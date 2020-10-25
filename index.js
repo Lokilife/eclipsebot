@@ -40,6 +40,12 @@ fs.readdir("./cmd/", (err, files) => {
 	});
 });
 
+bot.on("ready", () => {
+    console.log('Готов!');
+
+    bot.user.setActivity("аниме | e.? - Помощь", {type: "WATCHING"}); // Выставляем активность
+});
+
 bot.on("message", async (message) => {try{
     if(message.author.bot) return; //  Не слушаем других ботов
     if(message.channel.type == 'dm') return; //  Не слушаем ЛС
@@ -57,12 +63,8 @@ bot.on("message", async (message) => {try{
         "color": color,
         "defEmb": new discord.MessageEmbed().setColor(color),
         "footer": message.author.username +' | © Night Devs',
-        "categories": ['Общее','Прочее','Для модерации'],
+        "categories": ['Общее','Картинки','Прочее','Для модерации'],
         //"moderators": [],
         //"logchannel": allSettings.logChannel
     });
 }catch (err) {console.log(err)}})
-
-bot.on("ready", () => {
-    console.log('Готов!');
-});
