@@ -13,6 +13,9 @@ module.exports = {
             )
         }
 
+        return // Пока что не работает
+
+        /*
         if(!args[0]) return addlib.errors.notArgs(message);
         if(!/^[0-9]{1,}$/g.test(args[0]) || args[0] == "0") return addlib.errors.falseArgs(message, "Можно вводить только цифры, большие 0!");
         let ok = false;
@@ -22,6 +25,7 @@ module.exports = {
         message.channel.bulkDelete(args[0],true).then(() => {
             message.channel.send(con.defEmb.setColor('#00ff00').setTitle(`Очищено ${args[0]} сообщений.`)).then(msg => msg.delete({timeout:5000}));
         });
+        */
     }catch(err){console.log(err)}},
     cmd: ["clear","clean"],
     desc: "Очистка сообщений",
