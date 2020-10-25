@@ -50,7 +50,7 @@ bot.on("message", async (message) => {try{
     let args          = messageArray.slice(1);
 
     let commandfile
-	if(cmd.substr(0, 2) == prefix) commandfile = bot.commands.get(cmd.slice(prefix.length));
+	if(cmd.substr(0, prefix.length) == prefix) commandfile = bot.commands.get(cmd.slice(prefix.length));
 	if(commandfile) commandfile.run(bot,message,args,{
         "cmds":cmds,
         "prefix":prefix,
@@ -58,7 +58,7 @@ bot.on("message", async (message) => {try{
         "defEmb": new discord.MessageEmbed().setColor(color),
         "footer": message.author.username +' | © Night Devs',
         "categories": ['Общее'],
-        "moderators": ['449585603567157258','449590549683634176','652500169354510357'],
+        //"moderators": [],
         //"logchannel": allSettings.logChannel
     });
 }catch (err) {console.log(err)}})
