@@ -57,7 +57,7 @@ bot.on("message", async (message) => {try{
         "color": color,
         "defEmb": new discord.MessageEmbed().setColor(color),
         "footer": message.author.username +' | © Night Devs',
-        "categories": ['Общее'],
+        "categories": ['Общее','Прочее','Для модерации'],
         //"moderators": [],
         //"logchannel": allSettings.logChannel
     });

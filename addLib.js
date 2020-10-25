@@ -11,7 +11,11 @@ module.exports.errors = {
         message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
     },
     notPerms: (message) => {
-        let emb = new discord.MessageEmbed().setColor('ff0000').setTitle('Недостаточно прав!');
+        let emb = new discord.MessageEmbed().setColor('ff0000').setTitle('У тебя недостаточно прав!');
+        message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
+    },
+    botNotPerms: (message) => {
+        let emb = new discord.MessageEmbed().setColor('ff0000').setTitle('У меня недостаточно прав!');
         message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
     },
     noUser: (message)=> {
