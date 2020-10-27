@@ -16,7 +16,7 @@ module.exports = {
         }
         message.channel.send(emb.setFooter(con.footer));
     }catch(err){console.log(err)}},
-    cmd: ["help","?"],
+    cmd: ["help","?","h"],
     desc: "Помощь",
     category: "Общее"
 }

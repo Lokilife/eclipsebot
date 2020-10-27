@@ -14,9 +14,10 @@ const bot     = new discord.Client();
 bot.commands  = new discord.Collection(); // Тут будут храниться команды
 
 //  Переменные
-let prefix  = "e.";
-let cmds    = [];
-let color   = "525592";
+let prefix        = "e.";
+let cmds          = [];
+let color         = "525592";
+let feedBackChan  = "770009648023339049";
 
 bot.login(CONFIG.token); //  Логиним бота
 mongoose.connect(CONFIG.mongoToken, {useNewUrlParser: true, useUnifiedTopology: true}); //  Логиним mongoose
@@ -65,6 +66,7 @@ bot.on("message", async (message) => {try{
         "defEmb": new discord.MessageEmbed().setColor(color),
         "footer": message.author.username +' | © Night Devs',
         "categories": ['Общее','Картинки','Прочее','Для модерации'],
+        "feedBackChannel": feedBackChan
         //"moderators": [],
         //"logchannel": allSettings.logChannel
     });

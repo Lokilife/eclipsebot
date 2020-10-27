@@ -171,5 +171,5 @@ module.exports = {
     }catch(err){console.log(err)}},
     cmd: "settings",
     desc: "Настройка сервера",
-    category: "Общее"
+    category: "Для модерации"
 }
