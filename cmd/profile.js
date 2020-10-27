@@ -26,12 +26,22 @@ module.exports = {
             //if(!argsUser) return addlib.errors.noUser(message);
         }
     
-        let day = 1000 * 60 * 60 * 24
+        let day   = 1000 * 60 * 60 * 24
         let date1 = new Date(message.createdTimestamp)
         let date2 = new Date(argsUser.createdTimestamp)
         let date3 = new Date(message.guild.member(argsUser).joinedTimestamp)
         let diff1 = Math.round(Math.abs((date1.getTime() - date2.getTime()) / day))
         let diff2 = Math.round(Math.abs((date1.getTime() - date3.getTime()) / day))
+
+        let member = message.guild.members.cache.get(argsUser.id)
+
+        let nickname   = member.nickname ? ` aka ${member.nickname}` : "";
+
+        let roles      = member.roles.cache.filter((r) => r.id !== message.guild.id)
+        .sort((a, b) => b.rawPosition - a.rawPosition)
+        .map((r) => r).join(", ") || "Отсутствуют";
+
+        let roleCount = member.roles.cache.filter((r) => r.id !== message.guild.id).size;
     
         let statuses = {online: `В сети`, idle: `Не активен`, dnd: `Не беспокоить`, offline: `Не в сети`}
         let game
@@ -60,14 +70,15 @@ module.exports = {
     
         if(activ == '') activ = '```Нет```'
     
-        let profileEmbed = new Discord.MessageEmbed().setTitle(argsUser.username).setColor(con.color)
+        let profileEmbed = new Discord.MessageEmbed().setTitle(argsUser.username + nickname).setColor(con.color)
         .addField('Дата регистрации:', `${strftime('%B %d, %Y год в %H:%M', date2)}\n(${diff1} дней назад)`,true)
         .addField('Подключился на сервер:', `${strftime('%B %d, %Y год в %H:%M', date3)}\n(${diff2} дней назад)`,true)
-        .addField(`ID:`,`${argsUser.id}`,true)
+        .addField(`ID:`,`${argsUser.id}`)
+        .addField(`Роли (${roleCount}):`, `${roles}`)
         .addField(`Имеет статус:`, game)
         .addField(`Активен с`,text)
         .addField(`Активности:`, activ)
-        .setThumbnail(argsUser.avatarURL({ dynamic: true })|| argsUser.defaultAvatarURL)
+        .setThumbnail(argsUser.avatarURL({ dynamic: true, size: 512 })|| argsUser.defaultAvatarURL)
         .setFooter(con.footer);
         message.channel.send(profileEmbed)
     }catch(err){console.log(err)}},

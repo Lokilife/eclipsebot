@@ -3,7 +3,7 @@ const r2          = require('r2');
 
 const CONFIG = require('../config.json')
 
-// https://thedogapi.com/signup
+// https://thecatapi.com/signup
 
 module.exports = {
     run: async (bot,message,args,con)=> {try{

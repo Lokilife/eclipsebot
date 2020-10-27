@@ -3,14 +3,15 @@ const discord  = require('discord.js');
 //const ms        = require('ms');
 //const strftime  = require('strftime').localizeByIdentifier('ru_RU');
 const fs        = require('fs');
-//const mongoose  = require('mongoose');
+const mongoose  = require('mongoose');
 
 //  Подключение файлов
-const CONFIG = require('./config.json');
+const CONFIG    = require('./config.json');
+//const SETTINGS  = require('./models/settings.js');
 
 //  Константы
-const bot = new discord.Client();
-bot.commands = new discord.Collection(); // Тут будут храниться команды
+const bot     = new discord.Client();
+bot.commands  = new discord.Collection(); // Тут будут храниться команды
 
 //  Переменные
 let prefix  = "e.";
@@ -18,6 +19,7 @@ let cmds    = [];
 let color   = "525592";
 
 bot.login(CONFIG.token); //  Логиним бота
+mongoose.connect(CONFIG.mongoToken, {useNewUrlParser: true, useUnifiedTopology: true}); //  Логиним mongoose
 
 fs.readdir("./cmd/", (err, files) => {
 	if(err) console.log(err);
@@ -50,7 +52,6 @@ bot.on("message", async (message) => {try{
     if(message.author.bot) return; //  Не слушаем других ботов
     if(message.channel.type == 'dm') return; //  Не слушаем ЛС
 
-    //let messageArray  = message.content.replace(/\s/g, ' ').split(" ");
     let messageArray  = message.content.replace(/\s+/g, ' ').split(" ");
 	let cmd           = messageArray[0];
     let args          = messageArray.slice(1);
