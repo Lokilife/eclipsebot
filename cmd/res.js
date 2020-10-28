@@ -1,3 +1,4 @@
+const addlib = require('../addLib.js');
 module.exports = {
     run: async (bot,message,args,con)=> {try{
         if(args[0] == "help") {
@@ -19,7 +20,17 @@ module.exports = {
         .addField(`Время работы:`,`${d} : ${h} : ${m} : ${s}.${ms}`,true)
         .setFooter(con.footer)
         message.channel.send(resEmbed);
-    }catch(err){console.log(err)}},
+    }catch(err){
+        addlib.errors.unknow(message,"Код ошибки: " + err);
+        bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
+        .addField('Команда:', `${con.prefix}res`)
+        .addField('ID сервера:', message.guild.id, true)
+        .addField('ID канала:', message.channel.id, true)
+        .addField('ID сообщения:', message.id, true)
+        .addField('Ошибка:', ` \`\`\`${err}\`\`\``)
+        );
+        console.log(err)
+    }},
     cmd: ["res","ping"],
     desc: "Ресурсы и пинг",
     category: "Общее"

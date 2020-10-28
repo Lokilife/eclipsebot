@@ -2,7 +2,7 @@ const addlib = require("../addLib.js");
 module.exports = {
     run: (bot,message,args,con)=> {try{
         if(!args[0]) {
-            return message.channel.send(con.defEmb.setTitle(`Вот твой аватар:`).setImage(message.author.avatarURL({ dynamic: true, size: 1024 })).setFooter(con.footer));
+            return message.channel.send(con.defEmb.setTitle(`Вот твой аватар:`).setImage(message.author.avatarURL({ dynamic: true, size: 4096 })).setFooter(con.footer));
         } else if(args[0] == "help") {
             message.channel.send(con.defEmb.setTitle("Помощь по команде avatar").setDescription("Показать аватар").setFooter(con.footer)
             .addField('Аргументы:',`**<user || автор>** - Покажет аватар упомянутого пользователя *(Можно ввести ID или имя)*`)
@@ -14,9 +14,19 @@ module.exports = {
         } else {
             let aUser = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(m => m.user.username == args[0]));
             if(!aUser) return addlib.errors.noUser(message);
-            return message.channel.send(con.defEmb.setTitle(`Аватар пользователя ${aUser.user.username}:`).setImage(aUser.user.avatarURL({ dynamic: true, size: 1024 })).setFooter(con.footer));
+            return message.channel.send(con.defEmb.setTitle(`Аватар пользователя ${aUser.user.username}:`).setImage(aUser.user.avatarURL({ dynamic: true, size: 4096 })).setFooter(con.footer));
         } 
-    }catch(err){console.log(err)}},
+    }catch(err){
+        addlib.errors.unknow(message,"Код ошибки: " + err);
+        bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
+        .addField('Команда:', `${con.prefix}avatar`)
+        .addField('ID сервера:', message.guild.id, true)
+        .addField('ID канала:', message.channel.id, true)
+        .addField('ID сообщения:', message.id, true)
+        .addField('Ошибка:', ` \`\`\`${err}\`\`\``)
+        );
+        console.log(err)
+    }},
     cmd: ["avatar","ava"],
     desc: "Показать аватар",
     category: "Прочее"

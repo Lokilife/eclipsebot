@@ -1,7 +1,8 @@
 const querystring = require('querystring');
 const r2          = require('r2');
+const addlib      = require('../addLib.js');
 
-const CONFIG = require('../config.json')
+const CONFIG = require('../config.json');
 
 // https://thecatapi.com/signup
 
@@ -12,7 +13,17 @@ module.exports = {
         let image = images[0];
 
         message.channel.send(con.defEmb.setTitle("Котэ:").setImage(image.url).setFooter(con.footer));
-    }catch(err){console.log(err)}},
+    }catch(err){
+        addlib.errors.unknow(message,"Код ошибки: " + err);
+        bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
+        .addField('Команда:', `${con.prefix}cat`)
+        .addField('ID сервера:', message.guild.id, true)
+        .addField('ID канала:', message.channel.id, true)
+        .addField('ID сообщения:', message.id, true)
+        .addField('Ошибка:', ` \`\`\`${err}\`\`\``)
+        );
+        console.log(err)
+    }},
     cmd: "cat",
     desc: "Покажет рандомного кота",
     category: "Картинки"

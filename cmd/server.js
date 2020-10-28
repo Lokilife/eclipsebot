@@ -1,4 +1,5 @@
 const strftime = require("strftime").localizeByIdentifier('ru_RU');
+const addlib = require('../addLib.js');
 module.exports = {
     run: (bot,message,args,con)=> {try{
         if(args[0] == "help") {
@@ -17,7 +18,17 @@ module.exports = {
         .addField('Людей онлайн:', notbots.filter(m => m.presence.status !== 'offline').size,true)
         .addField('ID:', message.guild.id)
         .setFooter(con.footer));
-    }catch(err){console.log(err)}},
+    }catch(err){
+        addlib.errors.unknow(message,"Код ошибки: " + err);
+        bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
+        .addField('Команда:', `${con.prefix}server`)
+        .addField('ID сервера:', message.guild.id, true)
+        .addField('ID канала:', message.channel.id, true)
+        .addField('ID сообщения:', message.id, true)
+        .addField('Ошибка:', ` \`\`\`${err}\`\`\``)
+        );
+        console.log(err)
+    }},
     cmd: "server",
     desc: "Описание сервера",
     category: "Общее"

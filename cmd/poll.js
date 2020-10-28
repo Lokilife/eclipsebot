@@ -1,6 +1,6 @@
 const addlib = require('../addLib.js');
 module.exports = {
-    run: (bot,message,args,con)=> {
+    run: (bot,message,args,con)=> {try{
 		if(args[0] == "help") {
             return message.channel.send(con.defEmb.setTitle("Помощь по команде poll").setDescription("Создание голосований").setFooter(con.footer)
             .addField('Аргументы:',`**<тема голосования || "?">** - Создаст голосование с выбранной темой\n**+<выбор 1> +<выбор 2> ... +<выбор 10>** - Создаст голосование между заданными элементами`)
@@ -50,7 +50,17 @@ module.exports = {
 				}
 			});
 		}
-    },
+    }catch(err) {
+        addlib.errors.unknow(message,"Код ошибки: " + err);
+        bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
+        .addField('Команда:', `${con.prefix}poll`)
+        .addField('ID сервера:', message.guild.id, true)
+        .addField('ID канала:', message.channel.id, true)
+        .addField('ID сообщения:', message.id, true)
+        .addField('Ошибка:', ` \`\`\`${err}\`\`\``)
+        );
+        console.log(err)
+    }},
     cmd: "poll",
     desc: "Создание голосований",
     category: "Прочее"

@@ -1,3 +1,4 @@
+const addlib = require('../addLib.js');
 module.exports = {
     run: (bot,message,args,con)=> {try{
         if(args[0] == "help") {
@@ -12,10 +13,20 @@ module.exports = {
             for(let i2=0;i2<=con.cmds.length-1;i2++) {
                 if(con.cmds[i2].category == categories[i1]) text = text+`**${con.prefix}${con.cmds[i2].cmd}** - ${con.cmds[i2].desc}\n`
             }
-            emb.addField(categories[i1],text);
+            if(text !== '') emb.addField(categories[i1],text);
         }
         message.channel.send(emb.setFooter(con.footer));
-    }catch(err){console.log(err)}},
+    }catch(err){
+        addlib.errors.unknow(message,"Код ошибки: " + err);
+        bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
+        .addField('Команда:', `${con.prefix}help`)
+        .addField('ID сервера:', message.guild.id, true)
+        .addField('ID канала:', message.channel.id, true)
+        .addField('ID сообщения:', message.id, true)
+        .addField('Ошибка:', ` \`\`\`${err}\`\`\``)
+        );
+        console.log(err)
+    }},
     cmd: ["help","?","h"],
     desc: "Помощь",
     category: "Общее"
