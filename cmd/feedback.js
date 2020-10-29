@@ -9,6 +9,9 @@ module.exports = {
     
         const embed = con.defEmb
         .setTitle(`Новый отзыв от ${message.author.tag}`)
+        .addField('ID сервера:', message.guild.id, true)
+        .addField('ID канала:', message.channel.id, true)
+        .addField('ID сообщения:', message.id, true)
         .setDescription(feedback)
         .setFooter(con.footer)
         .setTimestamp();
@@ -16,7 +19,7 @@ module.exports = {
         bot.channels.cache.get(con.feedBackChannel).send(embed);
     
         addlib.errors.success(message,"Отзыв был успешно отправлен!");
-      }catch(err){
+    }catch(err){
         addlib.errors.unknow(message,"Код ошибки: " + err);
         bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
         .addField('Команда:', `${con.prefix}feedback`)
@@ -29,5 +32,6 @@ module.exports = {
     }},
     cmd: ["feedback"],
     desc: "Отправить отзыв",
-    category: "Общее"
+    category: "Общее",
+    show: true
 }

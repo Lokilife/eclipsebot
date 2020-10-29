@@ -41,5 +41,6 @@ module.exports = {
     }},
     cmd: ["info","bot"],
     desc: "Информация о боте",
-    category: "Общее"
+    category: "Общее",
+    show: true
 }

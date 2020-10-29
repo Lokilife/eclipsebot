@@ -88,5 +88,6 @@ module.exports = {
     }},
     cmd: ["profile","me"],
     desc: "Информация о человеке",
-    category: "Прочее"
+    category: "Прочее",
+    show: true
 }

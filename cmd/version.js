@@ -16,5 +16,6 @@ module.exports = {
     }},
     cmd: ["version","ver"],
     desc: "Что изменилось в последней версии",
-    category: "Общее"
+    category: "Общее",
+    show: true
 }

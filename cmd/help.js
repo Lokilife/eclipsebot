@@ -29,5 +29,6 @@ module.exports = {
     }},
     cmd: ["help","?","h"],
     desc: "Помощь",
-    category: "Общее"
+    category: "Общее",
+    show: true
 }

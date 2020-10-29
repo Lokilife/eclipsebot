@@ -23,5 +23,6 @@ module.exports = {
     }},
     cmd: ["ping"],
     desc: "Ресурсы и пинг",
-    category: "Общее"
+    category: "Общее",
+    show: true
 }

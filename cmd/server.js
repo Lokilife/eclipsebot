@@ -31,5 +31,6 @@ module.exports = {
     }},
     cmd: "server",
     desc: "Описание сервера",
-    category: "Общее"
+    category: "Общее",
+    show: true
 }

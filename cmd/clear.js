@@ -35,5 +35,6 @@ module.exports = {
     }},
     cmd: ["clear","clean"],
     desc: "Очистка сообщений",
-    category: "Для модерации"
+    category: "Для модерации",
+    show: true
 }

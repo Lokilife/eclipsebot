@@ -247,5 +247,6 @@ module.exports = {
     }},
     cmd: "settings",
     desc: "Настройка сервера",
-    category: "Для модерации"
+    category: "Для модерации",
+    show: true
 }

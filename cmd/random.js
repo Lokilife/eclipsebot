@@ -15,6 +15,8 @@ function getRandomInRange(first, second) {
 module.exports = {
     run: (bot,message,args,con)=> {try{
 
+        if(!args[0]) return addlib.errors.notArgs(message, "Напиши аргумент **help** для помощи по команде")
+
         switch (args[0]) {
             case "help":
                 message.channel.send(con.defEmb.setTitle("Помощь по команде random").setDescription("Рандомайзер").setFooter(con.footer)
@@ -63,7 +65,7 @@ module.exports = {
             break;
 
             default:
-                addlib.errors.notArgs(message, "Напиши аргумент **help** для помощи по команде")
+                addlib.errors.falseArgs(message)
             break;
 
         }
@@ -80,5 +82,6 @@ module.exports = {
     }},
     cmd: ["random","rand"],
     desc: "Рандомайзер",
-    category: "Прочее"
+    category: "Прочее",
+    show: true
 }

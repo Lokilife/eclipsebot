@@ -39,7 +39,7 @@ fs.readdir("./cmd/", (err, files) => {
 				bot.commands.set(props.cmd[i2], props);
 			}
         }
-        cmds.push({"cmd":props.cmd,"desc":props.desc,"category":props.category})
+        if(props.show) cmds.push({"cmd":props.cmd,"desc":props.desc,"category":props.category})
 	});
 });
 
