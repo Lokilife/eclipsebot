@@ -1,39 +1,40 @@
-const discord = require('discord.js')
+const discord = require('discord.js');
+const colors  = require('./colors.json');
 module.exports.errors = {
     notArgs: (message,desc) => {
-        let emb = new discord.MessageEmbed().setColor('ff0000').setTitle('Недостаточно аргументов!');
+        let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle('Недостаточно аргументов!');
         if(desc) emb.setDescription(desc);
         message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
     },
     falseArgs: (message,desc) => {
-        let emb = new discord.MessageEmbed().setColor('ff0000').setTitle('Неверные аргументы!');
+        let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle('Неверные аргументы!');
         if(desc) emb.setDescription(desc);
         message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
     },
     notPerms: (message) => {
-        let emb = new discord.MessageEmbed().setColor('ff0000').setTitle('У тебя недостаточно прав!');
+        let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle('У тебя недостаточно прав!');
         message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
     },
     botNotPerms: (message) => {
-        let emb = new discord.MessageEmbed().setColor('ff0000').setTitle('У меня недостаточно прав!');
+        let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle('У меня недостаточно прав!');
         message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
     },
     noUser: (message)=> {
-        let emb = new discord.MessageEmbed().setColor('ff0000').setTitle('Такого человека не существует!');
+        let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle('Такого человека не существует!');
         message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
     },
     castom: (message,title,desc) => {
-        let emb = new discord.MessageEmbed().setColor('ff0000').setTitle(title);
+        let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle(title);
         if(desc) emb.setDescription(desc);
         message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
     },
     success: (message,title,desc) => {
-        let emb = new discord.MessageEmbed().setColor('00ff00').setTitle(title);
+        let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle(title);
         if(desc) emb.setDescription(desc);
         message.channel.send(emb);
     },
     unknow: (message,desc) => {
-        let emb = new discord.MessageEmbed().setColor('ff0000').setTitle("Произошла неизвестная ошибка");
+        let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle("Произошла неизвестная ошибка");
         if(desc) emb.setDescription(desc);
         message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
     },

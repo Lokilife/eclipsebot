@@ -6,8 +6,6 @@ module.exports = {
             return message.channel.send(con.defEmb.setTitle("Тебе серьёзно нужна помощь по этой команде?").setDescription("Мне лень)").setFooter(con.footer))
         }
 
-        console.log(message.guild)
-
         let notbots = message.guild.members.cache.filter(member => !member.user.bot)
         message.channel.send(con.defEmb
         .setTitle("Информация о сервере")

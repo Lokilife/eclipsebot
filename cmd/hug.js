@@ -1,4 +1,4 @@
-const r2          = require('r2');
+const fetch       = require('node-fetch')
 const addlib      = require('../addLib.js');
 
 module.exports = {
@@ -6,8 +6,9 @@ module.exports = {
         if(!args[0]) return addlib.errors.notArgs(message,"Упомяни того, кого хочешь обнять");
         if(!message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(m => m.user.username == args[0]))) return addlib.errors.noUser(message);
         let username = `${message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(m => m.user.username == args[0])).user.username}`
-        let images = await r2.get(`https://some-random-api.ml/animu/hug`).json;
-        message.channel.send(con.defEmb.setTitle(`${message.author.username} обнимает ${username}`).setImage(images.link).setFooter(con.footer));
+        fetch(`https://some-random-api.ml/animu/hug`).then(res => res.json()).then(json => {
+            message.channel.send(con.defEmb.setTitle(`${message.author.username} обнимает ${username}`).setImage(json.link).setFooter(con.footer));
+        });
     }catch(err){
         addlib.errors.unknow(message,"Код ошибки: " + err);
         bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)

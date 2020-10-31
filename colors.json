@@ -1,0 +1,6 @@
+{
+    "default": "525592",
+    "errorRed": "ff0000",
+    "warnOrange": "ffa500",
+    "successGreen": "00ff00"
+}

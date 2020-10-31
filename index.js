@@ -7,6 +7,7 @@ const mongoose  = require('mongoose');
 
 //  Подключение файлов
 const CONFIG    = require('./config.json');
+const COLORS    = require('./colors.json');
 const SETTINGS  = require('./models/settings.js');
 
 //  Константы
@@ -16,7 +17,7 @@ bot.commands  = new discord.Collection(); // Тут будут хранитьс�
 //  Переменные
 let prefix        = "e.";
 let cmds          = [];
-let color         = "525592";
+let color         = COLORS.default;
 let feedBackChan  = "770009648023339049";
 
 bot.login(CONFIG.token); //  Логиним бота
@@ -100,7 +101,8 @@ bot.on("message", async (message) => {try{
         "defEmb": new discord.MessageEmbed().setColor(color),
         "footer": message.author.username +' | © Night Devs',
         "categories": ['Общее','Картинки','Прочее','Для модерации'],
-        "feedBackChannel": feedBackChan
+        "feedBackChannel": feedBackChan,
+        "cmd": cmd
         //"moderators": [],
         //"logchannel": allSettings.logChannel
     });

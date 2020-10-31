@@ -3,13 +3,13 @@ const addlib  = require('../addLib.js');
 
 module.exports = {
     run: async (bot,message,args,con)=> {try{
-        fetch(`https://some-random-api.ml/animu/wink`).then(res => res.json()).then(json => {
-            message.channel.send(con.defEmb.setTitle(`${message.author.username} подмигивает`).setImage(json.link).setFooter(con.footer));
+        fetch(`https://some-random-api.ml/img/${con.cmd.slice(con.prefix.length)}`).then(res => res.json()).then(json => {
+            message.channel.send(con.defEmb.setTitle("Воть:").setImage(json.link).setFooter(con.footer));
         });
     }catch(err){
         addlib.errors.unknow(message,"Код ошибки: " + err);
         bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
-        .addField('Команда:', `${con.prefix}wink`)
+        .addField('Команда:', `${con.prefix}pictures`)
         .addField('ID сервера:', message.guild.id, true)
         .addField('ID канала:', message.channel.id, true)
         .addField('ID сообщения:', message.id, true)
@@ -17,8 +17,8 @@ module.exports = {
         );
         console.log(err)
     }},
-    cmd: ["wink"],
-    desc: "Подмигнуть",
+    cmd: ["dog","cat","fox","bird","panda"],
+    desc: "Рандомные картинки животных",
     category: "Картинки",
     show: true
 }
