@@ -7,7 +7,7 @@ module.exports.errors = {
         message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
     },
     falseArgs: (message,desc) => {
-        let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle('Неверные аргументы!');
+        let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle('Предоставлены неверные аргументы!');
         if(desc) emb.setDescription(desc);
         message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
     },
@@ -20,7 +20,7 @@ module.exports.errors = {
         message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
     },
     noUser: (message)=> {
-        let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle('Такого человека не существует!');
+        let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle('Такого пользователя не существует!');
         message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
     },
     castom: (message,title,desc) => {
