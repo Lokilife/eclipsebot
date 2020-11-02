@@ -29,7 +29,7 @@ module.exports.errors = {
         message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
     },
     success: (message,title,desc) => {
-        let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle(title);
+        let emb = new discord.MessageEmbed().setColor(colors.successGreen).setTitle(title);
         if(desc) emb.setDescription(desc);
         message.channel.send(emb);
     },

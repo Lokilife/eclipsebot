@@ -108,4 +108,3 @@ bot.on("message", async (message) => {try{
     });
 }catch (err) {console.log(err)}})
 
-

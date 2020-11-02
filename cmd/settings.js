@@ -89,7 +89,11 @@ module.exports = {
                                 template: "<+> NAME"
                             },
                             other: {
-                                logChannel:""
+                                logChannel:"",
+                                admins: {
+                                    roles: [],
+                                    members: []
+                                }
                             }
                         })
 
@@ -160,7 +164,11 @@ module.exports = {
                         }
 
                         set.other = {
-                            logChannel:""
+                            logChannel:"",
+                            admins: {
+                                roles: [],
+                                members: []
+                            }
                         }
 
                         set.save().catch(err => console.log(err))
@@ -222,7 +230,7 @@ module.exports = {
                             category: set.privatVoises.category,
                             template: template
                         }
-                        addlib.errors.success(message, 'Конфигурация успешно изменена!')
+                        addlib.errors.success(message, 'Конфигурация успешно изменена!');
                         
                     }
 
