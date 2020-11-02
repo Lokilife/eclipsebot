@@ -1,7 +1,7 @@
 {
   "name": "eclipsebot",
   "version": "0.0.0",
-  "description": "EclipseBot - JavaScript Discord bot by Night Devs.",
+  "description": "EclipseBot is an open-source, easy to use & selfhostable Discord bot written in JavaScript.",
   "main": "index.js",
   "dependencies": {
     "discord.js": "^12.4.1",
@@ -26,7 +26,7 @@
     "discord"
   ],
   "author": "Night Devs",
-  "license": "ISC",
+  "license": "BSD-3-Clause",
   "bugs": {
     "url": "https://github.com/Elektroplayer/eclipsebot/issues"
   },

@@ -1,6 +1,6 @@
 {
     "default": "525592",
-    "errorRed": "ff0000",
-    "warnOrange": "ffa500",
-    "successGreen": "00ff00"
+    "errorRed": "cc0000",
+    "warnOrange": "fdb21a",
+    "successGreen": "00ce00"
 }
