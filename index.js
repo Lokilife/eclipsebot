@@ -45,7 +45,7 @@ fs.readdir("./cmd/", (err, files) => {
 });
 
 bot.on("ready", () => {
-    console.log('Готов!');
+    console.log(`Готов! Добавлен на ${bot.guilds.cache.size} серверах`);
 
     bot.user.setActivity("аниме | e.? - Помощь", {type: "WATCHING"}); // Выставляем активность
 });
