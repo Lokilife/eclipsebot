@@ -2,7 +2,7 @@ const addlib = require('../addLib.js'); //  Моя либа)
 module.exports = {
     run: async (bot,message,args,con)=> {try{
     if (!message.guild.me.hasPermission("BAN_MEMBERS")) { // Если у бота нет права банить
-      return message.channel.send("У вас нет права банить участников, следовательно, вы столкнулись с этой ошибкой.");
+      return message.channel.send("У меня нет права банить участников, следовательно, вы столкнулись с этой ошибкой.");
     }
 
     const banUser = message.guild.member(
