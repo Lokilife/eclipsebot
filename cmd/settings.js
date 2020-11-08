@@ -238,6 +238,7 @@ module.exports = {
 
                 break;
         
+                        if(!args[2]) return message.channel.send(con.defEmb.setTitle(`Текущее значение: ${set.other.admins.roles || "Нет"}`))
                 default:
                     return addlib.errors.falseArgs(message);
             }

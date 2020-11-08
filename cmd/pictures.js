@@ -17,7 +17,7 @@ module.exports = {
         );
         console.log(err)
     }},
-    cmd: ["dog","cat","fox","bird","panda"],
+    cmd: ["dog","cat","fox","bird","panda","whale"],
     desc: "Рандомные картинки животных",
     category: "Картинки",
     show: true
