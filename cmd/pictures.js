@@ -3,7 +3,7 @@ const addlib  = require('../addLib.js');
 
 module.exports = {
     run: async (bot,message,args,con)=> {try{
-        fetch(`https://some-random-api.ml/img/${con.cmd.slice(con.prefix.length)}`).then(res => res.json()).then(json => {
+        fetch(`https://some-random-api.ml/img/${con.cmd.slice(con.prefix.length)}`).then(res => res.json().catch(()=> addlib.errors.APIErrors(message))).then(json => {
             message.channel.send(con.defEmb.setTitle("Воть:").setImage(json.link).setFooter(con.footer));
         });
     }catch(err){
@@ -20,5 +20,11 @@ module.exports = {
     cmd: ["dog","cat","fox","bird","panda","whale"],
     desc: "Рандомные картинки животных",
     category: "Картинки",
+    helpEmbed: (con) => {
+        return con.defEmb
+        .addField('Аргументы:',`**Нет**`)
+        .addField('Примеры:',`**${con.prefix}cat** - Рандомная кошка\n**${con.prefix}dog** - Рандомная собака\nи так далее`)
+        .addField('Могут использовать:','Все без исключений',true)
+    },
     show: true
 }

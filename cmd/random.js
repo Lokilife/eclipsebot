@@ -18,16 +18,6 @@ module.exports = {
         if(!args[0]) return addlib.errors.notArgs(message, "Напиши аргумент **help** для помощи по команде")
 
         switch (args[0]) {
-            case "help":
-                message.channel.send(con.defEmb.setTitle("Помощь по команде random").setDescription("Рандомайзер").setFooter(con.footer)
-                .addField('Аргументы:',`**word <Слова из которых нужно выбрать>** - Выберет рандомное слово из заданных\n**number <x>** - Выберет рандомное число от 0 до x\n**number <x> <y>** - Выберет рандомное число от x до y\n**user** - Рандомный человек с сервера\n**color** - Рандомный цвет\n\n`)
-                .addField('Примеры:',`**${con.prefix}random word Кошка Кошечка Киска** - Выберет рандомное слово из предложенных\n**${con.prefix}random number 10** -  Рандомное число от 0 до 10\n**${con.prefix}random number 5 10** -  Рандомное число от 5 до 10\n**${con.prefix}random user** - Выберет рандомного человека\n**${con.prefix}random color** - Даст рандомный цвет`)
-                .addField('Сокращения:',`**${con.prefix}rand**`)
-                .addField('Могут использовать:','Все без исключений',true)
-                .addField('Последнее обновление:',`Версия 1.0.0`,true)
-                )
-            break;
-
             case "word":
                 if(!args[1] || !args[2]) return addlib.errors.notArgs(message,"А из чего выбирать?")
 
@@ -83,5 +73,12 @@ module.exports = {
     cmd: ["random","rand"],
     desc: "Рандомайзер",
     category: "Прочее",
+    helpEmbed: (con) => {
+        return con.defEmb
+        .addField('Аргументы:',`**word <Слова из которых нужно выбрать>** - Выберет рандомное слово из заданных\n**number <x>** - Выберет рандомное число от 0 до x\n**number <x> <y>** - Выберет рандомное число от x до y\n**user** - Рандомный человек с сервера\n**color** - Рандомный цвет\n\n`)
+        .addField('Примеры:',`**${con.prefix}random word Кошка Кошечка Киска** - Выберет рандомное слово из предложенных\n**${con.prefix}random number 10** -  Рандомное число от 0 до 10\n**${con.prefix}random number 5 10** -  Рандомное число от 5 до 10\n**${con.prefix}random user** - Выберет рандомного человека\n**${con.prefix}random color** - Даст рандомный цвет`)
+        .addField('Сокращения:',`**${con.prefix}rand**`)
+        .addField('Могут использовать:','Все без исключений',true)
+    },
     show: true
 }

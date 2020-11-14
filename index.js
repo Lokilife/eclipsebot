@@ -40,7 +40,7 @@ fs.readdir("./cmd/", (err, files) => {
 				bot.commands.set(props.cmd[i2], props);
 			}
         }
-        if(props.show) cmds.push({"cmd":props.cmd,"desc":props.desc,"category":props.category})
+        if(props.show) cmds.push({"cmd":props.cmd,"desc":props.desc,"category":props.category,"helpEmbed":props.helpEmbed})
 	});
 });
 
@@ -57,6 +57,7 @@ bot.on('raw', async (event) => { try {
 
             if(!set) return;
 
+            if(!set.privatVoises) return;
             if(!set.privatVoises.enabled) return;
             if(event.d.channel_id !== set.privatVoises.channel) return;
 

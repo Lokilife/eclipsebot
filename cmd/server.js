@@ -27,8 +27,14 @@ module.exports = {
         );
         console.log(err)
     }},
-    cmd: "server",
+    cmd: ["server"],
     desc: "Описание сервера",
     category: "Общее",
+    helpEmbed: (con) => {
+        return con.defEmb
+        .addField('Аргументы:',`**Нет**`)
+        .addField('Примеры:',`**${con.prefix}server** - Показать информацию о сервере`)
+        .addField('Могут использовать:','Все без исключений',true)
+    },
     show: true
 }

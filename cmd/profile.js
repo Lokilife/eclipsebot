@@ -4,16 +4,6 @@ const addlib     = require("../addLib.js");
 
 module.exports = {
     run: (bot,message,args,con)=> {try{
-        if(args[0] == "help") {
-            return message.channel.send(con.defEmb.setTitle("Помощь по команде profile").setDescription("Информация о человеке").setFooter(con.footer)
-            .addField('Аргументы:',`**<user || автор>** - Покажет информацию о пользователе *(Можно ввести ID или имя)*`)
-            .addField('Примеры:',`**${con.prefix}profile** - Покажет информацию о тебе\n**${con.prefix}profile @user** -  Покажет информацию об упомянутом пользователе\n**${con.prefix}profile 111111123456789101** - Покажет информацию о пользователе с таким ID\n**${con.prefix}profile UserName** - Покажет информацию о пользователе с таким именем *(НЕ НИКОМ НА СЕРВЕРЕ)*`)
-            .addField('Сокращения:',`**${con.prefix}me**`)
-            .addField('Могут использовать:','Все без исключений',true)
-            .addField('Последнее обновление:',`Версия 1.0.0`,true)
-            )
-        }
-
         // Получаем пользователя, о котором мы ищем инфу
         let argsUser
         if(!args[0]) argsUser = message.author
@@ -89,5 +79,12 @@ module.exports = {
     cmd: ["profile","me"],
     desc: "Информация о человеке",
     category: "Прочее",
+    helpEmbed: (con) => {
+        return con.defEmb
+        .addField('Аргументы:',`**<user || автор>** - Покажет информацию о пользователе *(Можно ввести ID или имя)*`)
+        .addField('Примеры:',`**${con.prefix}profile** - Покажет информацию о тебе\n**${con.prefix}profile @user** -  Покажет информацию об упомянутом пользователе\n**${con.prefix}profile 111111123456789101** - Покажет информацию о пользователе с таким ID\n**${con.prefix}profile UserName** - Покажет информацию о пользователе с таким именем *(НЕ НИКОМ НА СЕРВЕРЕ)*`)
+        .addField('Сокращения:',`**${con.prefix}me**`)
+        .addField('Могут использовать:','Все без исключений',true)
+    },
     show: true
 }

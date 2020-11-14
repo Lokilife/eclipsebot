@@ -37,5 +37,11 @@ module.exports = {
     cmd: ["ban"],
     desc: "Выгоняет пользователя с сервера и блокирует его",
     category: "Для модерации",
+    helpEmbed: (con) => {
+        return con.defEmb
+        .addField('Аргументы:',`**<user> <reason || ничего>** - Забанить человека по указанной причине *(Можно ввести ID или имя)*`)
+        .addField('Примеры:',`**${con.prefix}ban @Electroplayer Конченный** - Забанит Электроплэера по причине "Конченный"\n**${con.prefix}ban @Tegnio** - Молча баним Tegnio`)
+        .addField('Могут использовать:','Люди с правом на бан',true)
+    },
     show: true
 }

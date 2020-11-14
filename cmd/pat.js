@@ -6,7 +6,7 @@ module.exports = {
         if(!args[0]) return addlib.errors.notArgs(message,"Упомяни того, кого хочешь погладить");
         if(!message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(m => m.user.username == args[0]))) return addlib.errors.noUser(message);
         let username = `${message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(m => m.user.username == args[0])).user.username}`
-        fetch(`https://some-random-api.ml/animu/pat`).then(res => res.json()).then(json => {
+        fetch(`https://some-random-api.ml/animu/pat`).then(res => res.json().catch(()=> addlib.errors.APIErrors(message))).then(json => {
             message.channel.send(con.defEmb.setTitle(`${message.author.username} гладит ${username}`).setImage(json.link).setFooter(con.footer));
         });
     }catch(err){
@@ -23,5 +23,11 @@ module.exports = {
     cmd: ["pat"],
     desc: "Погладить",
     category: "Картинки",
+    helpEmbed: (con) => {
+        return con.defEmb
+        .addField('Аргументы:',`**<@user>** - Кого вы хотите Погладить`)
+        .addField('Примеры:',`**${con.prefix}pat @Electroplayer** - Давайте погладим Electroplayer :з`)
+        .addField('Могут использовать:','Все без исключений',true)
+    },
     show: true
 }

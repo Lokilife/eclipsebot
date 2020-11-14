@@ -33,6 +33,10 @@ module.exports.errors = {
         if(desc) emb.setDescription(desc);
         message.channel.send(emb);
     },
+    APIErrors: (message) => {
+        let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle('Неполадки с API! Попробуйте позже...');
+        message.channel.send(emb);
+    },
     unknow: (message,desc) => {
         let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle("Произошла неизвестная ошибка");
         if(desc) emb.setDescription(desc);

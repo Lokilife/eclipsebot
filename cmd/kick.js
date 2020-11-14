@@ -37,5 +37,11 @@ module.exports = {
     cmd: ["kick"],
     desc: "Выгоняет пользователя с сервера",
     category: "Для модерации",
+    helpEmbed: (con) => {
+        return con.defEmb
+        .addField('Аргументы:',`**<user> <reason || ничего>** - Кикнуть человека по указанной причине *(Можно ввести ID или имя)*`)
+        .addField('Примеры:',`**${con.prefix}kick @Electroplayer Конченный** - Кикнет Электроплэера по причине "Конченный"\n**${con.prefix}kick @Tegnio** - Молча кикнем Tegnio`)
+        .addField('Могут использовать:','Люди с правом на кик',true)
+    },
     show: true
 }

@@ -33,5 +33,11 @@ module.exports = {
     cmd: ["feedback"],
     desc: "Отправить отзыв",
     category: "Общее",
+    helpEmbed: (con) => {
+        return con.defEmb
+        .addField('Аргументы:',`**<text>** - Текст отзыва`)
+        .addField('Примеры:',`**${con.prefix}feedback У тибя в feedback ашиба!** - Отправит отзыв с текстом "У тибя в feedback ашиба!"`)
+        .addField('Могут использовать:','Все без исключений',true)
+    },
     show: true
 }

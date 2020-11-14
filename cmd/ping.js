@@ -22,7 +22,13 @@ module.exports = {
         console.log(err)
     }},
     cmd: ["ping"],
-    desc: "Ресурсы и пинг",
+    desc: "Пинг",
     category: "Общее",
+    helpEmbed: (con) => {
+        return con.defEmb
+        .addField('Аргументы:',`**Нет**`)
+        .addField('Примеры:',`**${con.prefix}ping** - Показать скорость соединения от хоста до серверов Discord`)
+        .addField('Могут использовать:','Все без исключений',true)
+    },
     show: true
 }

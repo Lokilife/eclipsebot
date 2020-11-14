@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 const addlib = require('../addLib.js');
 const settings = require('../models/settings.js');
 //const mongoose  = require('mongoose');
@@ -5,15 +6,6 @@ const settings = require('../models/settings.js');
 module.exports = {
     run: async (bot,message,args,con)=> {try{
         if(!args[0]) return addlib.errors.notArgs(message, "Напиши аргумент **help** для помощи по команде")
-
-        if(args[0] == "help") {
-            return message.channel.send(con.defEmb.setTitle("Помощь по команде settings").setDescription("Настройка сервера").setFooter(con.footer)
-            .addField('Аргументы:',`**configurationUpdate** - Создаст или сбросит конфигурацию бота\n**privateVoices enabled <true || false>** - Включит/выключит приватные каналы\n**privateVoices channel <ID>** - Обновит канал *(ВВОДИТЬ ТОЛЬКО ID!)*\n**privateVoices category <ID>** - Обновит категорию *(ВВОДИТЬ ТОЛЬКО ID!)*\n**privateVoices template <template>** - Обновит шаблон, должен содержать в себе NAME (большим регистром), которое заменится на имя человека`)
-            .addField('Примеры:',`**${con.prefix}settings configurationUpdate** - Создаст или сбросит конфигурацию бота`)
-            .addField('Могут использовать:','Создатель и админы',true)
-            .addField('Последнее обновление:',`Версия 1.0.0`,true)
-            )
-        }
 
         if(message.author.id !== message.guild.owner.id) return addlib.errors.notPerms(message)
 
@@ -181,7 +173,9 @@ module.exports = {
                 case "privatevoices":
                     if(!set) return addlib.errors.castom(message,"Обнови конфигурацию!",`${con.perfix}settings configurationupdate`);
 
-                    if(args[1] == "enabled") {
+                    if(!args[1]) {
+                        return addlib.errors.notArgs(message, "<enabled || channel || category || template>")
+                    } else if(args[1] == "enabled") {
                         if(!args[2]) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+(set.privatVoises.enabled || "**Нет...**")))
                         let ena = args[2].toLowerCase()
                         if(ena != "true" && ena != "false") return addlib.errors.falseArgs(message,"true или false?")
@@ -238,7 +232,55 @@ module.exports = {
 
                 break;
         
+                //  Сейчас НЕ работает!
+                case "admins":
+                    if(!args[1]) {
+                        return addlib.errors.notArgs(message, "<role || member>")
+                    } else if(args[1] == 'role') {
                         if(!args[2]) return message.channel.send(con.defEmb.setTitle(`Текущее значение: ${set.other.admins.roles || "Нет"}`))
+                        else if(args[2] == "add"){
+                            if(!args[3]) return addlib.errors.notArgs(message,"<ID роли>")
+                            if(!message.guild.roles.cache.get(args[3])) return addlib.errors.falseArgs(message,"Такой роли не существует!")
+                            let arr = set.other.admins.roles
+                            arr.splice(0,0,args[3])
+                            arr = Array.from(new Set(arr));
+                            //let admrole = Array.from(new Set(set.other.admins.roles))
+                            /*
+                            set.other = {
+                                logChannel: set.other.logChannel,
+                                admins: {
+                                    roles: admrole,
+                                    members: set.other.admins.members
+                                }
+                            };
+                            */
+
+                            set.other = {
+                                logChannel: set.other.logChannel,
+                                admins: {
+                                    roles: [].splice(0,0,set.other.admins.roles),
+                                    members: []
+                                }
+                            }
+                            console.log(set.other);
+                            try {
+                                set.save()
+                            } catch (error) {
+                                console.log(error)
+                            }
+                            
+                        } else if(args[2] == "remove"){
+                            return
+                            /*
+                            if(!message.guild.roles.cache.get(args[3])) return addlib.errors.falseArgs(message,"Такой роли не существует!")
+                            let admrole = set.other.admins.roles;
+                            admrole.push(args[3])
+                            admrole = Array.from(new Set(admrole))*/
+                        }
+                    }
+                    addlib.errors.success(message, 'Конфигурация успешно изменена!');
+                break;
+
                 default:
                     return addlib.errors.falseArgs(message);
             }
@@ -254,8 +296,14 @@ module.exports = {
         );
         console.log(err)
     }},
-    cmd: "settings",
+    cmd: ["settings"],
     desc: "Настройка сервера",
     category: "Для модерации",
+    helpEmbed: (con) => {
+        return con.defEmb
+        .addField('Аргументы:',`**configurationUpdate** - Создаст или сбросит конфигурацию бота\n**privateVoices enabled <true || false>** - Включит/выключит приватные каналы\n**privateVoices channel <ID>** - Обновит канал *(ВВОДИТЬ ТОЛЬКО ID!)*\n**privateVoices category <ID>** - Обновит категорию *(ВВОДИТЬ ТОЛЬКО ID!)*\n**privateVoices template <template>** - Обновит шаблон, должен содержать в себе NAME (большим регистром), которое заменится на имя человека`)
+        .addField('Примеры:',`**${con.prefix}settings configurationUpdate** - Создаст или сбросит конфигурацию бота`)
+        .addField('Могут использовать:','Создатель и админы',true)
+    },
     show: true
 }

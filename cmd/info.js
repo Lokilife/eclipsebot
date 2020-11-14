@@ -42,5 +42,12 @@ module.exports = {
     cmd: ["info","bot"],
     desc: "Информация о боте",
     category: "Общее",
+    helpEmbed: (con) => {
+        return con.defEmb
+        .addField('Аргументы:',`**Нет**`)
+        .addField('Примеры:',`**${con.prefix}info** - Информация о боте`)
+        .addField('Другие алиасы:',`${con.prefix}bot`)
+        .addField('Могут использовать:','Все без исключений',true)
+    },
     show: true
 }

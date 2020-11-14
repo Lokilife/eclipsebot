@@ -17,5 +17,11 @@ module.exports = {
     cmd: ["version","ver"],
     desc: "Что изменилось в последней версии",
     category: "Общее",
+    helpEmbed: (con) => {
+        return con.defEmb
+        .addField('Аргументы:',`**Нет**`)
+        .addField('Примеры:',`**${con.prefix}server** - Версия бота и что нового`)
+        .addField('Могут использовать:','Все без исключений',true)
+    },
     show: true
 }
