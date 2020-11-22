@@ -15,7 +15,7 @@ You are not allowed to upload this bot to any service such as discordbotlist or 
 - Submit a pull request
 
 ### Authors
-**EclipseBot** © [Elektroplayer](https://github.com/Elektroplayer)<br>Authored by [Elektroplayer](https://github.com/Elektroplayer)<br>Maintained by [Elektroplayer](https://github.com/Elektroplayer) and [Tegnio](https://github.com/Tegnio6882)
+**EclipseBot** © [Elektroplayer](https://github.com/Elektroplayer)<br>Authored by [Elektroplayer](https://github.com/Elektroplayer)<br>Maintained by [Elektroplayer](https://github.com/Elektroplayer)
 
 ### License
 [BSD 3-Clause](./LICENSE)
