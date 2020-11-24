@@ -1,7 +1,6 @@
 /* eslint-disable no-case-declarations */
 const addlib = require('../addLib.js');
 const settings = require('../models/settings.js');
-//const mongoose  = require('mongoose');
 
 module.exports = {
     run: async (bot,message,args,con)=> {try{
@@ -66,15 +65,7 @@ module.exports = {
                                     }
                                 }
                             },
-                            defense: {
-                                enabled: true,
-                                exceptions: {
-                                    members: [],
-                                    channels: [],
-                                    roles: []
-                                }
-                            },
-                            pivatVoises: {
+                            privatVoises: {
                                 enabled: false,
                                 channel: "",
                                 category: "",
@@ -82,10 +73,7 @@ module.exports = {
                             },
                             other: {
                                 logChannel:"",
-                                admins: {
-                                    roles: [],
-                                    members: []
-                                }
+                                adminRole:""
                             }
                         })
 
@@ -139,15 +127,6 @@ module.exports = {
                             }
                         }
 
-                        set.defense = {
-                            enabled: true,
-                            exceptions: {
-                                members: [],
-                                channels: [],
-                                roles: []
-                            }
-                        }
-
                         set.privatVoises = {
                             enabled: false,
                             channel: "",
@@ -157,10 +136,7 @@ module.exports = {
 
                         set.other = {
                             logChannel:"",
-                            admins: {
-                                roles: [],
-                                members: []
-                            }
+                            adminRole:""
                         }
 
                         set.save().catch(err => console.log(err))
@@ -232,55 +208,6 @@ module.exports = {
 
                 break;
         
-                //  Сейчас НЕ работает!
-                case "admins":
-                    if(!args[1]) {
-                        return addlib.errors.notArgs(message, "<role || member>")
-                    } else if(args[1] == 'role') {
-                        if(!args[2]) return message.channel.send(con.defEmb.setTitle(`Текущее значение: ${set.other.admins.roles || "Нет"}`))
-                        else if(args[2] == "add"){
-                            if(!args[3]) return addlib.errors.notArgs(message,"<ID роли>")
-                            if(!message.guild.roles.cache.get(args[3])) return addlib.errors.falseArgs(message,"Такой роли не существует!")
-                            let arr = set.other.admins.roles
-                            arr.splice(0,0,args[3])
-                            arr = Array.from(new Set(arr));
-                            //let admrole = Array.from(new Set(set.other.admins.roles))
-                            /*
-                            set.other = {
-                                logChannel: set.other.logChannel,
-                                admins: {
-                                    roles: admrole,
-                                    members: set.other.admins.members
-                                }
-                            };
-                            */
-
-                            set.other = {
-                                logChannel: set.other.logChannel,
-                                admins: {
-                                    roles: [].splice(0,0,set.other.admins.roles),
-                                    members: []
-                                }
-                            }
-                            console.log(set.other);
-                            try {
-                                set.save()
-                            } catch (error) {
-                                console.log(error)
-                            }
-                            
-                        } else if(args[2] == "remove"){
-                            return
-                            /*
-                            if(!message.guild.roles.cache.get(args[3])) return addlib.errors.falseArgs(message,"Такой роли не существует!")
-                            let admrole = set.other.admins.roles;
-                            admrole.push(args[3])
-                            admrole = Array.from(new Set(admrole))*/
-                        }
-                    }
-                    addlib.errors.success(message, 'Конфигурация успешно изменена!');
-                break;
-
                 default:
                     return addlib.errors.falseArgs(message);
             }
@@ -303,7 +230,7 @@ module.exports = {
         return con.defEmb
         .addField('Аргументы:',`**configurationUpdate** - Создаст или сбросит конфигурацию бота\n**privateVoices enabled <true || false>** - Включит/выключит приватные каналы\n**privateVoices channel <ID>** - Обновит канал *(ВВОДИТЬ ТОЛЬКО ID!)*\n**privateVoices category <ID>** - Обновит категорию *(ВВОДИТЬ ТОЛЬКО ID!)*\n**privateVoices template <template>** - Обновит шаблон, должен содержать в себе NAME (большим регистром), которое заменится на имя человека`)
         .addField('Примеры:',`**${con.prefix}settings configurationUpdate** - Создаст или сбросит конфигурацию бота`)
-        .addField('Могут использовать:','Создатель и админы',true)
+        .addField('Могут использовать:','Создатель',true)
     },
     show: true
 }

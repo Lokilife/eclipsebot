@@ -32,5 +32,11 @@ module.exports = {
     cmd: ["template"], //  Сюда все е алиасы. Первый желательно главный
     desc: "Шаблон", //  Описание
     category: "Общее", //  Категория
+    helpEmbed: (con) => { //  embed помощи по команде. По help <команда> появится этот embed.
+        return con.defEmb
+        .addField('Аргументы:',`**Нет**`)
+        .addField('Примеры:',`**${con.prefix}server** - Версия бота и что нового`)
+        .addField('Могут использовать:','Все без исключений',true)
+    },
     show: false  //  true - Показывать в команде help | false - не показывать
 }
