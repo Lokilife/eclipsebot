@@ -22,21 +22,21 @@ module.exports = {
         }
 
         let topic    = matchedText[0].slice(1).slice(0,-1);
-        let varibles = matchedText.slice(1)
+        let variables = matchedText.slice(1)
 
-        if(topic && varibles) {
+        if(topic && variables) {
 
-            let endText = ""
-            let l = 0
-            let i=0
-            for(;i<=varibles.length-1;i++) {
-                if(varibles[i].slice(1).slice(0,-1).trim() == "") {
+            let endText = "";
+            let l = 0;
+            let i = 0;
+            for(;i<=variables.length-1;i++) {
+                if(variables[i].slice(1).slice(0,-1).trim() == "") {
                     l++;
                     continue;
                 }
-                endText+= `${i+1-l}. ${varibles[i].slice(1).slice(0,-1)}\n`
+                endText+= `${i+1-l}. ${variables[i].slice(1).slice(0,-1)}\n`
             }
-            if((i+1-l)>10) return addlib.errors.falseArgs(message,"Не больше 10 вариантов!");
+            if((i-l)>10) return addlib.errors.falseArgs(message,"Не больше 10 вариантов!");
             if(topic.length>=256) return addlib.errors.falseArgs(message,"Тема должна быть не больше 256 символов!");
 
             if(endText == "") return message.channel.send(con.defEmb.setTitle(text)).then(async msg=> {
@@ -49,18 +49,18 @@ module.exports = {
                     await msg.react(["1️⃣", "2️⃣", "3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟"][i2-1]);
                 }
             });
-        } else if(!topic && varibles) {
-            let endText = ""
-            let l = 0
-            let i=0
-            for(;i<=varibles.length-1;i++) {
-                if(varibles[i].slice(1).slice(0,-1).trim() == "") {
+        } else if(!topic && variables) {
+            let endText = "";
+            let l = 0;
+            let i = 0;
+            for(;i<=variables.length-1;i++) {
+                if(variables[i].slice(1).slice(0,-1).trim() == "") {
                     l++;
                     continue;
                 }
-                endText+= `${i+1-l}. ${varibles[i].slice(1).slice(0,-1)}\n`
+                endText+= `${i+1-l}. ${variables[i].slice(1).slice(0,-1)}\n`
             }
-            if((i+1-l)>10) return addlib.errors.falseArgs(message,"Не больше 10 вариантов!");
+            if((i-l)>10) return addlib.errors.falseArgs(message,"Не больше 10 вариантов!");
 
             if(endText == "") return message.channel.send(con.defEmb.setTitle('?')).then(async msg=> {
                 await msg.react('✅');
@@ -72,7 +72,7 @@ module.exports = {
                     await msg.react(["1️⃣", "2️⃣", "3️⃣","4️⃣","5️⃣","6️⃣","7️⃣","8️⃣","9️⃣","🔟"][i2-1]);
                 }
             });
-        } else if(topic && !varibles) {
+        } else if(topic && !variables) {
             let endText
             if(topic.trim() == "") endText = "?"
             else endText = topic

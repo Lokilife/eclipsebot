@@ -26,7 +26,7 @@ module.exports = {
     helpEmbed: (con) => {
         return con.defEmb
         .addField('Аргументы:',`**<@user>** - Кого вы хотите обнять`)
-        .addField('Примеры:',`**${con.prefix}hug @Electroplayer** - Давайте обнимим Electroplayer :з`)
+        .addField('Примеры:',`**${con.prefix}hug @Electroplayer** - Давайте обнимем Electroplayer :з`)
         .addField('Могут использовать:','Все без исключений',true)
     },
     show: true

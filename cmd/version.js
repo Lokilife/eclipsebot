@@ -1,8 +1,8 @@
 const addlib = require('../addLib.js');
 module.exports = {
     run: async (bot,message,args,con)=> {try{
-        message.channel.send(con.defEmb.setTitle("Версия 0.0.0").setFooter(con.footer)
-        .setDescription('Бот находится в разработке и версий пока что не имеет.\nНе все команды могут работать!'))
+        message.channel.send(con.defEmb.setTitle("Версия pre1.0.0").setFooter(con.footer)
+        .setDescription('Похоже, что мы близко к 1.0.0!\nВерсия сейчас 0.0.0.18'))
     }catch(err){
         addlib.errors.unknow(message,"Код ошибки: " + err);
         bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)

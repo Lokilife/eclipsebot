@@ -39,7 +39,7 @@ To start the bot, you need:
 
 ### Authors
 **EclipseBot** © Night Devs<br>
-Authored by [Elektroplayer](https://github.com/Elektroplayer)<br>
+Authored by [Electroplayer](https://github.com/Elektroplayer)<br>
 [Bot support](https://discord.gg/PHuvYMrvdr)
 
 ### Acknowledgments

@@ -4,7 +4,7 @@ const settings = require('../models/settings.js');
 
 module.exports = {
     run: async (bot,message,args,con)=> {try{
-        if(!args[0]) return addlib.errors.notArgs(message, "Напиши аргумент **help** для помощи по команде")
+        if(!args[0]) return addlib.errors.notArgs(message, `Напиши **${con.prefix}help settings** для помощи по команде`)
 
         if(message.author.id !== message.guild.owner.id) return addlib.errors.notPerms(message)
 
@@ -65,7 +65,7 @@ module.exports = {
                                     }
                                 }
                             },
-                            privatVoises: {
+                            privatVoices: {
                                 enabled: false,
                                 channel: "",
                                 category: "",
@@ -127,7 +127,7 @@ module.exports = {
                             }
                         }
 
-                        set.privatVoises = {
+                        set.privatVoices = {
                             enabled: false,
                             channel: "",
                             category: "",
@@ -147,57 +147,57 @@ module.exports = {
                 break;
 
                 case "privatevoices":
-                    if(!set) return addlib.errors.castom(message,"Обнови конфигурацию!",`${con.perfix}settings configurationupdate`);
+                    if(!set) return addlib.errors.castom(message,"Обнови конфигурацию!",`${con.prefix}settings configurationupdate`);
 
                     if(!args[1]) {
                         return addlib.errors.notArgs(message, "<enabled || channel || category || template>")
                     } else if(args[1] == "enabled") {
-                        if(!args[2]) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+(set.privatVoises.enabled || "**Нет...**")))
+                        if(!args[2]) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+(set.privatVoices.enabled || "**Нет...**")))
                         let ena = args[2].toLowerCase()
                         if(ena != "true" && ena != "false") return addlib.errors.falseArgs(message,"true или false?")
-                        set.privatVoises = {
+                        set.privatVoices = {
                             enabled: (args[2] == 'true'),
-                            channel: set.privatVoises.channel,
-                            category: set.privatVoises.category,
-                            template: set.privatVoises.template
+                            channel: set.privatVoices.channel,
+                            category: set.privatVoices.category,
+                            template: set.privatVoices.template
                         }
                         addlib.errors.success(message, 'Конфигурация успешно изменена!')
                     } else if(args[1] == "channel") {
-                        if(!args[2]) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+set.privatVoises.channel))
+                        if(!args[2]) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+set.privatVoices.channel))
                         if(!message.guild.channels.cache.get(args[2])) return addlib.errors.falseArgs(message)
                         if(message.guild.channels.cache.get(args[2]).type != 'voice') return addlib.errors.falseArgs(message) 
-                        set.privatVoises = {
-                            enabled: set.privatVoises.enabled,
+                        set.privatVoices = {
+                            enabled: set.privatVoices.enabled,
                             channel: args[2],
-                            category: set.privatVoises.category,
-                            template: set.privatVoises.template
+                            category: set.privatVoices.category,
+                            template: set.privatVoices.template
                         }
                         addlib.errors.success(message, 'Конфигурация успешно изменена!')
                     } else if(args[1] == "category") {
-                        if(!args[2]) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+set.privatVoises.category))
+                        if(!args[2]) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+set.privatVoices.category))
                         if(!message.guild.channels.cache.get(args[2])) return addlib.errors.falseArgs(message)
                         if(message.guild.channels.cache.get(args[2]).type != 'category') return addlib.errors.falseArgs(message) 
                         
-                        set.privatVoises = {
-                            enabled: set.privatVoises.enabled,
-                            channel: set.privatVoises.channel,
+                        set.privatVoices = {
+                            enabled: set.privatVoices.enabled,
+                            channel: set.privatVoices.channel,
                             category: args[2],
-                            template: set.privatVoises.template
+                            template: set.privatVoices.template
                         }
                         addlib.errors.success(message, 'Конфигурация успешно изменена!')
                         
                     } else if(args[1] == "template") {
-                        if(!args[2]) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+set.privatVoises.template))
+                        if(!args[2]) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+set.privatVoices.template))
 
                         let template = args.slice(2).join(" ");
-                        if(!template) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+set.privatVoises.template))
+                        if(!template) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+set.privatVoices.template))
                         if(template.replace(`NAME`, `${message.author.username}`) == template) return addlib.errors.falseArgs(message,"Не содержится переменная NAME!")
                         if(template.length>=67) return addlib.errors.falseArgs(message,"Нельзя делать такой большой шаблон!")
 
-                        set.privatVoises = {
-                            enabled: set.privatVoises.enabled,
-                            channel: set.privatVoises.channel,
-                            category: set.privatVoises.category,
+                        set.privatVoices = {
+                            enabled: set.privatVoices.enabled,
+                            channel: set.privatVoices.channel,
+                            category: set.privatVoices.category,
                             template: template
                         }
                         addlib.errors.success(message, 'Конфигурация успешно изменена!');

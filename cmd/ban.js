@@ -6,7 +6,7 @@ module.exports = {
         let banUser    = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(m => m.user.username == args[0]));
         let banReason  = args.slice(1).join(" ") || "";
 
-        // Если у бота нет права кикать кого-либо
+        // Если у бота нет права банить кого-либо
         if (!banUser) return addlib.errors.noUser(message); // Если указан не существующий пользователь
         if (message.guild.me.roles.highest.comparePositionTo(banUser.roles.highest) < 0 || !banUser.bannable || !message.guild.me.hasPermission("BAN_MEMBERS")) return addlib.errors.botNotPerms(message);
         if (!message.member.hasPermission("BAN_MEMBERS")) return addlib.errors.notPerms(message)
@@ -20,7 +20,7 @@ module.exports = {
             mesg = mesg +  `по причине:\n${banReason}`
         }
 
-        banUser.user.send(mesg); // Уведомление в ЛС кикнутому пользователю
+        banUser.user.send(mesg); // Уведомление в ЛС забаненному пользователю
         banUser.ban({reason:`${banReason}Забанен с помощью Eclipse пользователем ${message.author.tag}`}); // Сам процесс кика
         addlib.errors.success(message,`Пользователь ${banUser.user.username} был успешно забанен.`)
     }catch(err){

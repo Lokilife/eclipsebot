@@ -15,7 +15,7 @@ function getRandomInRange(first, second) {
 module.exports = {
     run: (bot,message,args,con)=> {try{
 
-        if(!args[0]) return addlib.errors.notArgs(message, "Напиши аргумент **help** для помощи по команде")
+        if(!args[0]) return addlib.errors.notArgs(message, `Напиши **${con.prefix}help random** для помощи по команде`)
 
         switch (args[0]) {
             case "word":
@@ -28,13 +28,13 @@ module.exports = {
                 if(!args[1]) return addlib.errors.notArgs(message);
 
                 if(args[1] && !args[2]) {
-                    if(!/^[0-9]{1,}$/g.test(args[1])) return addlib.errors.falseArgs(message, "Разрешены только числа!")
-                    if(args[1]>999999) return addlib.errors.falseArgs(message, "Число не должно быть больше 999999")
+                    if(!/^[-]?\d+$/.test(args[1])) return addlib.errors.falseArgs(message, "Разрешены только числа!")
+                    if(args[1]>999999 || args[1]<-999999) return addlib.errors.falseArgs(message, "Число не должно быть больше 999999")
                     message.channel.send(con.defEmb.setTitle(`${Math.floor(Math.random() * args[1])}`))
                 }
                 else if(args[1] && args[2]) {
-                    if(!/^[0-9]{1,}$/g.test(args[1])||!/^[0-9]{1,}$/g.test(args[2])) return addlib.errors.falseArgs(message, "Разрешены только числа!")
-                    if(args[1]>999999||args[2]>999999) return addlib.errors.falseArgs(message, "Число не должно быть больше 999999");
+                    if(!/^[-]?\d+$/.test(args[1])||!/^[-]?\d+$/.test(args[2])) return addlib.errors.falseArgs(message, "Разрешены только числа!")
+                    if(args[1]>999999 || args[1]<-999999 || args[2]<-999999 || args[2]>999999) return addlib.errors.falseArgs(message, "Число не должно быть больше 999999");
                     if(args[1]==args[2]) return message.channel.send(con.defEmb.setTitle(`${args[1]}`))
                     message.channel.send(con.defEmb.setTitle(`${getRandomInRange(Number(args[1]), Number(args[2]))}`))
                 } else return addlib.errors.unknow(message);

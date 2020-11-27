@@ -4,7 +4,7 @@ const addlib     = require("../addLib.js");
 
 module.exports = {
     run: (bot,message,args,con)=> {try{
-        // Получаем пользователя, о котором мы ищем инфу
+        // Получаем пользователя, о котором мы ищем информацию
         let argsUser
         if(!args[0]) argsUser = message.author
         else {
@@ -42,7 +42,7 @@ module.exports = {
         if(message.guild.presences.cache.get(argsUser.id)) {
             game = `\`\`\`${statuses[message.guild.presences.cache.get(argsUser.id).status]}\`\`\``; //  Вычисляем в сети ли он или нет
             if(game == `\`\`\`Не в сети\`\`\``) return; //  Если нет, то на этом заканчиваем
-        } else return message.channel.send(profileEmbed.addField(`Имеет статус:`, `\`\`\`${statuses[argsUser.presence.status]}\`\`\``)) //  Если у нас нет его персистенсов, то заканчиваем тоже
+        } else return message.channel.send(profileEmbed.addField(`Имеет статус:`, `\`\`\`${statuses[argsUser.presence.status]}\`\`\``)) //  Если у нас нет его действий, то заканчиваем тоже
     
         let text = `` //  Узнаем, откуда он активен
         if(message.guild.presences.cache.get(argsUser.id).clientStatus.web) text = text + `Браузера\n`
@@ -62,7 +62,7 @@ module.exports = {
     
         if(activ == '') activ = '```Нет```' //  Если активностей нет, то и сюда нет...
 
-        message.channel.send(profileEmbed.addField(`Активен с`,`\`\`\`${text}\`\`\``).addField(`Активности:`, activ)) //  Откправляем конечный embed
+        message.channel.send(profileEmbed.addField(`Активен с`,`\`\`\`${text}\`\`\``).addField(`Активности:`, activ)) //  Отправляем конечный embed
         
 
     }catch(err){

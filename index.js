@@ -9,21 +9,23 @@ const mongoose  = require('mongoose');
 //  Подключение файлов
 const CONFIG    = require('./config.json');
 const COLORS    = require('./colors.json');
-const SETTINGS  = require('./models/settings.js');
+//const SETTINGS  = require('./models/settings.js');
+const EVENTS    = require('./events.js');
 
 //  Константы
 const bot     = new discord.Client();
 bot.commands  = new discord.Collection(); // Тут будут храниться команды
 
 //  Переменные
-let prefix        = "e."; //  На сколько я знаю, он устновлен везде и, при изменении, изменится тоже везде, НО ЭТО НЕ ТОЧНО!
+let prefix        = "e."; //  На сколько я знаю, он установлен везде и, при изменении, изменится тоже везде, НО ЭТО НЕ ТОЧНО!
 let cmds          = []; //  Массив с командами. Позже поясню, зачем.
 let color         = COLORS.default; //  Если мне понадобится изменить цвет, достаточно будет залезть в один json
-let feedBackChan  = "770009648023339049"; //  Канал, в котрый будут автоматически отправляться баги. 
+let feedBackChan  = "770009648023339049"; //  Канал, в который будут автоматически отправляться баги. 
 
 bot.login(CONFIG.token); //  Логиним бота
 mongoose.connect(CONFIG.mongoToken, {useNewUrlParser: true, useUnifiedTopology: true}); //  Логиним mongoose
 //  CONFIG я конечно же не дам, но там есть только token и mongotoken.
+//  Подробнее читай на гитхабе в README.md, в разделе MiniWiki.
 
 fs.readdir("./cmd/", (err, files) => {
     if(err) console.log(err); //  Если будет ошибка, я об этом узнаю)
@@ -54,42 +56,9 @@ bot.on("ready", () => { //  По готовности
     bot.user.setActivity("аниме | e.? - Помощь", {type: "WATCHING"}); // начать смотреть аниме. Даа, мой бот тот ещё анимешник)
 });
 
-bot.on('raw', async (event) => { try {
-    if(event.t === 'VOICE_STATE_UPDATE') { // Создание приваток
-        SETTINGS.findOne({serverID:event.d.guild_id}, (err,set) => { //  Заходим в БД
-            if(err) console.log(err); //  Ошибки идут (нахер) в консоль
+bot.on('raw', async (event) => {try {EVENTS.raw(bot,event)}catch(err){console.log(err)}}) //  Да, тут теперь только один подключенный файл)
 
-            if(!set) return; //  Забить, если настроек нет
-
-            if(!set.privatVoises) return; //  Забить если нет настроек приваток
-            if(!set.privatVoises.enabled) return; //  Забить если выключено
-            if(event.d.channel_id !== set.privatVoises.channel) return; //  Забить если это не тот канал
-
-            let server = bot.guilds.cache.get(event.d.guild_id); 
-            let member = server.members.cache.get(event.d.user_id);
-            let name   = set.privatVoises.template.replace(`NAME`, `${member.user.username}`);
-            
-            if(server.channels.cache.find(n=>n.name === name)) return member.voice.setChannel(server.channels.find(n=>n.name === name).id) //  Если таков уже существует
-            
-            if(!server.channels.cache.get(set.privatVoises.category)) return; //  Забить если такой категории не существует
-            if(server.channels.cache.get(set.privatVoises.category).type != 'category') return; //  Забить если это, блин, не категория.
-
-            server.channels.create(`${name}`, {type: 'voice', parent: set.privatVoises.category}).then(channel => { //  Создаём канал, затем
-                member.voice.setChannel(channel); //  Перемещаем мембера
-                var intr = setInterval(()=>{ //  Начинаем следить за каналом. Каждые 5 секунд он смотрит на состояние канала, и если там никого нет, то удаляет его.
-                    if(channel.deleted) return clearInterval(intr)
-                    if(channel.members.size <= 0) {
-                        channel.delete();
-                        clearInterval(intr)
-                    }
-                }, 5000)
-            })
-        })
-
-	} else return;
-}catch(err){console.log(err)}})
-
-bot.on("message", async (message) => {try{ //  На сообение
+bot.on("message", async (message) => {try{ //  На сообщение
     if(message.author.bot) return; //  Забиваем, если бот
     if(message.channel.type == 'dm') return; //  Забиваем, если ЛС
 
@@ -100,7 +69,7 @@ bot.on("message", async (message) => {try{ //  На сообение
     let commandfile
     if(cmd.substr(0, prefix.length) == prefix) commandfile = bot.commands.get(cmd.slice(prefix.length));
     //  Если cmd начинается с префикса, то записываем выполняемый файл, если по такой команде он существует
-    if(commandfile) commandfile.run(bot,message,args,{ //  Далее делаем вспомагательный массив, он реально может помочь, чтобы потом снова всё это не вычислять и не тратить вычислительную мощь... Но тратить ОЗУ...
+    if(commandfile) commandfile.run(bot,message,args,{ //  Далее делаем вспомогательный массив, он реально может помочь, чтобы потом снова всё это не вычислять и не тратить вычислительную мощь... Но тратить ОЗУ...
         "cmds":cmds,
         "prefix":prefix,
         "color": color,
