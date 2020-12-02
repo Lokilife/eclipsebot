@@ -25,7 +25,7 @@ module.exports = {
     category: "Картинки",
     helpEmbed: (con) => {
         return con.defEmb
-        .addField('Аргументы:',`**<@user>** - Кого вы хотите Погладить`)
+        .addField('Аргументы:',`**<@user>** - Кого вы хотите погладить`)
         .addField('Примеры:',`**${con.prefix}pat @Electroplayer** - Давайте погладим Electroplayer :з`)
         .addField('Могут использовать:','Все без исключений',true)
     },

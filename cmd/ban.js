@@ -40,7 +40,7 @@ module.exports = {
     helpEmbed: (con) => {
         return con.defEmb
         .addField('Аргументы:',`**<user> <reason || ничего>** - Забанить человека по указанной причине *(Можно ввести ID или имя)*`)
-        .addField('Примеры:',`**${con.prefix}ban @Electroplayer Конченный** - Забанит Электроплэера по причине "Конченный"\n**${con.prefix}ban @Tegnio** - Молча баним Tegnio`)
+        .addField('Примеры:',`**${con.prefix}ban @Electroplayer Спамит** - Забанит Электроплэера по причине "Спамит"\n**${con.prefix}ban @Electroplayer** - Молча баним Electroplayer'a`)
         .addField('Могут использовать:','Люди с правом на бан',true)
     },
     show: true

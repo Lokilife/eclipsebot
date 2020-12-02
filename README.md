@@ -43,7 +43,6 @@ Authored by [Electroplayer](https://github.com/Elektroplayer)<br>
 [Bot support](https://discord.gg/PHuvYMrvdr)
 
 ### Acknowledgments
-Tegnio - Did the design and gave several commands.<br>
 Ueuecoyotl - Looks for grammatical errors. <br>
 Lookins - Looks for incorrectly working commands.
 

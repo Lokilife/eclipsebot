@@ -40,7 +40,7 @@ module.exports = {
     helpEmbed: (con) => {
         return con.defEmb
         .addField('Аргументы:',`**<user> <reason || ничего>** - Кикнуть человека по указанной причине *(Можно ввести ID или имя)*`)
-        .addField('Примеры:',`**${con.prefix}kick @Electroplayer Конченный** - Кикнет Электроплэера по причине "Конченный"\n**${con.prefix}kick @Tegnio** - Молча кикнем Tegnio`)
+        .addField('Примеры:',`**${con.prefix}kick @Electroplayer Спамит** - Кикнет Электроплэера по причине "Спамит"\n**${con.prefix}kick @Electroplayer** - Молча кикнем Electroplayer'а`)
         .addField('Могут использовать:','Люди с правом на кик',true)
     },
     show: true

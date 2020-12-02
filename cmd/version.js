@@ -1,8 +1,8 @@
 const addlib = require('../addLib.js');
 module.exports = {
     run: async (bot,message,args,con)=> {try{
-        message.channel.send(con.defEmb.setTitle("Версия pre1.0.0").setFooter(con.footer)
-        .setDescription('Похоже, что мы близко к 1.0.0!\nВерсия сейчас 0.0.0.18'))
+        message.channel.send(con.defEmb.setTitle("Версия 1.0.0").setFooter(con.footer)
+        .setDescription('Бот только что релизнулся. Посети эту команду позже)\nНашёл баг или ошибку? Напиши в поддержку или через `e.feedback <проблема>`'))
     }catch(err){
         addlib.errors.unknow(message,"Код ошибки: " + err);
         bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
@@ -20,7 +20,7 @@ module.exports = {
     helpEmbed: (con) => {
         return con.defEmb
         .addField('Аргументы:',`**Нет**`)
-        .addField('Примеры:',`**${con.prefix}server** - Версия бота и что нового`)
+        .addField('Примеры:',`**${con.prefix}version** - Версия бота и что нового`)
         .addField('Могут использовать:','Все без исключений',true)
     },
     show: true
