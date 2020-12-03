@@ -45,6 +45,7 @@ Authored by [Electroplayer](https://github.com/Elektroplayer)<br>
 ### Acknowledgments
 Ueuecoyotl - Looks for grammatical errors. <br>
 Lookins - Looks for incorrectly working commands.
+Autoplayer - Hosts the bot.
 
 ### License
 [BSD 3-Clause](./LICENSE)
