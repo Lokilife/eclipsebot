@@ -1,11 +1,11 @@
 ![Banner](https://cdn.discordapp.com/attachments/770009593131827300/770256444988850197/banner.png)
 <p align="center">
 
-<img src="https://img.shields.io/badge/made%20by-Electroplayer-blue.svg" >
+<img src="https://img.shields.io/badge/made%20by-NightDevs-blue.svg" >
 
-<img src="https://img.shields.io/github/stars/Elektroplayer/BFBot.svg?style=flat">
+<img src="https://img.shields.io/github/stars/Elektroplayer/eclipsebot.svg?style=flat">
 
-<img src="https://img.shields.io/github/languages/top/Elektroplayer/BFBot.svg">
+<img src="https://img.shields.io/github/languages/top/Elektroplayer/eclipsebot.svg">
 </p>
 
 # EclipseBot
