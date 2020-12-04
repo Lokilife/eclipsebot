@@ -1,8 +1,16 @@
-const addlib = require('../addLib.js');
+const addlib   = require('../addLib.js');
+const package  = require('../package.json');
+const versions = require('../versions.json');
 module.exports = {
     run: async (bot,message,args,con)=> {try{
-        message.channel.send(con.defEmb.setTitle("Версия 1.0.0").setFooter(con.footer)
-        .setDescription('Бот только что релизнулся. Посети эту команду позже)\nНашёл баг или ошибку? Напиши в поддержку или через `e.feedback <проблема>`'))
+        if(!args[0]) {
+            message.channel.send(con.defEmb.setTitle(`Что нового было добавлено в версии ${package.version}`).setFooter(con.footer)
+            .setDescription(versions[package.version]))
+        } else {
+            if(versions[args[0]]) message.channel.send(con.defEmb.setTitle(`Версия: ${package.version}`).setFooter(con.footer)
+            .setDescription(versions[args[0]]))
+            else addlib.errors.castom(message, "Такой версии не существует!")
+        }
     }catch(err){
         addlib.errors.unknow(message,"Код ошибки: " + err);
         bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
@@ -21,6 +29,7 @@ module.exports = {
         return con.defEmb
         .addField('Аргументы:',`**Нет**`)
         .addField('Примеры:',`**${con.prefix}version** - Версия бота и что нового`)
+        .addField('Другие алиасы:',`${con.prefix}ver`)
         .addField('Могут использовать:','Все без исключений',true)
     },
     show: true

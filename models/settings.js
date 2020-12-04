@@ -4,7 +4,7 @@ const xpSchema = mongoose.Schema({
     serverID: String,
     wellcome: Object,
     goodbye: Object,
-    privatVoises: Object,
+    privatVoices: Object,
     other: Object
 })
 
