@@ -150,7 +150,7 @@ module.exports = {
                     if(!set) return addlib.errors.castom(message,"Обнови конфигурацию!",`${con.prefix}settings configurationupdate`);
 
                     if(!args[1]) {
-                        return addlib.errors.notArgs(message, "<enabled || channel || category || template>")
+                        return addlib.errors.notArgs(message, "<enabled \\|\\| channel \\|\\| category \\|\\| template>")
                     } else if(args[1] == "enabled") {
                         if(!args[2]) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+(set.privatVoices.enabled || "**Нет...**")))
                         let ena = args[2].toLowerCase()
@@ -164,8 +164,8 @@ module.exports = {
                         addlib.errors.success(message, 'Конфигурация успешно изменена!')
                     } else if(args[1] == "channel") {
                         if(!args[2]) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+set.privatVoices.channel))
-                        if(!message.guild.channels.cache.get(args[2])) return addlib.errors.falseArgs(message)
-                        if(message.guild.channels.cache.get(args[2]).type != 'voice') return addlib.errors.falseArgs(message) 
+                        if(!message.guild.channels.cache.get(args[2])) return addlib.errors.noChannel(message)
+                        if(message.guild.channels.cache.get(args[2]).type != 'voice') return addlib.errors.falseArgs(message, `Канал не является голосовым.`) 
                         set.privatVoices = {
                             enabled: set.privatVoices.enabled,
                             channel: args[2],
@@ -176,7 +176,7 @@ module.exports = {
                     } else if(args[1] == "category") {
                         if(!args[2]) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+set.privatVoices.category))
                         if(!message.guild.channels.cache.get(args[2])) return addlib.errors.falseArgs(message)
-                        if(message.guild.channels.cache.get(args[2]).type != 'category') return addlib.errors.falseArgs(message) 
+                        if(message.guild.channels.cache.get(args[2]).type != 'category') return addlib.errors.falseArgs(message, `Канал не является категорией!`) 
                         
                         set.privatVoices = {
                             enabled: set.privatVoices.enabled,
@@ -201,13 +201,28 @@ module.exports = {
                             template: template
                         }
                         addlib.errors.success(message, 'Конфигурация успешно изменена!');
-                        
+                    } else {
+                        return addlib.errors.falseArgs(message, "<enabled \\|\\| channel \\|\\| category \\|\\| template>")
                     }
 
                     set.save().catch(err => console.log(err))
 
                 break;
         
+                case "logchannel":
+                    if(!args[1]) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+set.other.logChannel))
+                    if(!message.guild.channels.cache.get(args[1])) return addlib.errors.noChannel(message)
+                    if(message.guild.channels.cache.get(args[1]).type != 'text') return addlib.errors.falseArgs(message, `Канал не является текстовым.`)
+                    if (!message.guild.channels.cache.get(args[1]).permissionsFor(bot.user).has('SEND_MESSAGES')) return addlib.errors.botNotPerms(message)
+
+                    set.other = {
+                        logChannel: args[1],
+                        adminRole: set.other.adminRole
+                    }
+
+                    addlib.errors.success(message, 'Конфигурация успешно изменена!')
+                break;
+
                 default:
                     return addlib.errors.falseArgs(message);
             }
@@ -228,7 +243,7 @@ module.exports = {
     category: "Для модерации",
     helpEmbed: (con) => {
         return con.defEmb
-        .addField('Аргументы:',`**configurationUpdate** - Создаст или сбросит конфигурацию бота\n**privateVoices enabled <true || false>** - Включит/выключит приватные каналы\n**privateVoices channel <ID>** - Обновит канал *(ВВОДИТЬ ТОЛЬКО ID!)*\n**privateVoices category <ID>** - Обновит категорию *(ВВОДИТЬ ТОЛЬКО ID!)*\n**privateVoices template <template>** - Обновит шаблон, должен содержать в себе NAME (большим регистром), которое заменится на имя человека`)
+        .addField('Аргументы:',`**configurationUpdate** - Создаст или сбросит конфигурацию бота\n**logChannel <id>** - Указать канал для ошибок в настройках\n**privateVoices enabled <true || false>** - Включит/выключит приватные каналы\n**privateVoices channel <ID>** - Обновит канал *(ВВОДИТЬ ТОЛЬКО ID!)*\n**privateVoices category <ID>** - Обновит категорию *(ВВОДИТЬ ТОЛЬКО ID!)*\n**privateVoices template <template>** - Обновит шаблон, должен содержать в себе NAME (большим регистром), которое заменится на имя человека`)
         .addField('Примеры:',`**${con.prefix}settings configurationUpdate** - Создаст или сбросит конфигурацию бота`)
         .addField('Могут использовать:','Создатель',true)
     },

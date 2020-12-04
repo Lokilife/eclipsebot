@@ -23,6 +23,10 @@ module.exports.errors = {
         let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle('Такого пользователя не существует!');
         message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
     },
+    noChannel: (message)=> {
+        let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle('Такого канала не существует!');
+        message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
+    },
     castom: (message,title,desc) => {
         let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle(title);
         if(desc) emb.setDescription(desc);
