@@ -44,8 +44,8 @@ Authored by [Electroplayer](https://github.com/Elektroplayer)<br>
 
 ### Acknowledgments
 Ueuecoyotl - Looks for grammatical errors. <br>
-Lookins - Looks for incorrectly working commands.
-Autoplayer - Hosts the bot.
+Lookins - Looks for incorrectly working commands.<br>
+Autoplayer - Hosts the bot.<br>
 
 ### License
 [BSD 3-Clause](./LICENSE)
