@@ -7,10 +7,6 @@ require("moment-duration-format");
 
 module.exports = {
     run: (bot,message,args,con)=> {try{
-        if(args[0] == "help") {
-            return message.channel.send(con.defEmb.setTitle("Тебе серьёзно нужна помощь по этой команде?").setDescription("Мне лень)").setFooter(con.footer))
-        }
-
         let embed = con.defEmb
         .setTitle("Информация о боте")
         .addField("Основное",`Пользователей: \`${bot.users.cache.size}\`\nСерверов: \`${bot.guilds.cache.size}\`\nДата создания: \`${strftime('%d.%m.%Y год в %H:%M', new Date(bot.user.createdTimestamp))}\`\nВремя работы: \`${moment.duration(bot.uptime).format(" D [д] : H [ч] : mm [м] ss.SSS [с]")}\``)
@@ -34,14 +30,14 @@ module.exports = {
         );
         console.log(err)
     }},
-    cmd: ["info","bot"],
+    cmd: ["info","bot", "botinfo"],
     desc: "Информация о боте",
     category: "Общее",
     helpEmbed: (con) => {
         return con.defEmb
         .addField('Аргументы:',`**Нет**`)
         .addField('Примеры:',`**${con.prefix}info** - Информация о боте`)
-        .addField('Другие алиасы:',`${con.prefix}bot`)
+        .addField('Другие алиасы:',`${con.prefix}bot, ${con.prefix}botinfo`)
         .addField('Могут использовать:','Все без исключений',true)
     },
     show: true

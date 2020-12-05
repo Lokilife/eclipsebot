@@ -9,7 +9,7 @@ const mongoose  = require('mongoose');
 //  Подключение файлов
 const CONFIG    = require('./config.json');
 const COLORS    = require('./colors.json');
-//const SETTINGS  = require('./models/settings.js');
+const SETTINGS  = require('./models/settings.js');
 const EVENTS    = require('./events.js');
 
 //  Константы
@@ -57,6 +57,15 @@ bot.on("ready", () => { //  По готовности
 });
 
 bot.on('raw', async (event) => {try {EVENTS.raw(bot,event)}catch(err){console.log(err)}}) //  Да, тут теперь только один подключенный файл)
+
+bot.on('guildDelete', (guild) => {try {
+    SETTINGS.findOneAndDelete({serverID:guild.id}, (err) => {
+        if(err) console.log(err)
+        //  Заходим в БД и удаляем этот сервер.
+        //  Понимаю, бот не всегда работает и, возможно, какие-то сервера останутся, но их будет гораздо меньше.
+        //  Когда будет мало места в БД, тогда и займусь удалением остатков
+    })
+} catch(err){console.log(err)}})
 
 bot.on("message", async (message) => {try{ //  На сообщение
     if(message.author.bot) return; //  Забиваем, если бот

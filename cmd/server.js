@@ -2,18 +2,14 @@ const strftime = require("strftime").localizeByIdentifier('ru_RU');
 const addlib = require('../addLib.js');
 module.exports = {
     run: (bot,message,args,con)=> {try{
-        if(args[0] == "help") {
-            return message.channel.send(con.defEmb.setTitle("Тебе серьёзно нужна помощь по этой команде?").setDescription("Мне лень)").setFooter(con.footer))
-        }
-
-        let notBots = message.guild.members.cache.filter(member => !member.user.bot)
         message.channel.send(con.defEmb
         .setTitle("Информация о сервере")
         .setThumbnail(message.guild.iconURL())
         .addField("Имя сервера:", message.guild.name)
         .addField("Создан:", strftime('%B %d, %Y год в %H:%M', message.guild.createdAt))
-        .addField("Всего людей:", notBots.size,true)
-        .addField('Людей онлайн:', notBots.filter(m => m.presence.status !== 'offline').size,true)
+        .addField("Создатель:", `${message.guild.owner.user.username}#${message.guild.owner.user.discriminator}`, true)
+        .addField("Участников всего | из них людей | онлайн | ботов:", `${message.guild.members.cache.size} | ${message.guild.members.cache.filter(member => !member.user.bot).size} | ${message.guild.members.cache.filter(member => !member.user.bot && member.presence.status !== 'offline')} | ${message.guild.members.cache.filter(member => member.user.bot).size}`,true)
+        .addField("Ролей:", message.guild.roles.cache.size, true)
         .addField('ID:', message.guild.id)
         .setFooter(con.footer));
     }catch(err){

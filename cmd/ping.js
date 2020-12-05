@@ -1,15 +1,16 @@
 const addlib = require('../addLib.js');
 module.exports = {
     run: async (bot,message,args,con)=> {try{
-        if(args[0] == "help") {
-            return message.channel.send(con.defEmb.setTitle("Тебе серьёзно нужна помощь по этой команде?").setDescription("Мне лень)").setFooter(con.footer))
-        }
-
+        /*
         let resEmbed = con.defEmb
         .setTitle("Понг!")
         .addField(`Пинг:`, `${Math.round(bot.ws.ping)} ms`)
         .setFooter(con.footer)
         message.channel.send(resEmbed);
+        */
+        const msg = await message.channel.send(con.defEmb.setTitle(`🏓 Проверка...`));
+
+        msg.edit(con.defEmb.setTitle(`🏓 Понг!`).addField(`Задержка:`, `${Math.floor(msg.createdTimestamp - message.createdTimestamp)}ms`).addField(`Задержка API: ${Math.round(bot.ws.ping)}ms`).setFooter(con.footer));
     }catch(err){
         addlib.errors.unknow(message,"Код ошибки: " + err);
         bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
