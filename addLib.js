@@ -47,3 +47,16 @@ module.exports.errors = {
         message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
     },
 }
+
+module.exports.helps = {
+    parseMS: (milliseconds) => {
+        let roundTowardsZero = milliseconds > 0 ? Math.floor : Math.ceil;
+        return {
+            days: roundTowardsZero(milliseconds / 86400000),
+            hours: roundTowardsZero(milliseconds / 3600000) % 24,
+            minutes: roundTowardsZero(milliseconds / 60000) % 60,
+            seconds: roundTowardsZero(milliseconds / 1000) % 60,
+            milliseconds: roundTowardsZero(milliseconds) % 1000
+        };
+    }
+}
