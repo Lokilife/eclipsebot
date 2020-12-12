@@ -11,6 +11,7 @@ const CONFIG    = require('./config.json');
 const COLORS    = require('./colors.json');
 const SETTINGS  = require('./models/settings.js');
 const EVENTS    = require('./events.js');
+const PACKAGE   = require('./package.json');
 
 //  Константы
 const bot     = new discord.Client();
@@ -66,6 +67,22 @@ bot.on('guildDelete', (guild) => {try {
         //  Когда будет мало места в БД, тогда и займусь удалением остатков
     })
 } catch(err){console.log(err)}})
+
+bot.on('guildCreate', (guild) => {
+    guild.channels.cache.filter(m => m.type == "text" && m.permissionsFor(bot.user).has('SEND_MESSAGES')).first()
+    .send(new discord.MessageEmbed().setColor(COLORS.default).setFooter('И ещё раз спасибо) © Night Devs')
+    .setTitle('Спасибо, что добавили Eclipse на сервер!')
+    .setDescription(`Бот поддерживает только русский язык!`)
+    .addField(`Информация:`,`Префикс бота: \`e.\`\nКоманда справки: \`e.?\`\nВерсия бота: \`${PACKAGE.version}\`\nСвяжитесь с [поддержкой](https://discord.gg/PHuvYMrvdr) при появлении проблем.`)
+    .addField(`Полезные ссылки:`,"[Сервер поддержки](https://discord.gg/YM3KMDM) | [GitHub бота](https://github.com/Elektroplayer/eclipsebot) | [Ссылка на бота](https://discord.com/api/oauth2/authorize?client_id=769659625129377812&permissions=1359473878&scope=bot)")
+    )
+});
+
+bot.on('guildMemberAdd', (member) => {try {
+    EVENTS.guildMemberAdd_server(bot,member);
+    //EVENTS.guildMemberAdd_direct(bot,member);
+    //EVENTS.guildMemberAdd_autorole(bot,member);
+} catch (err) {console.log(err)}})
 
 bot.on("message", async (message) => {try{ //  На сообщение
     if(message.author.bot) return; //  Забиваем, если бот

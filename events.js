@@ -1,4 +1,23 @@
-const SETTINGS = require('./models/settings.js');
+const SETTINGS        = require('./models/settings.js');
+const addlib          = require('./addLib.js');
+const COLORS          = require('./colors.json');
+const {MessageEmbed}  = require('discord.js');
+
+function baseErrEmb_audit (set, member, value, bot) {
+    if(set.other && set.other.logchannel) {
+        if(member.guild.channels.cache.get(set.other.logchannel).permissionsFor(bot.user).has('SEND_MESSAGES')) 
+        addlib.errors.baseErr({channel: member.guild.channels.cache.get(set.other.logchannel)}, value);
+    }
+    return;
+}
+
+function castomErrEmb_audit (set,member,value,bot) {
+    if(set.other && set.other.logchannel) {
+        if(member.guild.channels.cache.get(set.other.logchannel).permissionsFor(bot.user).has('SEND_MESSAGES')) 
+        addlib.errors.castom({channel: member.guild.channels.cache.get(set.other.logchannel)}, value);
+    }
+    return;
+}
 
 module.exports.raw = (bot,event) => { try {
     if(event.t === 'VOICE_STATE_UPDATE') { // Создание приваток
@@ -34,3 +53,36 @@ module.exports.raw = (bot,event) => { try {
 
 	} else return;
 }catch(err){console.log(err)}}
+
+module.exports.guildMemberAdd_server = (bot,member) => {try {
+    SETTINGS.findOne({serverID: member.guild.id}, (err,set) => {
+        if(err) console.log(err);
+
+        if(!set) return;
+
+        if(!set.wellcome) return baseErrEmb_audit(set,member,`set.welcome`, bot)
+        if(!set.wellcome.server) return baseErrEmb_audit(set,member,`set.welcome.server`, bot)
+
+        if(!set.wellcome.server.enabled) return;
+        if(!set.wellcome.server.channel) return castomErrEmb_audit(set,member,'Не указан канал для сообщений о новых пользователях!',bot)
+        if(!set.wellcome.server.message) return castomErrEmb_audit(set,member,'Не указано сообщение о новых пользователях!',bot)
+
+        if(!set.wellcome.server.embed) set.wellcome.server.embed = {enabled: false} //  Лень заморачиваться...
+
+        let channel = member.guild.channels.cache.get(set.wellcome.server.channel);
+
+        if (!channel) return castomErrEmb_audit(set,member,'Канала для приветствий не существует!',bot);
+        if (!channel.permissionsFor(bot.user).has('SEND_MESSAGES')) return castomErrEmb_audit(set,member,'Я не могу отправлять сообщения в заданный канал для приветствий!',bot);
+
+        let msg
+
+        if(set.wellcome.server.embed.enabled) {
+            msg = new MessageEmbed().setColor(set.wellcome.server.embed.color || COLORS.default).setDescription(set.wellcome.server.message.replace('MEMBER', member.user.username).replace('COUNT', member.guild.members.cache.size).replace('SERVER', member.guild.name))
+            if(set.wellcome.server.embed.avatar) msg.setThumbnail(member.user.avatarURL()|| member.user.defaultAvatarURL);
+        } else {
+            msg = set.wellcome.server.message.replace('MEMBER', member.user.username).replace('COUNT', member.guild.members.cache.size).replace('SERVER', member.guild.name);
+        }
+
+        channel.send(msg);
+    });
+}catch (err) {console.log(err)}}

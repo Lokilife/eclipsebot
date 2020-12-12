@@ -41,11 +41,21 @@ module.exports.errors = {
         let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle('Неполадки с API! Попробуйте позже...');
         message.channel.send(emb);
     },
+    baseErr: (message,value) => {
+        let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle(value ? `Ошибка базы данных! Значение: ${value}` : `Ошибка базы данных!`)
+        .setDescription(`Обновите конфигурацию! \`e.settings configurationUpdate\``);
+        message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
+    },
+    doNotWorksNow: (message) => {
+        let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle(`Эта функция не работает сейчас!`)
+        .setDescription(`Следите за обновлениями) \`e.ver\`...`);
+        message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
+    },
     unknow: (message,desc) => {
         let emb = new discord.MessageEmbed().setColor(colors.errorRed).setTitle("Произошла неизвестная ошибка");
         if(desc) emb.setDescription(desc);
         message.channel.send(emb).then(msg=>msg.delete({timeout:5000}));
-    },
+    }
 }
 
 module.exports.helps = {
