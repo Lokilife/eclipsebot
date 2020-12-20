@@ -1,4 +1,4 @@
-![Banner](https://cdn.discordapp.com/attachments/770009593131827300/770256444988850197/banner.png)
+![Banner](./img/banner.png)
 <p align="center">
 
 <a href="https://discord.gg/PHuvYMrvdr"><img src="https://img.shields.io/discord/769184583123730432?color=7289da&logo=discord&logoColor=white"></a>
