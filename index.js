@@ -51,10 +51,39 @@ fs.readdir("./cmd/", (err, files) => {
 	});
 });
 
+//  Высшая жопность кода. Хуже вы не найдёте нигде. Но это тот вариант, до которого я додумался за 2 минуты. И работает он стабильно...
+function status_1 (bot) {
+    setTimeout(()=> {
+        bot.user.setActivity(`Аниме`, {type: `WATCHING`});
+        status_2(bot);
+    },15000);
+}
+
+function status_2 (bot) {
+    setTimeout(()=> {
+        bot.user.setActivity(`${bot.guilds.cache.size} серверов`, {type: "PLAYING"});
+        status_3(bot);
+    },15000);
+}
+
+function status_3 (bot) {
+    setTimeout(()=> {
+        bot.user.setActivity(`${bot.users.cache.size} пользователей`, {type: "PLAYING"});
+        status_4(bot);
+    },15000);
+}
+
+function status_4 (bot) {
+    setTimeout(()=> {
+        bot.user.setActivity(`e!? - Помощь`, {type: "PLAYING"});
+        status_1(bot);
+    },15000);
+}
+
 bot.on("ready", () => { //  По готовности 
     console.log(`Готов! Добавлен на ${bot.guilds.cache.size} серверах`); //  оповестить
-
-    bot.user.setActivity("аниме | e.? - Помощь", {type: "WATCHING"}); // начать смотреть аниме. Даа, мой бот тот ещё анимешник)
+    status_1(bot);
+    //bot.user.setActivity("аниме | e.? - Помощь", {type: "WATCHING"});
 });
 
 bot.on('raw', async (event) => {try {EVENTS.raw(bot,event)}catch(err){console.log(err)}}) //  Да, тут теперь только один подключенный файл)
@@ -75,7 +104,23 @@ bot.on('guildCreate', (guild) => {
     .setDescription(`Бот поддерживает только русский язык!`)
     .addField(`Информация:`,`Префикс бота: \`e.\`\nКоманда справки: \`e.?\`\nВерсия бота: \`${PACKAGE.version}\`\nСвяжитесь с [поддержкой](https://discord.gg/PHuvYMrvdr) при появлении проблем.`)
     .addField(`Полезные ссылки:`,"[Сервер поддержки](https://discord.gg/YM3KMDM) | [GitHub бота](https://github.com/Elektroplayer/eclipsebot) | [Ссылка на бота](https://discord.com/api/oauth2/authorize?client_id=769659625129377812&permissions=1359473878&scope=bot)")
-    )
+    );
+
+    bot.channels.cache.get(feedBackChan).send(
+		new discord.MessageEmbed().setTitle('Новый сервер!').setColor(COLORS.successGreen)
+		.addField('Имя:', guild.name)
+		.addField('ID:', guild.id)
+		.addField('Количество людей:', guild.members.cache.size)
+	);
+});
+
+bot.on('guildDelete', (guild) => {
+	bot.channels.cache.get(feedBackChan).send(
+		new discord.MessageEmbed().setTitle('Удалён сервер!').setColor(COLORS.errorRed)
+		.addField('Имя:', guild.name)
+		.addField('ID:', guild.id)
+		.addField('Количество людей:', guild.members.cache.size)
+	)
 });
 
 bot.on('guildMemberAdd', (member) => {try {
@@ -101,7 +146,7 @@ bot.on("message", async (message) => {try{ //  На сообщение
         "color": color,
         "defEmb": new discord.MessageEmbed().setColor(color),
         "footer": message.author.username +' | © Night Devs',
-        "categories": ['Общее','Картинки','Прочее','Для модерации'],
+        "categories": ['Общее','Картинки','Настройки','Прочее','Для модерации'],
         "feedBackChannel": feedBackChan,
         "cmd": cmd
     });

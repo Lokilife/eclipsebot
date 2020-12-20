@@ -4,13 +4,27 @@ module.exports = {
 
         if(!message.member.permissions.has('MANAGE_MESSAGES')) return addlib.errors.notPerms(message);
         if(!message.guild.members.cache.get(bot.user.id).permissions.has('MANAGE_MESSAGES')) return addlib.errors.botNotPerms(message);
-        if(!args[0]) return addlib.errors.notArgs(message, "Напиши аргумент **help** для помощи по команде");
-        if(!/^[0-9]{1,}$/g.test(args[0]) || args[0] == "0") return addlib.errors.falseArgs(message, "Можно вводить только цифры, большие 0!");
+        if(!args[0]) return addlib.errors.notArgs(message, `Напиши **${con.prefix}help clear** для помощи по команде`);
+        if(!/^[0-9]{1,}$/g.test(args[0]) || args[0] == "0") return addlib.errors.falseArgs(message, "Можно вводить только цифры, больше 0!");
+        if(args[0]>1000) return addlib.errors.falseArgs(message, "Можно вводить только цифры, меньше 2000!");
 
         await message.delete();
-        message.channel.bulkDelete(args[0],true).then(() => {
+        if(args[0]<=100) {
+            message.channel.bulkDelete(args[0],true).then(() => {
+                addlib.errors.success(message,`Очищено ${args[0]} сообщений.`)
+            });
+        } else {
+            for(let i = args[0];i>0;) {
+                if(i>=100) {
+                    i-=100;
+                    message.channel.bulkDelete(100,true);
+                } else {
+                    i-=i;
+                    message.channel.bulkDelete(i,true);
+                }
+            }
             addlib.errors.success(message,`Очищено ${args[0]} сообщений.`)
-        });
+        }
 
         return;
     }catch(err){

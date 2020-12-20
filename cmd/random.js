@@ -42,7 +42,7 @@ module.exports = {
             break;
 
             case "user":
-                message.channel.send(con.defEmb.setTitle(`${message.guild.members.cache.random().user.username}`))
+                message.channel.send(con.defEmb.setTitle(`${message.guild.members.cache.random().user.tag}`))
             break;
 
             case "color":

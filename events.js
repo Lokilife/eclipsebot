@@ -67,8 +67,6 @@ module.exports.guildMemberAdd_server = (bot,member) => {try {
         if(!set.wellcome.server.channel) return castomErrEmb_audit(set,member,'Не указан канал для сообщений о новых пользователях!',bot)
         if(!set.wellcome.server.message) return castomErrEmb_audit(set,member,'Не указано сообщение о новых пользователях!',bot)
 
-        if(!set.wellcome.server.embed) set.wellcome.server.embed = {enabled: false} //  Лень заморачиваться...
-
         let channel = member.guild.channels.cache.get(set.wellcome.server.channel);
 
         if (!channel) return castomErrEmb_audit(set,member,'Канала для приветствий не существует!',bot);
@@ -76,11 +74,14 @@ module.exports.guildMemberAdd_server = (bot,member) => {try {
 
         let msg
 
-        if(set.wellcome.server.embed.enabled) {
-            msg = new MessageEmbed().setColor(set.wellcome.server.embed.color || COLORS.default).setDescription(set.wellcome.server.message.replace('MEMBER', member.user.username).replace('COUNT', member.guild.members.cache.size).replace('SERVER', member.guild.name))
+        if(set.wellcome.server.embed == true) {
+            msg = new MessageEmbed().setColor(set.wellcome.server.color || COLORS.default)
+            .setTitle(set.wellcome.server.title.replace('MEMBER', member.user.username).replace('COUNT', member.guild.members.cache.size))
+            .setDescription(set.wellcome.server.description.replace('MEMBER', member.user.username).replace('COUNT', member.guild.members.cache.size))
+            
             if(set.wellcome.server.embed.avatar) msg.setThumbnail(member.user.avatarURL()|| member.user.defaultAvatarURL);
         } else {
-            msg = set.wellcome.server.message.replace('MEMBER', member.user.username).replace('COUNT', member.guild.members.cache.size).replace('SERVER', member.guild.name);
+            msg = set.wellcome.server.message.replace('MEMBER', member.user.username).replace('COUNT', member.guild.members.cache.size);
         }
 
         channel.send(msg);

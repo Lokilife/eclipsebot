@@ -1,13 +1,12 @@
 const addlib = require('../addLib.js');
 module.exports = {
     run: async (bot,message,args,con)=> {try{
-        const feedback = args.join(" ");
+        let feedback = args.join(" ");
     
-        if (!feedback) return message.channel.send("Пожалуйста, укажите текст отзыва!");
-    
+        if (!feedback) return addlib.errors.notArgs(message, `Напиши **${con.prefix}help feedback** для помощи по команде`);
         if (!con.feedBackChannel || con.feedBackChannel === "") return;
     
-        const embed = con.defEmb
+        let embed = con.defEmb
         .setTitle(`Новый отзыв от ${message.author.tag}`)
         .addField('ID сервера:', message.guild.id, true)
         .addField('ID канала:', message.channel.id, true)

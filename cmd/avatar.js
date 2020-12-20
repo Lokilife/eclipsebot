@@ -2,11 +2,11 @@ const addlib = require("../addLib.js");
 module.exports = {
     run: (bot,message,args,con)=> {try{
         if(!args[0]) {
-            return message.channel.send(con.defEmb.setTitle(`Вот твой аватар:`).setImage(message.author.avatarURL({ dynamic: true, size: 4096 }) || message.author.defaultAvatarURL).setFooter(con.footer));
+            return message.channel.send(con.defEmb.setTitle(`Вот твой аватар:`).setDescription(`[Если не загрузилось](${message.author.avatarURL({ dynamic: true, size: 4096 }) || message.author.defaultAvatarURL})`).setImage(message.author.avatarURL({ dynamic: true, size: 4096 }) || message.author.defaultAvatarURL).setFooter(con.footer));
         } else {
             let aUser = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(m => m.user.username == args[0]));
             if(!aUser) return addlib.errors.noUser(message);
-            return message.channel.send(con.defEmb.setTitle(`Аватар пользователя ${aUser.user.username}:`).setImage(aUser.user.avatarURL({ dynamic: true, size: 4096 }) || aUser.user.defaultAvatarURL).setFooter(con.footer));
+            return message.channel.send(con.defEmb.setTitle(`Аватар пользователя ${aUser.user.username}:`).setDescription(`[Если не загрузилось](${aUser.user.avatarURL({ dynamic: true, size: 4096 }) || aUser.user.defaultAvatarURL})`).setImage(aUser.user.avatarURL({ dynamic: true, size: 4096 }) || aUser.user.defaultAvatarURL).setFooter(con.footer));
         } 
     }catch(err){
         addlib.errors.unknow(message,"Код ошибки: " + err);

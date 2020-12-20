@@ -1,7 +1,7 @@
 const addlib = require('../addLib.js'); //  Моя либа)
 module.exports = {
     run: async (bot,message,args,con)=> {try{
-        if (!args[0]) return addlib.errors.notArgs(message) //  Если пользователь не указан
+        if (!args[0]) return addlib.errors.notArgs(message, `Напиши **${con.prefix}help ban** для помощи по команде`) //  Если пользователь не указан
 
         let banUser    = message.guild.member(message.mentions.users.first() || message.guild.members.cache.get(args[0]) || message.guild.members.cache.find(m => m.user.username == args[0]));
         let banReason  = args.slice(1).join(" ") || "";
