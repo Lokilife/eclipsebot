@@ -23,17 +23,7 @@ module.exports = {
         banUser.user.send(mesg); // Уведомление в ЛС забаненному пользователю
         banUser.ban({reason:`${banReason}Забанен с помощью Eclipse пользователем ${message.author.tag}`}); // Сам процесс кика
         addlib.errors.success(message,`Пользователь ${banUser.user.username} был успешно забанен.`)
-    }catch(err){
-        addlib.errors.unknow(message,"Код ошибки: " + err);
-        bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
-        .addField('Команда:', `${con.prefix}ban`)
-        .addField('ID сервера:', message.guild.id, true)
-        .addField('ID канала:', message.channel.id, true)
-        .addField('ID сообщения:', message.id, true)
-        .addField('Ошибка:', ` \`\`\`${err}\`\`\``)
-        );
-        console.log(err)
-    }},
+    }catch(err){addlib.helps.commandError(bot,message,con,err)}},
     cmd: ["ban"],
     desc: "Выгоняет пользователя с сервера и блокирует его",
     category: "Для модерации",

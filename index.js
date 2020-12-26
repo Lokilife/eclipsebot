@@ -75,7 +75,7 @@ function status_3 (bot) {
 
 function status_4 (bot) {
     setTimeout(()=> {
-        bot.user.setActivity(`e!? - Помощь`, {type: "PLAYING"});
+        bot.user.setActivity(`e.? - Помощь`, {type: "PLAYING"});
         status_1(bot);
     },15000);
 }
@@ -127,7 +127,12 @@ bot.on('guildMemberAdd', (member) => {try {
     EVENTS.guildMemberAdd_server(bot,member);
     //EVENTS.guildMemberAdd_direct(bot,member);
     //EVENTS.guildMemberAdd_autorole(bot,member);
-} catch (err) {console.log(err)}})
+} catch (err) {console.log(err)}});
+
+bot.on('guildMemberRemove', (member) => {try {
+    EVENTS.guildMemberRemove_server(bot,member);
+    //EVENTS.guildMemberAdd_direct(bot,member);
+} catch (err) {console.log(err)}});
 
 bot.on("message", async (message) => {try{ //  На сообщение
     if(message.author.bot) return; //  Забиваем, если бот

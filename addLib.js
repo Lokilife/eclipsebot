@@ -68,5 +68,19 @@ module.exports.helps = {
             seconds: roundTowardsZero(milliseconds / 1000) % 60,
             milliseconds: roundTowardsZero(milliseconds) % 1000
         };
+    },
+    commandError: (bot,message,con,err) => {
+        let emb = con.defEmb.setColor(colors.errorRed).setTitle("Произошла неизвестная ошибка").setDescription("Код ошибки: " + err);
+        message.channel.send(emb).then(msg=>msg.delete({timeout:15000}));
+
+        bot.channels.cache.get(con.feedBackChannel).send(con.defEmb
+        .addField('Команда:', `${con.prefix}${con.cmd}`)
+        .addField('Сервер:', `${message.guild.name}\n${message.guild.id}`, true)
+        .addField('Канал:', `${message.channel.name}\n${message.channel.id}`, true)
+        .addField('Сообщение:', `${message.id}`, true)
+        .addField('Ошибка:', ` \`\`\`${err}\`\`\``)
+        );
+
+        console.log(err);
     }
 }

@@ -18,17 +18,7 @@ module.exports = {
         message.channel.send({embed: embed, files: [new discord.MessageAttachment("./img/banner.png", 'banner.png')]});
 
         return;
-    }catch(err){
-        addlib.errors.unknow(message,"Код ошибки: " + err);
-        bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
-        .addField('Команда:', `${con.prefix}info`)
-        .addField('ID сервера:', message.guild.id, true)
-        .addField('ID канала:', message.channel.id, true)
-        .addField('ID сообщения:', message.id, true)
-        .addField('Ошибка:', ` \`\`\`${err}\`\`\``)
-        );
-        console.log(err)
-    }},
+    }catch(err){addlib.helps.commandError(bot,message,con,err)}},
     cmd: ["info","bot", "botinfo"],
     desc: "Информация о боте",
     category: "Общее",

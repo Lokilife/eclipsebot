@@ -6,18 +6,8 @@ module.exports = {
 
         let channelRaw = message.mentions.channels.first() || message.guild.channels.cache.find(n=> n.name == args[0])
         if(!channelRaw) return addlib.errors.noChannel(message)
-        message.channel.send(con.defEmb.setTitle(`ID канала "${channelRaw.name}": ${channelRaw.id}`))
-    }catch(err){
-        addlib.errors.unknow(message,"Код ошибки: " + err);
-        bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
-        .addField('Команда:', `${con.prefix}id`)
-        .addField('ID сервера:', message.guild.id, true)
-        .addField('ID канала:', message.channel.id, true)
-        .addField('ID сообщения:', message.id, true)
-        .addField('Ошибка:', ` \`\`\`${err}\`\`\``)
-        );
-        console.log(err);
-    }},
+        message.channel.send(con.defEmb.setTitle(`ID канала "${channelRaw.name}":`).setDescription(`${channelRaw.id}`))
+    }catch(err){addlib.helps.commandError(bot,message,con,err)}},
     cmd: ["id"],
     desc: "Узнай id канала",
     category: "Общее",

@@ -1,5 +1,6 @@
-const addlib = require('../addLib.js');
-const settings = require('../models/settings.js');
+const addlib    = require('../addLib.js');
+const settings  = require('../models/settings.js');
+const COLORS    = require('../colors.json');
 
 module.exports = {
     run: async (bot,message,args,con)=> {try{
@@ -152,6 +153,8 @@ module.exports = {
                         },
                         autorole: set.wellcome.autorole
                     }
+                    set.save().catch(err => console.log(err))
+                    return message.channel.send(con.defEmb.setColor(c).setTitle('Конфигурация успешно изменена!'));
                 } else if(args[1] == "avatar"){
                     if(!args[2]) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+set.wellcome.server.avatar))
                     let ena = args[2].toLowerCase()
@@ -170,6 +173,21 @@ module.exports = {
                         },
                         autorole: set.wellcome.autorole
                     }
+                } else if(args[1] == "test") {
+                    let msg
+                    let member = message.member
+                    
+                    if(set.wellcome.server.embed == true) {
+                        msg = con.defEmb.setColor(set.wellcome.server.color || COLORS.default)
+                        .setTitle(set.wellcome.server.title.replace('MEMBER', member.user.username).replace('COUNT', member.guild.members.cache.size))
+                        .setDescription(set.wellcome.server.description.replace('MEMBER', member.user.username).replace('COUNT', member.guild.members.cache.size))
+                        
+                        if(set.wellcome.server.avatar) msg.setThumbnail(member.user.avatarURL() || member.user.defaultAvatarURL);
+                    } else {
+                        msg = set.wellcome.server.message.replace('MEMBER', member.user.username).replace('COUNT', member.guild.members.cache.size);
+                    }
+            
+                    return message.channel.send(msg);
                 } else return addlib.errors.falseArgs(message, "<enabled \\|\\| embed \\|\\| channel \\|\\| message \\|\\| title \\|\\| description \\|\\| color \\|\\| avatar>")
                 
                 addlib.errors.success(message, 'Конфигурация успешно изменена!')
@@ -182,23 +200,13 @@ module.exports = {
             set.save().catch(err => console.log(err))
 
         })
-    }catch(err){
-        addlib.errors.unknow(message,"Код ошибки: " + err);
-        bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
-        .addField('Команда:', `${con.prefix}settings`)
-        .addField('ID сервера:', message.guild.id, true)
-        .addField('ID канала:', message.channel.id, true)
-        .addField('ID сообщения:', message.id, true)
-        .addField('Ошибка:', ` \`\`\`${err}\`\`\``)
-        );
-        console.log(err)
-    }},
+    }catch(err){addlib.helps.commandError(bot,message,con,err)}},
     cmd: ["welcome"],
-    desc: "Настройка сервера",
+    desc: "Настройка приветствий",
     category: "Настройки",
     helpEmbed: (con) => {
         return con.defEmb
-        .addField('Аргументы:',`*Всё начинается на \`${con.prefix}welcome server\`*\n**enabled <true \\|\\| false \\|\\| Ничего>** - Включить/выключить/посмотреть значение приветствий на сервере\n**embed <true \\|\\| false \\|\\| Ничего>** - Включить/выключить/посмотреть значение отправку(и) embed-сообщения на сервере\n**channel <ID \\|\\| Ничего>** - Записать новый ID/посмотреть ID записанного канала для приветствий на сервере\n**message <message \\|\\| Ничего>** - Записать новое/посмотреть старое приветствие на сервере. Может содержать такие переменные как: MEMBER и COUNT\n**title <title \\|\\| Ничего>** - Изменить/посмотреть заголовок embed-сообщения на сервере\n**description <description \\|\\| Ничего>** - Изменить/посмотреть описание embed-сообщения на сервере\n**avatar <true \\|\\| false \\|\\| Ничего>** - Включить/выключить/посмотреть текущее значение отправки аватара в embed-сообщении на сервере\n**color <color \\|\\| Ничего>** - Изменить/посмотреть цвет embed-сообщения на сервере`)
+        .addField('Аргументы:',`*Всё начинается на \`${con.prefix}welcome server\`*\n**enabled <true \\|\\| false \\|\\| Ничего>** - Включить/выключить/посмотреть значение приветствий на сервере\n**embed <true \\|\\| false \\|\\| Ничего>** - Включить/выключить/посмотреть значение отправки embed-сообщения на сервере\n**channel <ID \\|\\| Ничего>** - Записать новый ID/посмотреть ID записанного канала для приветствий на сервере\n**message <message \\|\\| Ничего>** - Записать новое/посмотреть старое приветствие на сервере. Может содержать такие переменные как: MEMBER и COUNT\n**title <title \\|\\| Ничего>** - Изменить/посмотреть заголовок embed-сообщения на сервере\n**description <description \\|\\| Ничего>** - Изменить/посмотреть описание embed-сообщения на сервере\n**avatar <true \\|\\| false \\|\\| Ничего>** - Включить/выключить/посмотреть текущее значение отправки аватара в embed-сообщении на сервере\n**color <color \\|\\| Ничего>** - Изменить/посмотреть цвет embed-сообщения на сервере\n**test** - Посмотреть получаемое приветствие`)
         .addField('Могут использовать:','Создатель',true)
     },
     show: true

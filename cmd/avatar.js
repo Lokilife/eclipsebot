@@ -8,17 +8,7 @@ module.exports = {
             if(!aUser) return addlib.errors.noUser(message);
             return message.channel.send(con.defEmb.setTitle(`Аватар пользователя ${aUser.user.username}:`).setDescription(`[Если не загрузилось](${aUser.user.avatarURL({ dynamic: true, size: 4096 }) || aUser.user.defaultAvatarURL})`).setImage(aUser.user.avatarURL({ dynamic: true, size: 4096 }) || aUser.user.defaultAvatarURL).setFooter(con.footer));
         } 
-    }catch(err){
-        addlib.errors.unknow(message,"Код ошибки: " + err);
-        bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
-        .addField('Команда:', `${con.prefix}avatar`)
-        .addField('ID сервера:', message.guild.id, true)
-        .addField('ID канала:', message.channel.id, true)
-        .addField('ID сообщения:', message.id, true)
-        .addField('Ошибка:', ` \`\`\`${err}\`\`\``)
-        );
-        console.log(err)
-    }},
+    }catch(err){addlib.helps.commandError(bot,message,con,err)}},
     cmd: ["avatar","ava"],
     desc: "Показать аватар",
     category: "Прочее",

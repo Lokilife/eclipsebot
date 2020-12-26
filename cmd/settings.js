@@ -23,7 +23,7 @@ module.exports = {
                                 direct: {
                                     enabled: false,
                                     embed: false,
-                                    message: "MEMBER, добро пожаловать на **SERVER**! Ты уже **COUNT**!",
+                                    message: "MEMBER, добро пожаловать на сервер! Ты уже **COUNT**!",
                                     title: "Новый человек!",
                                     description: "Добро пожаловать, MEMBER! Ты уже **COUNT**!",
                                     color: "00ce00"
@@ -41,7 +41,7 @@ module.exports = {
                                     enabled: false,
                                     embed: false,
                                     channel: "",
-                                    message: "MEMBER, добро пожаловать на **SERVER**! Ты уже **COUNT**!",
+                                    message: "MEMBER, добро пожаловать на сервер! Ты уже **COUNT**!",
                                     title: "Новый человек!",
                                     description: "Добро пожаловать, MEMBER! Ты уже **COUNT**!",
                                     color: "00ce00",
@@ -63,19 +63,19 @@ module.exports = {
                                 direct: {
                                     enabled: false,
                                     embed: false,
-                                    message: "MEMBER, добро пожаловать на **SERVER**! Ты уже **COUNT**!",
-                                    title: "Новый человек!",
-                                    description: "Добро пожаловать, MEMBER! Ты уже **COUNT**!",
-                                    color: "00ce00"
+                                    message: "Прощай MEMBER! Заходи, если что!",
+                                    title: "Прощай MEMBER!",
+                                    description: "Заходи, если что!)",
+                                    color: "cc0000"
                                 },
                                 server: {
                                     enabled: false,
                                     embed: false,
                                     channel: "",
-                                    message: "MEMBER, добро пожаловать на **SERVER**! Ты уже **COUNT**!",
-                                    title: "Новый человек!",
-                                    description: "Добро пожаловать, MEMBER! Ты уже **COUNT**!",
-                                    color: "00ce00",
+                                    message: "Прощай MEMBER! Увидимся позже! Нас осталось **COUNT**!",
+                                    title: "Человек ушёл",
+                                    description: "Прощай MEMBER! Увидимся позже! Нас осталось **COUNT**!!",
+                                    color: "cc0000",
                                     avatar: true
                                 }
                             },
@@ -83,7 +83,8 @@ module.exports = {
                                 enabled: false,
                                 channel: "",
                                 category: "",
-                                template: "<+> NAME"
+                                template: "<+> NAME",
+                                position: "0"
                             },
                             other: {
                                 logChannel:"",
@@ -96,22 +97,21 @@ module.exports = {
                         set.wellcome = {
                             direct: {
                                 enabled: false,
-                                message: "MEMBER, добро пожаловать на **SERVER**!",
-                                embed: {
-                                    enabled: false,
-                                    color: "",
-                                    avatar: false
-                                }
+                                embed: false,
+                                message: "MEMBER, добро пожаловать на сервер! Ты уже **COUNT**!",
+                                title: "Новый человек!",
+                                description: "Добро пожаловать, MEMBER! Ты уже **COUNT**!",
+                                color: "00ce00"
                             },
                             server: {
                                 enabled: false,
-                                channel: "", 
-                                message: "MEMBER, добро пожаловать на **SERVER**! Ты уже **COUNT**!",
-                                embed: {
-                                    enabled: false,
-                                    color: "",
-                                    avatar: true
-                                }
+                                embed: false,
+                                channel: "",
+                                message: "MEMBER, добро пожаловать на сервер! Ты уже **COUNT**!",
+                                title: "Новый человек!",
+                                description: "Добро пожаловать, MEMBER! Ты уже **COUNT**!",
+                                color: "00ce00",
+                                avatar: true
                             },
                             autorole: {
                                 enabled: false,
@@ -122,22 +122,21 @@ module.exports = {
                         set.goodbye = {
                             direct: {
                                 enabled: false,
-                                message: "MEMBER, ты ушёл с **SERVER**!",
-                                embed: {
-                                    enabled: false,
-                                    color: "",
-                                    avatar: false
-                                }
+                                embed: false,
+                                message: "Прощай MEMBER! Заходи, если что!",
+                                title: "Прощай MEMBER!",
+                                description: "Заходи, если что!)",
+                                color: "cc0000"
                             },
                             server: {
                                 enabled: false,
-                                channel: "", 
-                                message: "MEMBER, ушёл **SERVER**! Нас осталось **COUNT**!",
-                                embed: {
-                                    enabled: false,
-                                    color: "",
-                                    avatar: true
-                                }
+                                embed: false,
+                                channel: "",
+                                message: "Прощай MEMBER! Увидимся позже! Нас осталось **COUNT**!",
+                                title: "Человек ушёл",
+                                description: "Прощай MEMBER! Увидимся позже! Нас осталось **COUNT**!!",
+                                color: "cc0000",
+                                avatar: true
                             }
                         }
 
@@ -145,7 +144,8 @@ module.exports = {
                             enabled: false,
                             channel: "",
                             category: "",
-                            template: "<+> NAME"
+                            template: "<+> NAME",
+                            position: "0"
                         }
 
                         set.other = {
@@ -158,69 +158,6 @@ module.exports = {
 
                     addlib.errors.success(message,"Конфигурация успешно обновлена!");
                     
-                break;
-
-                case "privatevoices":
-                    if(!set) return addlib.errors.castom(message,"Обнови конфигурацию!",`${con.prefix}settings configurationupdate`);
-
-                    if(!args[1]) {
-                        return addlib.errors.notArgs(message, "<enabled \\|\\| channel \\|\\| category \\|\\| template>")
-                    } else if(args[1] == "enabled") {
-                        if(!args[2]) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+set.privatVoices.enabled))
-                        let ena = args[2].toLowerCase()
-                        if(ena != "true" && ena != "false") return addlib.errors.falseArgs(message,"true или false?")
-                        set.privatVoices = {
-                            enabled: (ena == 'true'),
-                            channel: set.privatVoices.channel,
-                            category: set.privatVoices.category,
-                            template: set.privatVoices.template
-                        }
-                        addlib.errors.success(message, 'Конфигурация успешно изменена!')
-                    } else if(args[1] == "channel") {
-                        if(!args[2]) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+set.privatVoices.channel))
-                        if(!message.guild.channels.cache.get(args[2])) return addlib.errors.noChannel(message)
-                        if(message.guild.channels.cache.get(args[2]).type != 'voice') return addlib.errors.falseArgs(message, `Канал не является голосовым.`) 
-                        set.privatVoices = {
-                            enabled: set.privatVoices.enabled,
-                            channel: args[2],
-                            category: set.privatVoices.category,
-                            template: set.privatVoices.template
-                        }
-                        addlib.errors.success(message, 'Конфигурация успешно изменена!')
-                    } else if(args[1] == "category") {
-                        if(!args[2]) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+set.privatVoices.category))
-                        if(!message.guild.channels.cache.get(args[2])) return addlib.errors.falseArgs(message)
-                        if(message.guild.channels.cache.get(args[2]).type != 'category') return addlib.errors.falseArgs(message, `Канал не является категорией!`) 
-                        
-                        set.privatVoices = {
-                            enabled: set.privatVoices.enabled,
-                            channel: set.privatVoices.channel,
-                            category: args[2],
-                            template: set.privatVoices.template
-                        }
-                        addlib.errors.success(message, 'Конфигурация успешно изменена!')
-                        
-                    } else if(args[1] == "template") {
-                        if(!args[2]) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+set.privatVoices.template))
-
-                        let template = args.slice(2).join(" ");
-                        if(!template) return message.channel.send(con.defEmb.setTitle('Текущее значение: '+set.privatVoices.template))
-                        if(template.replace(`NAME`, `${message.author.username}`) == template) return addlib.errors.falseArgs(message,"Не содержится переменная NAME!")
-                        if(template.length>=67) return addlib.errors.falseArgs(message,"Нельзя делать такой большой шаблон!")
-
-                        set.privatVoices = {
-                            enabled: set.privatVoices.enabled,
-                            channel: set.privatVoices.channel,
-                            category: set.privatVoices.category,
-                            template: template
-                        }
-                        addlib.errors.success(message, 'Конфигурация успешно изменена!');
-                    } else {
-                        return addlib.errors.falseArgs(message, "<enabled \\|\\| channel \\|\\| category \\|\\| template>")
-                    }
-
-                    set.save().catch(err => console.log(err))
-
                 break;
 
                 case "logchannel":
@@ -241,24 +178,13 @@ module.exports = {
                     return addlib.errors.falseArgs(message);
             }
         })
-    }catch(err){
-        addlib.errors.unknow(message,"Код ошибки: " + err);
-        bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
-        .addField('Команда:', `${con.prefix}settings`)
-        .addField('ID сервера:', message.guild.id, true)
-        .addField('ID канала:', message.channel.id, true)
-        .addField('ID сообщения:', message.id, true)
-        .addField('Ошибка:', ` \`\`\`${err}\`\`\``)
-        );
-        console.log(err)
-    }},
+    }catch(err){addlib.helps.commandError(bot,message,con,err)}},
     cmd: ["settings"],
     desc: "Настройка сервера",
     category: "Настройки",
     helpEmbed: (con) => {
         return con.defEmb
-        .addField('Приватные голосовые каналы:',`*Всё начинается на \`${con.prefix}settings privateVoices\`*\n**enabled <true \\|\\| false>** - Включит/выключит приватные каналы\n**channel <ID>** - Обновит канал *(ВВОДИТЬ ТОЛЬКО ID!)*\n**category <ID>** - Обновит категорию *(ВВОДИТЬ ТОЛЬКО ID!)*\n**template <template>** - Обновит шаблон, должен содержать в себе NAME (большим регистром), которое заменится на имя человека`)
-        .addField('Другое:', `*Всё начинается на \`${con.prefix}settings\`*\n**configurationUpdate** - Создаст или сбросит конфигурацию бота\n**logChannel <id \\|\\| Ничего>** - Указать канал для ошибок в настройках\n`)
+        .addField('Аргументы:', `*Всё начинается на \`${con.prefix}settings\`*\n**configurationUpdate** - Создаст или сбросит конфигурацию бота\n**logChannel <id \\|\\| Ничего>** - Указать канал для ошибок в настройках\n`)
         .addField('Могут использовать:','Создатель',true)
     },
     show: true

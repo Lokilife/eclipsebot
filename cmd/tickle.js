@@ -10,24 +10,14 @@ module.exports = {
 
         message.channel.send(con.defEmb.setTitle(`${message.author.username} щекочет ${username}`).setImage(`https://cdn.nekos.life/tickle/tickle_0${(rand+"").length==2 ? rand+"" : "0"+(rand+"")}.gif`).setFooter(con.footer));
 
-    }catch(err){
-        addlib.errors.unknow(message,"Код ошибки: " + err);
-        bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
-        .addField('Команда:', `${con.prefix}tickle`)
-        .addField('ID сервера:', message.guild.id, true)
-        .addField('ID канала:', message.channel.id, true)
-        .addField('ID сообщения:', message.id, true)
-        .addField('Ошибка:', ` \`\`\`${err}\`\`\``)
-        );
-        console.log(err)
-    }},
+    }catch(err){addlib.helps.commandError(bot,message,con,err)}},
     cmd: ["tickle"],
     desc: "Пощекотать",
     category: "Картинки",
     helpEmbed: (con) => {
         return con.defEmb
         .addField('Аргументы:',`**<@user>** - Кого вы хотите пощекотать`)
-        .addField('Примеры:',`**${con.prefix}tickle @Electroplayer** - Давайте пощекочем Electroplayer`)
+        .addField('Примеры:',`**${con.prefix}tickle @Electroplayer** - Давайте пощекочем Electroplayer'а`)
         .addField('Могут использовать:','Все без исключений',true)
     },
     show: true

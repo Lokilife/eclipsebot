@@ -9,35 +9,19 @@ module.exports = {
         if(args[0]>1000) return addlib.errors.falseArgs(message, "Можно вводить только цифры, меньше 2000!");
 
         await message.delete();
-        if(args[0]<=100) {
-            message.channel.bulkDelete(args[0],true).then(() => {
-                addlib.errors.success(message,`Очищено ${args[0]} сообщений.`)
-            });
-        } else {
-            for(let i = args[0];i>0;) {
-                if(i>=100) {
-                    i-=100;
-                    message.channel.bulkDelete(100,true);
-                } else {
-                    i-=i;
-                    message.channel.bulkDelete(i,true);
-                }
-            }
-            addlib.errors.success(message,`Очищено ${args[0]} сообщений.`)
+
+        let count = args[0];
+
+        for (let i; count;) {
+            i = (count >= 100 ? 100 : count);
+            count -= i;
+            await message.channel.bulkDelete(i, true);
         }
 
+        addlib.errors.success(message,`Очищено ${args[0]} сообщений.`)
+
         return;
-    }catch(err){
-        addlib.errors.unknow(message,"Код ошибки: " + err);
-        bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
-        .addField('Команда:', `${con.prefix}clear`)
-        .addField('ID сервера:', message.guild.id, true)
-        .addField('ID канала:', message.channel.id, true)
-        .addField('ID сообщения:', message.id, true)
-        .addField('Ошибка:', ` \`\`\`${err}\`\`\``)
-        );
-        console.log(err)
-    }},
+    }catch(err){addlib.helps.commandError(bot,message,con,err)}},
     cmd: ["clear","clean"],
     desc: "Очистка сообщений",
     category: "Для модерации",

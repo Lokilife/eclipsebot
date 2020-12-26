@@ -23,17 +23,7 @@ module.exports = {
         kickUser.user.send(mesg); // Уведомление в ЛС кикнутому пользователю
         kickUser.kick({reason:`${kickReason}Изгнан с помощью Eclipse пользователем ${message.author.tag}`}); // Сам процесс кика
         addlib.errors.success(message,`Пользователь ${kickUser.user.username} был успешно изгнан.`)
-    }catch(err){
-        addlib.errors.unknow(message,"Код ошибки: " + err);
-        bot.channels.cache.get(con.feedBackChannel).send(con.defEmb.setFooter(con.footer)
-        .addField('Команда:', `${con.prefix}kick`)
-        .addField('ID сервера:', message.guild.id, true)
-        .addField('ID канала:', message.channel.id, true)
-        .addField('ID сообщения:', message.id, true)
-        .addField('Ошибка:', ` \`\`\`${err}\`\`\``)
-        );
-        console.log(err)
-    }},
+    }catch(err){addlib.helps.commandError(bot,message,con,err)}},
     cmd: ["kick"],
     desc: "Выгоняет пользователя с сервера",
     category: "Для модерации",

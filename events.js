@@ -45,7 +45,7 @@ module.exports.raw = (bot,event) => { try {
                     if(channel.deleted) return clearInterval(intr)
                     if(channel.members.size <= 0) {
                         channel.delete();
-                        clearInterval(intr)
+                        clearInterval(intr) // А за одно и интервал очищает
                     }
                 }, 5000)
             })
@@ -65,7 +65,7 @@ module.exports.guildMemberAdd_server = (bot,member) => {try {
 
         if(!set.wellcome.server.enabled) return;
         if(!set.wellcome.server.channel) return castomErrEmb_audit(set,member,'Не указан канал для сообщений о новых пользователях!',bot)
-        if(!set.wellcome.server.message) return castomErrEmb_audit(set,member,'Не указано сообщение о новых пользователях!',bot)
+        if(!set.wellcome.server.message && !set.wellcome.server.embed) return castomErrEmb_audit(set,member,'Не указано сообщение о новых пользователях!',bot)
 
         let channel = member.guild.channels.cache.get(set.wellcome.server.channel);
 
@@ -79,9 +79,43 @@ module.exports.guildMemberAdd_server = (bot,member) => {try {
             .setTitle(set.wellcome.server.title.replace('MEMBER', member.user.username).replace('COUNT', member.guild.members.cache.size))
             .setDescription(set.wellcome.server.description.replace('MEMBER', member.user.username).replace('COUNT', member.guild.members.cache.size))
             
-            if(set.wellcome.server.embed.avatar) msg.setThumbnail(member.user.avatarURL()|| member.user.defaultAvatarURL);
+            if(set.wellcome.server.avatar) msg.setThumbnail(member.user.avatarURL() || member.user.defaultAvatarURL);
         } else {
             msg = set.wellcome.server.message.replace('MEMBER', member.user.username).replace('COUNT', member.guild.members.cache.size);
+        }
+
+        channel.send(msg);
+    });
+}catch (err) {console.log(err)}}
+
+module.exports.guildMemberRemove_server = (bot,member) => {try {
+    SETTINGS.findOne({serverID: member.guild.id}, (err,set) => {
+        if(err) console.log(err);
+
+        if(!set) return;
+
+        if(!set.goodbye) return baseErrEmb_audit(set,member,`set.goodbye`, bot)
+        if(!set.goodbye.server) return baseErrEmb_audit(set,member,`set.goodbye.server`, bot)
+
+        if(!set.goodbye.server.enabled) return;
+        if(!set.goodbye.server.channel) return castomErrEmb_audit(set,member,'Не указан канал для сообщений о уходящих пользователях!',bot)
+        if(!set.goodbye.server.message && !set.goodbye.server.embed) return castomErrEmb_audit(set,member,'Не указано сообщение о уходящих пользователях!',bot)
+
+        let channel = member.guild.channels.cache.get(set.goodbye.server.channel);
+
+        if (!channel) return castomErrEmb_audit(set,member,'Канала для прощаний не существует!',bot);
+        if (!channel.permissionsFor(bot.user).has('SEND_MESSAGES')) return castomErrEmb_audit(set,member,'Я не могу отправлять сообщения в заданный канал для прощаний!',bot);
+
+        let msg
+
+        if(set.goodbye.server.embed == true) {
+            msg = new MessageEmbed().setColor(set.goodbye.server.color || COLORS.default)
+            .setTitle(set.goodbye.server.title.replace('MEMBER', member.user.username).replace('COUNT', member.guild.members.cache.size))
+            .setDescription(set.goodbye.server.description.replace('MEMBER', member.user.username).replace('COUNT', member.guild.members.cache.size))
+            
+            if(set.goodbye.server.avatar) msg.setThumbnail(member.user.avatarURL() || member.user.defaultAvatarURL);
+        } else {
+            msg = set.goodbye.server.message.replace('MEMBER', member.user.username).replace('COUNT', member.guild.members.cache.size);
         }
 
         channel.send(msg);
