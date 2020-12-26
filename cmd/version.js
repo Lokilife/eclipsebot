@@ -5,14 +5,14 @@ const versions = require('../versions.json');
 module.exports = {
     run: async (bot,message,args,con)=> {try{
         let ver = args[0] || package.version;
-        if(!ver) return addlib.errors.castom(message, "Такой версии не существует!");
+        if(!versions[ver]) return addlib.errors.castom(message, "Такой версии не существует!");
 
-        let embed = con.defEmb.setTitle(`Версия: ${package.version}`).setFooter(con.footer);
+        let embed = con.defEmb.setTitle(`Версия: ${ver}`).setFooter(con.footer);
 
         if(versions[ver].new)  embed.addField('Новое:',versions[ver].new);
         if(versions[ver].edit) embed.addField('Изменено:', versions[ver].edit);
         if(versions[ver].bugs) embed.addField('Исправления багов:',versions[ver].bugs);
-        if(versions[ver].desc) embed.addField('Что нового:',versions[ver].bugs);
+        if(versions[ver].desc) embed.addField('Что нового:',versions[ver].desc);
 
         message.channel.send(embed);
 
