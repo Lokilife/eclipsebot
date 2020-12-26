@@ -30,11 +30,11 @@ module.exports.raw = (bot,event) => { try {
             if(!set.privatVoices.enabled) return; //  Забить если выключено
             if(event.d.channel_id !== set.privatVoices.channel) return; //  Забить если это не тот канал
 
-            let server = bot.guilds.cache.get(event.d.guild_id); 
+            let server = bot.guilds.cache.get(event.d.guild_id);
             let member = server.members.cache.get(event.d.user_id);
             let name   = set.privatVoices.template.replace(`NAME`, `${member.user.username}`);
             
-            if(server.channels.cache.find(n=>n.name === name)) return member.voice.setChannel(server.channels.find(n=>n.name === name).id) //  Если таков уже существует
+            if(server.channels.cache.find(n=>n.name === name)) return member.voice.setChannel(server.channels.cache.find(n=>n.name === name).id) //  Если таков уже существует
             
             if(!server.channels.cache.get(set.privatVoices.category)) return; //  Забить если такой категории не существует
             if(server.channels.cache.get(set.privatVoices.category).type != 'category') return; //  Забить если это, блин, не категория.
