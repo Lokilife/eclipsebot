@@ -20,6 +20,11 @@ module.exports = {
 
         let categories = con.categories;
         let emb = con.defEmb.setTitle('Помощь').setDescription('`e.help <команда>` для углублённой помощи по команде')
+        /* Наводка на новую обнову
+        let fields = {
+            "": ""
+        }
+        */
         let text =''
         for(let i1=0;i1<=categories.length-1;i1++) {
             text = ''

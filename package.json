@@ -1,6 +1,6 @@
 {
   "name": "eclipsebot",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "EclipseBot is an open-source, easy to use & selfhostable Discord bot written in JavaScript.",
   "main": "index.js",
   "dependencies": {

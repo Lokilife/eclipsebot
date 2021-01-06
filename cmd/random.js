@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 const addlib   = require('../addLib.js');
 
 function getRandomInRange(first, second) {
@@ -46,12 +47,17 @@ module.exports = {
             break;
 
             case "color":
-                // eslint-disable-next-line no-case-declarations
                 let color = '#'
                 for (var i = 0; i < 6; i++) {
                     color += '0123456789ABCDEF'[Math.floor(Math.random() * 16)];
                 }
                 message.channel.send(con.defEmb.setColor(color).setTitle(`Случайный цвет:`).setDescription(color))
+            break;
+
+            case "8ball":
+                let answers = [ { text: "Бесспорно", color: "0000ff" },{ text: "Предрешено", color: "0000ff" },{ text: "Никаких сомнений", color: "0000ff" },{ text: "Определённо да", color: "0000ff" },{ text: "Можешь быть уверен в этом", color: "0000ff" }, { text: "Мне кажется — «да»", color: "00ff00" },{ text: "Вероятнее всего", color: "00ff00" },{ text: "Хорошие перспективы", color: "00ff00" },{ text: "Знаки говорят — «да»", color: "00ff00" },{ text: "Да", color: "00ff00" }, { text: "Пока не ясно, попробуй снова", color: "FFA500" },{ text: "Спроси позже", color: "FFA500" },{ text: "Лучше не рассказывать", color: "FFA500" },{ text: "Сейчас нельзя предсказать", color: "FFA500" },{ text: "Сконцентрируйся и спроси опять", color: "FFA500" }, { text: "Даже не думай", color: "ff0000" },{ text: "Мой ответ — «нет»", color: "ff0000" },{ text: "По моим данным — «нет»", color: "ff0000" },{ text: "Перспективы не очень хорошие", color: "ff0000" },{ text: "Весьма сомнительно", color: "ff0000" }, ]
+                let rand = answers[Math.floor(Math.random()*20)];
+                message.channel.send(con.defEmb.setColor(rand.color).setTitle(rand.text))
             break;
 
             default:
@@ -65,7 +71,7 @@ module.exports = {
     category: "Прочее",
     helpEmbed: (con) => {
         return con.defEmb
-        .addField('Аргументы:',`**word <Слова из которых нужно выбрать>** - Выберет рандомное слово из заданных\n**number <x>** - Выберет рандомное число от 0 до x\n**number <x> <y>** - Выберет рандомное число от x до y\n**user** - Рандомный человек с сервера\n**color** - Рандомный цвет\n\n`)
+        .addField('Аргументы:',`**word <Слова из которых нужно выбрать>** - Выберет рандомное слово из заданных\n**8ball** - Магический шар, отвечающий на вопросы\n**number <x>** - Выберет рандомное число от 0 до x\n**number <x> <y>** - Выберет рандомное число от x до y\n**user** - Рандомный человек с сервера\n**color** - Рандомный цвет\n\n`)
         .addField('Примеры:',`**${con.prefix}random word Кошка Кошечка Киска** - Выберет рандомное слово из предложенных\n**${con.prefix}random number 10** -  Рандомное число от 0 до 10\n**${con.prefix}random number 5 10** -  Рандомное число от 5 до 10\n**${con.prefix}random user** - Выберет рандомного человека\n**${con.prefix}random color** - Даст рандомный цвет`)
         .addField('Сокращения:',`**${con.prefix}rand**`)
         .addField('Могут использовать:','Все без исключений',true)

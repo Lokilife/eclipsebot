@@ -2,7 +2,8 @@ const addlib      = require('../addLib.js');
 
 module.exports = {
     run: async (bot,message,args,con)=> {try{
-
+        message.delete();
+        
         let text = args.join(" ");
 
         if(!text.trim()) return message.channel.send(con.defEmb.setTitle('?')).then(async msg=> {

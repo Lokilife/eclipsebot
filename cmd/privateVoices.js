@@ -94,7 +94,7 @@ module.exports = {
             } else {
                 return addlib.errors.falseArgs(message, "<enabled \\|\\| channel \\|\\| category \\|\\| template>")
             }
-
+            set.save().catch(err => console.log(err))
         })
     }catch(err){addlib.helps.commandError(bot,message,con,err)}},
     cmd: ["privatevoices"],
