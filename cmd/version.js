@@ -6,7 +6,7 @@ module.exports = {
         let ver = args[0] || package.version;
         if(ver == "list") {
             message.channel.send(con.defEmb.setTitle(`Список всех выпущенных версий:`).setFooter(con.footer)
-            .setDescription("1.0.0\n1.0.1\n1.1.0\n1.1.1\n1.1.2\n1.2.0\n1.3.0\n1.4.0\n1.4.1\n1.4.2"))
+            .setDescription("1.0.0\n1.0.1\n1.1.0\n1.1.1\n1.1.2\n1.2.0\n1.3.0\n1.4.0\n1.4.1\n1.4.2\n1.4.3"))
             return
         }
         if(!versions[ver]) return addlib.errors.castom(message, "Такой версии не существует!");

@@ -20,20 +20,65 @@ module.exports = {
 
         let categories = con.categories;
         let emb = con.defEmb.setTitle('Помощь').setDescription('`e.help <команда>` для углублённой помощи по команде')
-        /* Наводка на новую обнову
+
+        let numbers = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
+        
         let fields = {
-            "": ""
+            "1️⃣": {
+                "name": "Содержание",
+                "value": ""
+            }
         }
-        */
-        let text =''
-        for(let i1=0;i1<=categories.length-1;i1++) {
+
+        let titVal = "1. Содержание\n";
+
+        for(let i = 0;i<=categories.length-1;i++) {
+            titVal = titVal + `${i+2}. ${categories[i]}\n`;
+        }
+
+        fields['1️⃣'].value = titVal
+
+        let text = '';
+        let i1   = 0;
+        for(;i1<=categories.length-1;i1++) {
             text = ''
+
             for(let i2=0;i2<=con.cmds.length-1;i2++) {
                 if(con.cmds[i2].category == categories[i1]) text = text+`**${con.prefix}${con.cmds[i2].cmd}** - ${con.cmds[i2].desc}\n`
             }
-            if(text !== '') emb.addField(categories[i1],text);
+            
+            if(text == '') text = "Тут пока ничего нет...";
+
+            fields[numbers[i1+1]] = {
+                "name": categories[i1],
+                "value": text
+            }
         }
-        message.channel.send(emb.setFooter(con.footer));
+
+        message.channel.send(emb.addField(fields['1️⃣'].name,fields['1️⃣'].value).setFooter(con.footer)).then(async msg=> {
+            for(let i=0;i<=i1;i++){
+                await msg.react(numbers[i]);
+            }
+
+            numbers = numbers.slice(0,i1+1)
+
+            let filter = (reaction,user) => numbers.includes(reaction.emoji.name) && user.id === message.author.id
+            let collector  = msg.createReactionCollector(filter,{idle:30000});
+
+            collector.on('collect',(r) => {
+                msg.reactions.cache.get(r.emoji.name).users.remove(message.client.users.cache.get(message.author.id));
+
+                emb.fields = [fields[r.emoji.name]];
+
+                msg.edit(emb)
+            });
+            
+            collector.on('end', async () => {
+                try {
+                    await msg.reactions.removeAll()
+                } catch (error) {console.log(error)}
+            })
+        })
     }catch(err){addlib.helps.commandError(bot,message,con,err)}},
     cmd: ["help","?","h"],
     desc: "Помощь",
