@@ -19,6 +19,9 @@ const client = new discord.Client(
         ]
     }
 );
+
+client.helps = {} //  Нету con? Теперь есть)
+
 client.commands = new Array();
 
 client.on("message", async function(message) {
@@ -26,11 +29,8 @@ client.on("message", async function(message) {
     // Если автор сообщения - бот.
     // Или сообщение не начинается с префикса бота.
     // Или тип канала - dm, т. е. ЛС.
-    if (
-        message.author.bot ||
-        !message.content.startsWith(config.prefix) ||
-        message.channel.type == "dm"
-    ) return;
+    if (message.author.bot || !message.content.startsWith(config.prefix) || message.channel.type == "dm") return;
+
     const messageArray = message.content.split(/\s+/g),
           cmd          = messageArray[0].slice(config.prefix.length),
           args         = messageArray.slice(1);
@@ -61,6 +61,8 @@ client.on("message", async function(message) {
                     "type": "NotOwner",
                     "author": message.author
                 });
+
+            client.helps.footer = message.author.username +' | © Night Devs',
             command.run(message, client, args);
         }
     }

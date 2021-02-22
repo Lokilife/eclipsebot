@@ -29,8 +29,16 @@ To start the bot, you need:
 3. Created config.json:
 ```json
 {
-    "token": "Your discord token",
-    "mongoToken": "Your MongoDB token"
+    "prefix": "c.",
+    "token": "your token",
+    "owners": ["your ID", "ID of another author"],
+    "lang": "en",
+    "colors": {
+        "default": "525592",
+        "errorRed": "cc0000",
+        "warnOrange": "fdb21a",
+        "successGreen": "00ce00"
+    }
 }
 ```
 
@@ -38,7 +46,7 @@ To start the bot, you need:
 
 ### Authors
 **EclipseBot** © Night Devs<br>
-Authored by [Electroplayer](https://github.com/Elektroplayer)<br>
+Authored by [Electroplayer](https://github.com/Elektroplayer) and [Lokilife](https://github.com/Lokilife)<br>
 [Bot support](https://discord.gg/PHuvYMrvdr)
 
 ### Acknowledgments
