@@ -1,0 +1,30 @@
+{
+  "name": "eclipsebot",
+  "version": "1.0.0-OVERWRITE-Debug",
+  "description": "EclipseBot is an open-source, easy to use & selfhostable Discord bot written in JavaScript.",
+  "main": "index.js",
+  "devDependencies": {
+    "eslint": "^7.12.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Elektroplayer/eclipsebot.git"
+  },
+  "keywords": [
+    "bot",
+    "discord"
+  ],
+  "author": "Night Devs",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/Elektroplayer/eclipsebot/issues"
+  },
+  "homepage": "https://github.com/Elektroplayer/eclipsebot#readme",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "discord.js": "^12.5.1"
+  }
+}
