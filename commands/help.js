@@ -1,4 +1,3 @@
-const { Message, Client } = require("discord.js");
 const discord  = require("discord.js");
 const config   = require("../config.json");
 const errors   = require("../lib/errors.js");
@@ -27,13 +26,17 @@ module.exports = {
                         break;
                     }
                 }
-                if(ok == true) break;
+                if(ok) break;
             }
             if(!ok) errors.falseArgs(message,"Такой команды/алиаса не существует!") //  Ахах, а как же я это без addlib сделаю... UPD: Сделал... Не знаю, понравится ли тебе, но если что скажи.
             return
         }
 
-        let categories  = ["Общее", "Прочее"]; //  А вот тут нужно придумать код наполнения
+        let categories = [];
+        bot.commands.forEach(value => {if(categories.indexOf(value.help.category) == -1) categories.push(value.help.category)});         //  Мой вариант
+        //  client.commands.forEach(value => categories.indexOf(value.category) != -1 ? return : categories.push(value.category));  //  Твой вариант (не работает)
+        //  bot.commands.forEach(value => categories.indexOf(value.category) != -1 ? "" : categories.push(value.category));         //  Твой видоизменённый вариант (Работает)
+
         let emb         = new discord.MessageEmbed().setColor(config.colors.default).setTitle('Помощь').setDescription(`\`${config.prefix}help <команда>\` для углублённой помощи по команде'`).setFooter(bot.helps.footer)
         let numbers     = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"] //  Ты целый мап сделал для этого. Я разобрался одним массивом!
         
@@ -112,7 +115,5 @@ module.exports = {
 /*
 TODO!!!:
 
-1. 16-37 строка : Возможно говнокод.
-2. 39 строка    : Захардхожено
-3. 88,97 строка : console.log. Возможно сможешь что-то с этим сделать
+88,97 строка : console.log. Возможно захочешь что-то с этим сделать
 */

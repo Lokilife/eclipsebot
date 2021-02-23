@@ -55,7 +55,8 @@ client.on("message", async function(message) {
                     "author": message.member,
                     "perms": command.botPermissions
                 });
-            if (config.owners.indexOf(message.author.id) == -1 && command.ownerOnly)
+                
+            if (command.ownerOnly && config.owners.indexOf(message.author.id) == -1)
                 return client.emit("commandError", 
                 {
                     "type": "NotOwner",
