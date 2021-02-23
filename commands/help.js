@@ -1,18 +1,15 @@
+const { Message, Client } = require("discord.js");
 const discord  = require("discord.js");
 const config   = require("../config.json");
-//const tools    = require("../lib/tools");
 const errors   = require("../lib/errors.js");
 
 module.exports = {
     /**
-     * 
      * @param {Message} message 
-     * @param {Client} client 
-     * @param {Array<String} args
+     * @param {Client} bot
+     * @param {Array<String>} args
      */
-    "run": async function(message, bot, args) { // Ненавижу client
-        //message.channel.send("Не готово!");
-        
+    "run": async function(message, bot, args) {
         if(args[0]) {
             let ok = false;
             for(let i=0;i<=bot.commands.length-1;i++) {

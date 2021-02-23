@@ -8,7 +8,7 @@ module.exports = {
             `Welcome to Eclipse!
             Version: ${package.version}.
             Authors: [ElectroPlayer]#0256, Lokilife#7962.
-            Node Version: ${process.version}.
+            Node.JS Version: ${process.version}.
             Discord.JS Version: ${discord.version}.`),
         "clientInitialization": {
             "start": chalk.cyan("[Initialization] Started initialization of client..."),
@@ -24,6 +24,29 @@ module.exports = {
         },
         "client": {
             "start": chalk.green("[Client] Client started!")
+        }
+    },
+    "ru": {
+        "welcome": chalk.yellow(
+            `Добро пожаловать в Eclipse!
+            Версия: ${package.version}.
+            Разработчики: [ElectroPlayer]#0256, Lokilife#7962.
+            Версия Node.JS: ${process.version}.
+            Версия Discord.JS: ${discord.version}.`),
+        "clientInitialization": {
+            "start": chalk.cyan("[Инициализация] Началась инициализация клиента..."),
+            "endSuccess": chalk.cyan("[Инициализация] Инициализация клиента успешно завершена!"),
+            "endFail": chalk.red("[Инициализация] Инициализация клиента не удалась!")
+        },
+        "commandsLoader": {
+            "start": chalk.cyan("[Загрузчик Команд] Инициализирована загрузка команд..."),
+            "endSuccess": chalk.cyan("[Загрузчик Команд] Все команды успешно загружены!"),
+            "endFail": chalk.cyan("[Загрузчик Команд] Команды загружены с некоторыми сбоями."),
+            "commandLoaded": (commandName) => chalk.green(`+ ${commandName}`),
+            "commandLoadingFailed": (commandName, err) => chalk.red(`Не удалось загрузить команду ${commandName}\nОшибка: ${err}`)
+        },
+        "client": {
+            "start": chalk.green("[Клиент] Клиент запущен!")
         }
     }
 }
