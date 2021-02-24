@@ -1,0 +1,12 @@
+{
+    "token": "TOKEN",
+    "prefix": "PREFIX",
+    "owners": ["OWNER_ID_1", "OWNER_ID_2"],
+    "lang": "en",
+    "colors": {
+        "default": "525592",
+        "errorRed": "cc0000",
+        "warnOrange": "fdb21a",
+        "successGreen": "00ce00"
+    }
+}

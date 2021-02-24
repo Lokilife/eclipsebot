@@ -20,15 +20,11 @@ const client = new discord.Client(
     }
 );
 
-client.helps = {} //  Нету con? Теперь есть)
+client.helps = {}
 
 client.commands = new Array();
 
 client.on("message", async function(message) {
-    // Условие в котором по одной из причин бот не будет реагировать. А именно:
-    // Если автор сообщения - бот.
-    // Или сообщение не начинается с префикса бота.
-    // Или тип канала - dm, т. е. ЛС.
     if (message.author.bot || !message.content.startsWith(config.prefix) || message.channel.type == "dm") return;
 
     const messageArray = message.content.split(/\s+/g),
@@ -44,7 +40,10 @@ client.on("message", async function(message) {
             ) return client.emit("commandError",
                 {
                     "type": "MissingPermissions",
-                    "author": message.member
+                    "message": message,
+                    "clientGuild": message.guild.me,
+                    "author": message.member,
+                    "perms": command.userPermissions
                 });
             if (!message.guild.me.permissions.has(
                 new discord.Permissions(command.botPermissions)
@@ -52,19 +51,31 @@ client.on("message", async function(message) {
             ) return client.emit("commandError", 
                 {
                     "type": "BotMissingPermissions",
+                    "message": message,
+                    "clientGuild": message.guild.me,
                     "author": message.member,
                     "perms": command.botPermissions
                 });
-                
             if (command.ownerOnly && config.owners.indexOf(message.author.id) == -1)
                 return client.emit("commandError", 
                 {
                     "type": "NotOwner",
+                    "message": message,
                     "author": message.author
                 });
 
-            client.helps.footer = message.author.username +' | © Night Devs',
-            command.run(message, client, args);
+            client.helps.footer = message.author.username +' | © Night Devs';
+            try {
+                command.run(message, client, args);
+            } catch (e) {
+                client.emit("commandError",
+                    {
+                        "type": "unknown",
+                        "message": message,
+                        "author": message.author,
+                        "error": e
+                    })
+            }
         }
     }
 });
@@ -72,8 +83,13 @@ client.on("message", async function(message) {
 console.log(messages.clientInitialization.endSuccess);
 
 console.log(messages.commandsLoader.start);
-require("./lib/loader").loadAll(join(__dirname, ".", "commands"), client);
+require("./lib/loader").loadCommands(join(__dirname, ".", "commands"), client);
 
 console.log(messages.commandsLoader.endSuccess);
+
+console.log(messages.listenersLoader.start);
+require("./lib/loader").loadListeners(join(__dirname, ".", "listeners"), client);
+
+console.log(messages.listenersLoader.endSuccess);
 
 client.login(config.token);

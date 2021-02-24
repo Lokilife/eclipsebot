@@ -8,10 +8,9 @@ module.exports = {
     "run": async function (message, client, args) {
         const code = args.join(" ").replace(/(```(\w+)?)/g, "").trim();
         try {
-            const result = eval(code);
-            message.channel.send(result.toString());
+            message.channel.send(eval(code).toString());
         } catch (e) {
-            message.channel.send(`\`\`\`js\n${e}\`\`\``);
+            message.channel.send(`\`\`\`js\n${e}\n\`\`\``);
         }
     },
     "name": "eval",

@@ -15,6 +15,13 @@ module.exports = {
             "endSuccess": chalk.cyan("[Initialization] Client initialization successfully finished!"),
             "endFail": chalk.red("[Initialization] Client initialization failed!")
         },
+        "listenersLoader": {
+            "start": chalk.cyan("[ListenersLoader] Initialized loading of listeners..."),
+            "endSuccess": chalk.cyan("[ListenersLoader]] All listeners successfully loaded!"),
+            "endFail": chalk.cyan("[ListenersLoader] The listeners are loaded with some fails."),
+            "listenerLoaded": (listenerName) => chalk.green(`+ ${listenerName}`),
+            "listenerLoadingFailed": (listenerName, err) => chalk.red(`Failed to load listener ${listenerName}\nError: ${err}`)
+        },
         "commandsLoader": {
             "start": chalk.cyan("[CommandsLoader] Initialized loading of commands..."),
             "endSuccess": chalk.cyan("[CommandsLoader] All commands successfully loaded!"),
@@ -37,6 +44,13 @@ module.exports = {
             "start": chalk.cyan("[Инициализация] Началась инициализация клиента..."),
             "endSuccess": chalk.cyan("[Инициализация] Инициализация клиента успешно завершена!"),
             "endFail": chalk.red("[Инициализация] Инициализация клиента не удалась!")
+        },
+        "listenersLoader": {
+            "start": chalk.cyan("[Загрузчик Событий] Инициализирована загрузка событий..."),
+            "endSuccess": chalk.cyan("[Загрузчик Событий] Все события успешно загружены!"),
+            "endFail": chalk.cyan("[Загрузчик Событий] События загружены с некоторыми сбоями."),
+            "listenerLoaded": (listenerName) => chalk.green(`+ ${listenerName}`),
+            "listenerLoadingFailed": (listenerName, err) => chalk.red(`Не удалось загрузить событие ${listenerName}\nОшибка: ${err}`)
         },
         "commandsLoader": {
             "start": chalk.cyan("[Загрузчик Команд] Инициализирована загрузка команд..."),
