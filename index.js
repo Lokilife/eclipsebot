@@ -2,6 +2,7 @@ const discord = require("discord.js");
 const config = require("./config.json");
 const { join } = require("path");
 const messages = require("./messages").en;
+const typeorm = require("typeorm");
 
 console.log(messages.welcome);
 console.log(messages.clientInitialization.start);
@@ -20,7 +21,7 @@ const client = new discord.Client(
     }
 );
 
-client.helps = {}
+client.helps = {};
 
 client.commands = new Array();
 
@@ -65,17 +66,15 @@ client.on("message", async function(message) {
                 });
 
             client.helps.footer = message.author.username +' | © Night Devs';
-            try {
-                command.run(message, client, args);
-            } catch (e) {
-                client.emit("commandError",
-                    {
-                        "type": "unknown",
-                        "message": message,
-                        "author": message.author,
-                        "error": e
-                    })
-            }
+                command.run(message, client, args).catch((e)=>{
+                    client.emit("commandError",
+                        {
+                            "type": "unknown",
+                            "message": message,
+                            "author": message.author,
+                            "error": e
+                        })
+                });
         }
     }
 });
@@ -91,5 +90,18 @@ console.log(messages.listenersLoader.start);
 require("./lib/loader").loadListeners(join(__dirname, ".", "listeners"), client);
 
 console.log(messages.listenersLoader.endSuccess);
+
+typeorm.createConnection({
+    type: "mongodb",
+    url: config.mongo_uri,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    synchronize: true,
+    entities: [
+        require("./models/custom"),
+        require("./models/guilds"),
+        require("./models/private-voices")
+    ]
+});
 
 client.login(config.token);

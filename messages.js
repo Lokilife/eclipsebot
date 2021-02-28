@@ -17,7 +17,7 @@ module.exports = {
         },
         "listenersLoader": {
             "start": chalk.cyan("[ListenersLoader] Initialized loading of listeners..."),
-            "endSuccess": chalk.cyan("[ListenersLoader]] All listeners successfully loaded!"),
+            "endSuccess": chalk.cyan("[ListenersLoader] All listeners successfully loaded!"),
             "endFail": chalk.cyan("[ListenersLoader] The listeners are loaded with some fails."),
             "listenerLoaded": (listenerName) => chalk.green(`+ ${listenerName}`),
             "listenerLoadingFailed": (listenerName, err) => chalk.red(`Failed to load listener ${listenerName}\nError: ${err}`)
