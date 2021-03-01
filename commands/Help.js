@@ -1,6 +1,7 @@
 const discord  = require("discord.js");
 const config   = require("../config.json");
 const errors   = require("../lib/errors.js");
+const tools    = require("../lib/tools.js");
 
 module.exports = {
     /**
@@ -14,14 +15,17 @@ module.exports = {
             for(let i=0;i<=bot.commands.length-1;i++) {
                 for(let i2=0;i2<=bot.commands[i].aliases.length-1;i2++){
                     if(bot.commands[i].aliases[i2] == args[0]) {
-                        message.channel.send(
-                            new discord.MessageEmbed().setColor(config.colors.default)
-                            .setTitle(`Помощь по команде ${bot.commands[i].name}`)
-                            .setDescription(bot.commands[i].help.desciption)
-                            .addField('Использование:', bot.commands[i].help.usage)
-                            .addField('Примеры:', bot.commands[i].help.examples.join("\n"))
-                            .setFooter(bot.helps.footer)
-                        )
+                        let embed = new discord.MessageEmbed().setColor(config.colors.default)
+                        .setTitle(`Помощь по команде ${bot.commands[i].name}`)
+                        .setDescription(bot.commands[i].help.desciption)
+                        .addField('Аргументы:', bot.commands[i].help.arguments)
+                        .addField('Примеры:', bot.commands[i].help.usage)
+                        .addField('Могут использовать:', tools.securitylevel(bot.commands[i].help.usegeLevel), true)
+                        .setFooter(bot.helps.footer)
+
+                        if(bot.commands[i].aliases.length>1) embed.addField('Сокращения:', bot.commands[i].aliases.slice(1).join(', ') ,true)
+
+                        message.channel.send(embed)
                         ok = true;
                         break;
                     }
@@ -29,10 +33,11 @@ module.exports = {
                 if(ok) break;
             }
             if(!ok) errors.falseArgs(message,"Такой команды/алиаса не существует!")
+            return;
         }
 
         let categories = [];
-        bot.commands.forEach(value => {if(categories.indexOf(value.help.category) == -1) categories.push(value.help.category)});
+        bot.commands.forEach(value => {if(categories.indexOf(value.help.category) == -1 && value.help.category != "Owners") categories.push(value.help.category)});
 
         let emb         = new discord.MessageEmbed().setColor(config.colors.default).setTitle('Помощь').setDescription(`\`${config.prefix}help <команда>\` для углублённой помощи по команде'`).setFooter(bot.helps.footer)
         let numbers     = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"] //  Ты целый мап сделал для этого. Я разобрался одним массивом!
@@ -101,12 +106,9 @@ module.exports = {
     "help": {
         "category": "Общее",
         "desciption": "Помощь по командам",
-        "shortDescription": "Помощь",
-        "usage": "help [?command]",
-        "examples": [
-            "help",
-            "help ping"
-        ],
+        "arguments": `**<command || Нет>** - Показать более подробную информацию о команде`,
+        "usage": `**${config.prefix}help** - Список всех команд\n**${config.prefix}help help** - Более подробная информация о help`,
+        "usegeLevel": 0
     }
 }
 

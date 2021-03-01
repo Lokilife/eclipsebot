@@ -1,5 +1,5 @@
 const discord   = require("discord.js");
-const colors    = require("../config.json").colors;
+const config    = require("../config.json");
 const tools     = require("../lib/tools.js");
 const strftime  = require("strftime").localizeByIdentifier('ru_RU');
 const package   = require("../package.json");
@@ -8,7 +8,7 @@ module.exports = {
     "run": async (message, bot) => {
         let uptime = tools.parseMS(bot.uptime);
 
-        let embed = new discord.MessageEmbed().setColor(colors.default)
+        let embed = new discord.MessageEmbed().setColor(config.colors.default)
         .setTitle("Информация о боте")
         .addField("Основное",`Пользователей: \`${bot.users.cache.size}\`\nСерверов: \`${bot.guilds.cache.size}\`\nДата создания: \`${strftime('%d.%m.%Y год в %H:%M', new Date(bot.user.createdTimestamp))}\`\nВремя работы: \`${uptime.days} : ${uptime.hours} : ${uptime.minutes} : ${uptime.seconds}.${uptime.milliseconds}\``)
         .addField("Техническая информация",`Использование ОЗУ:  \`${(process.memoryUsage().rss / 1024 / 1024)
@@ -23,14 +23,12 @@ module.exports = {
         return;
     },
     "name": "info",
-    "aliases": ["info"],
+    "aliases": ["info", "bot", "botinfo"],
     "help": {
         "category": "Общее",
         "desciption": "Версия бота и что нового",
-        "shortDescription": "Версия",
-        "usage": "info",
-        "examples": [
-            "info",
-        ],
+        "arguments": `**Нет**`,
+        "usage": `**${config.prefix}info** - Информация о боте`,
+        "usegeLevel": 0
     }
 }

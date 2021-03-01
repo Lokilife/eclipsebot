@@ -17,12 +17,10 @@ module.exports = {
     "aliases": ["eval"],
     "ownerOnly": true,
     "help": {
-        "category": "Прочее",
+        "category": "Owners",
         "desciption": "Просто eval, чё те ещё надо!?",
-        "shortDescription": "Просто eval, чё те ещё надо!?",
-        "usage": "eval <code>",
-        "examples": [
-            "eval message.channel.send(\"Примеров с этой командой может быть бесконечно много, обойдётесь одним\")"
-        ],
+        "arguments": `Запрещено!`,
+        "usage": `Запрещено!`,
+        "usegeLevel": ["BOT_OWNER"]
     }
 }

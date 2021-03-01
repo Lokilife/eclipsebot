@@ -31,6 +31,8 @@ To start the bot, you need:
 {
     "prefix": "c.",
     "token": "your token",
+    "mongo_uri": "URI",
+    "virusTotalApiKey": "API_KEY",
     "owners": ["your ID", "ID of another author"],
     "lang": "en",
     "colors": {

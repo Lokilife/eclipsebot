@@ -1,4 +1,5 @@
-const { VoiceState, Client } = require("discord.js"),
+// eslint-disable-next-line no-unused-vars
+const { VoiceState, Client } = require("discord.js"), //  Нужно для IntelliSense
         privateVoices = require("../models/private-voices"),
         guilds = require("../models/guilds"),
         typeorm = require("typeorm");
@@ -12,9 +13,9 @@ module.exports = {
      * @param {VoiceState} newState 
      */
     run: async function(client, oldState, newState) {
-        const manager = typeorm.getMongoManager(),
-              guild = await manager.getRepository(guilds).findOne({_id: newState.guild.id}),
-              privateVoice = manager.getRepository(privateVoices).findOne({_id: newState.member.id});
+        let manager = typeorm.getMongoManager(),
+            guild = await manager.getRepository(guilds).findOne({_id: newState.guild.id}),
+            privateVoice = manager.getRepository(privateVoices).findOne({_id: newState.member.id});
 
         // Создание румы
         if (
@@ -48,7 +49,7 @@ module.exports = {
             });
             if (!channel) return;
 
-            await newState.setChannel(channel).catch(async(e)=>{await channel.delete()});
+            await newState.setChannel(channel).catch(async(/*e*/)=>{await channel.delete()});
             
             if (channel.deleted) return;
 

@@ -1,7 +1,7 @@
 const errors          = require('../lib/errors.js');
 const {MessageEmbed}  = require('discord.js');
 const strftime        = require('strftime').localizeByIdentifier('ru_RU');
-const colors          = require('../config.json').colors;
+const config          = require('../config.json');
 
 module.exports = {
     "run": async (message, bot, args) => {
@@ -31,7 +31,7 @@ module.exports = {
 
         let roleCount = member.roles.cache.filter((r) => r.id !== message.guild.id).size; //  Находим количество ролей
     
-        let profileEmbed = new MessageEmbed().setTitle(argsUser.username + nickname).setColor(colors.default)
+        let profileEmbed = new MessageEmbed().setTitle(argsUser.username + nickname).setColor(config.colors.default)
         .addField('Дата регистрации:', `${strftime('%B %d, %Y год в %H:%M', date2)}\n(${diff1} дней назад)`,true)
         .addField('Подключился на сервер:', `${strftime('%B %d, %Y год в %H:%M', date3)}\n(${diff2} дней назад)`,true)
         .addField(`ID:`,`${argsUser.id}`)
@@ -76,11 +76,9 @@ module.exports = {
     "help": {
         "category": "Общее",
         "desciption": "Информация о пользователей",
-        "shortDescription": "Профиль",
-        "usage": "profile ?[@User]",
-        "examples": [
-            "profile",
-            "profile @Electroplayer",
-        ],
+        "arguments": `**<user || автор>** - Покажет информацию о пользователе *(Можно ввести ID или имя)*`,
+        "usage": `**${config.prefix}profile** - Покажет информацию о тебе\n**${config.prefix}profile @user** -  Покажет информацию об упомянутом пользователе\n**${config.prefix}profile 111111123456789101** - Покажет информацию о пользователе с таким ID\n**${config.prefix}profile UserName** - Покажет информацию о пользователе с таким именем *(НЕ НИКОМ НА СЕРВЕРЕ)*`,
+        "usegeLevel": 0
     }
+    
 }

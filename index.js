@@ -1,7 +1,7 @@
 const discord = require("discord.js");
 const config = require("./config.json");
 const { join } = require("path");
-const messages = require("./messages").en;
+const messages = require("./messages")[config.lang];
 const typeorm = require("typeorm");
 
 console.log(messages.welcome);
@@ -34,11 +34,7 @@ client.on("message", async function(message) {
     
     for (const command of client.commands) {
         if (command.aliases.indexOf(cmd) != -1) {
-            if (
-                !message.member.permissions.has(
-                    new discord.Permissions(command.userPermissions)
-                )
-            ) return client.emit("commandError",
+            if (!message.member.permissions.has(new discord.Permissions(command.userPermissions))) return client.emit("commandError",
                 {
                     "type": "MissingPermissions",
                     "message": message,
@@ -105,3 +101,4 @@ typeorm.createConnection({
 });
 
 client.login(config.token);
+client.on('ready', () => console.log(messages.client.start));

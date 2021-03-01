@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 const { Message, MessageEmbed } = require("discord.js");
 const urllib = require("urllib");
 const config = require("../config.json");
@@ -20,7 +21,7 @@ module.exports = {
                     "apikey": config.virusTotalIpiKey,
                     "url": attachment.url
                 }
-            }, function(err, data, res) {
+            }, function(err, data /*, res*/) {
                 VTApiResults.push(JSON.parse(data.toString()).permalink);
                 console.log(data.toString());
             });
@@ -37,7 +38,7 @@ module.exports = {
                         `Данное сообщение отправлено автоматически, потому что `+
                         `администратор вашего сервера включил автоматическую проверку исполняемых файлов.`)
         .setFooter(`VirusTotal Auto Checker | © Night devs`);
-        console.log("Test");
+        //console.log("Test");
         await message.channel.send(embed);
     }
 }
