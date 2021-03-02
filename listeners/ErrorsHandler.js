@@ -13,24 +13,24 @@ module.exports = {
         const embed = new discord.MessageEmbed()
         .setColor(config.colors.errorRed)
         .setTitle("Ошибка!")
-        .setFooter(`${data.message.author.username} | © Night Devs`)
+        //.setFooter(`${data.message.author.username} | © Night Devs`)
         let perms;
         switch(data.type) {
             case "NotOwner":
-                embed.setDescription("Вы не являетесь владельцем бота!")
+                embed.setDescription("Эта функция не для простолюдин!")
                 break
 
             case "BotMissingPermissions":
                 perms = data.perms.filter((value)=>data.clientGuild.permissions.has(value) ? false : true)
                 embed.setDescription(
-                    `У бота отсутствуют права необходимые для данной команды. \`` +
+                    `У бота отсутствуют права необходимые для данной команды, а именно:\`` +
                     tools.permsToText(perms).join('`, `')+`\`.\n` +
-                    `Обратитесь к администратору вашего сервера чтобы исправить это.`
+                    `Обратитесь к администратору сервера, чтобы исправить это.`
                 );
                 break
             case "MissingPermissions":
                 perms = data.perms.filter((value)=>data.author.permissions.has(value) ? false : true)
-                embed.setDescription(`У вас недостаточно прав.\n\`${tools.permsToText(perms).join('`, `')}\``);
+                embed.setDescription(`У вас недостаточно вот этих прав: \n\`${tools.permsToText(perms).join('`, `')}\``);
                 break
             default:
                 embed.setDescription("Произошла неожиданная ошибка, отчёт уже отправлен разработчикам. Извините за предоставленные неудобства.");
@@ -38,10 +38,10 @@ module.exports = {
                     new discord.MessageEmbed()
                         .setTitle("Ошибка!")
                         .setDescription(`\`\`\`js\n${data.error}\n\`\`\``)
-                        .addField("Message Author", `${data.author} (${data.author.id})`, false)
-                        .addField("Message Content", `\`\`\`\n${data.message.content}\n\`\`\``, false)
-                        .addField("Guild ID", data.message.guild.id, false)
-                        .addField("Channel ID", data.message.channel.id, false)
+                        .addField("Автор:", `${data.author} (${data.author.id})`, false)
+                        .addField("Контент:", `\`\`\`\n${data.message.content}\n\`\`\``, false)
+                        .addField("ID сервера:", data.message.guild.id, false)
+                        .addField("ID канала:", data.message.channel.id, false)
                 );
                 break
         }

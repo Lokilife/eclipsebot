@@ -28,13 +28,13 @@ module.exports = {
         message.channel.send(embed);
 
     },
-    "name": "version",
     "aliases": ["version", "ver"],
     "help": {
         "category": "Общее",
-        "description": "Задержки Discord API",
-        "arguments": `**Нет**`,
-        "usage": `**${config.prefix}ping** - Показать скорость соединения от хоста до серверов Discord`,
-        "usageLevel": 0
-    }
+        "description": "Версии бота",
+        "arguments": `**list** - Список всех версий\n**<ver>** - версия, изменения в которой вы хотите посмотреть\n**<Нет>** - Посмотреть изменения в текущей версии`,
+        "usage": `**${config.prefix}version** - Изменения в текущей версии\n**${config.prefix}version 1.0.0** - Изменения в версии 1.0.0`,
+    },
+    "botPermissions": [],
+    "userPermissions": []
 }

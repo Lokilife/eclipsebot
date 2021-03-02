@@ -22,13 +22,13 @@ module.exports = {
 
         return;
     },
-    "name": "info",
     "aliases": ["info", "bot", "botinfo"],
     "help": {
         "category": "Общее",
-        "description": "Версия бота и что нового",
+        "description": "Информация о боте",
         "arguments": `**Нет**`,
         "usage": `**${config.prefix}info** - Информация о боте`,
-        "usageLevel": 0
-    }
+    },
+    "botPermissions": [],
+    "userPermissions": []
 }

@@ -7,13 +7,13 @@ module.exports = {
 
         msg.edit(new MessageEmbed().setColor(config.colors.default).setTitle(`🏓 Понг!`).addField(`Задержка:`, `${Math.floor(msg.createdTimestamp - message.createdTimestamp)}ms`).addField(`Задержка API:`, ` ${Math.round(bot.ws.ping)}ms`).setFooter(bot.helps.footer));
     },
-    "name": "ping",
-    "aliases": ["ping", "пинг"],
+    "aliases": ["ping"],
     "help": {
         "category": "Общее",
         "description": "Задержки Discord API",
         "arguments": `**Нет**`,
         "usage": `**${config.prefix}ping** - Показать скорость соединения от хоста до серверов Discord`,
-        "usageLevel": 0
-    }
+    },
+    "botPermissions": [],
+    "userPermissions": []
 }

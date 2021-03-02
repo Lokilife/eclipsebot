@@ -71,14 +71,13 @@ module.exports = {
 
         message.channel.send(profileEmbed.addField(`Активен с`,`${text}`).addField(`Активности:`, activ)) //  Отправляем конечный embed
     },
-    "name": "profile",
     "aliases": ["profile", "me"],
     "help": {
         "category": "Общее",
         "description": "Информация о пользователей",
-        "arguments": `**<user || автор>** - Покажет информацию о пользователе *(Можно ввести ID или имя)*`,
+        "arguments": `**<user>** - Покажет информацию о пользователе *(Можно ввести ID или имя)*\n**<Нет>** - Покажет информацию о авторе`,
         "usage": `**${config.prefix}profile** - Покажет информацию о тебе\n**${config.prefix}profile @user** -  Покажет информацию об упомянутом пользователе\n**${config.prefix}profile 111111123456789101** - Покажет информацию о пользователе с таким ID\n**${config.prefix}profile UserName** - Покажет информацию о пользователе с таким именем *(НЕ НИКОМ НА СЕРВЕРЕ)*`,
-        "usageLevel": 0
-    }
-    
+    },
+    "botPermissions": [],
+    "userPermissions": []
 }

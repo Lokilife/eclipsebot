@@ -13,14 +13,14 @@ module.exports = {
             message.channel.send(`\`\`\`js\n${e}\n\`\`\``);
         }
     },
-    "name": "eval",
     "aliases": ["eval"],
     "ownerOnly": true,
     "help": {
         "category": "Owners",
         "description": "Просто eval, чё те ещё надо!?",
         "arguments": `Запрещено!`,
-        "usage": `Запрещено!`,
-        "usageLevel": ["BOT_OWNER"]
-    }
+        "usage": `Запрещено!`
+    },
+    "botPermissions": [],
+    "userPermissions": []
 }
