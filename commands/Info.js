@@ -26,9 +26,9 @@ module.exports = {
     "aliases": ["info", "bot", "botinfo"],
     "help": {
         "category": "Общее",
-        "desciption": "Версия бота и что нового",
+        "description": "Версия бота и что нового",
         "arguments": `**Нет**`,
         "usage": `**${config.prefix}info** - Информация о боте`,
-        "usegeLevel": 0
+        "usageLevel": 0
     }
 }

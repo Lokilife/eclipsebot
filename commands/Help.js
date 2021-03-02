@@ -17,10 +17,10 @@ module.exports = {
                     if(bot.commands[i].aliases[i2] == args[0]) {
                         let embed = new discord.MessageEmbed().setColor(config.colors.default)
                         .setTitle(`Помощь по команде ${bot.commands[i].name}`)
-                        .setDescription(bot.commands[i].help.desciption)
+                        .setDescription(bot.commands[i].help.description)
                         .addField('Аргументы:', bot.commands[i].help.arguments)
                         .addField('Примеры:', bot.commands[i].help.usage)
-                        .addField('Могут использовать:', tools.securitylevel(bot.commands[i].help.usegeLevel), true)
+                        .addField('Могут использовать:', tools.securitylevel(bot.commands[i].help.usageLevel), true)
                         .setFooter(bot.helps.footer)
 
                         if(bot.commands[i].aliases.length>1) embed.addField('Сокращения:', bot.commands[i].aliases.slice(1).join(', ') ,true)
@@ -62,7 +62,7 @@ module.exports = {
             text = '';
 
             for(let i2=0;i2<=bot.commands.length-1;i2++) {
-                if(bot.commands[i2].help.category == categories[i1]) text = text+`**${config.prefix}${bot.commands[i2].name}** - ${bot.commands[i2].help.desciption}\n` //  Если категории совпадают, то к перемнной с текстом добавляется нужный текст (Команда с её описанием)
+                if(bot.commands[i2].help.category == categories[i1]) text = text+`**${config.prefix}${bot.commands[i2].name}** - ${bot.commands[i2].help.description}\n` //  Если категории совпадают, то к переменной с текстом добавляется нужный текст (Команда с её описанием)
             }
             
             if(text == '') text = "Тут пока ничего нет...";
@@ -105,10 +105,10 @@ module.exports = {
     "botPermissions": ["MANAGE_MESSAGES"],
     "help": {
         "category": "Общее",
-        "desciption": "Помощь по командам",
+        "description": "Помощь по командам",
         "arguments": `**<command || Нет>** - Показать более подробную информацию о команде`,
         "usage": `**${config.prefix}help** - Список всех команд\n**${config.prefix}help help** - Более подробная информация о help`,
-        "usegeLevel": 0
+        "usageLevel": 0
     }
 }
 

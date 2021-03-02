@@ -34,43 +34,37 @@ client.on("message", async function(message) {
     
     for (const command of client.commands) {
         if (command.aliases.indexOf(cmd) != -1) {
-            if (!message.member.permissions.has(new discord.Permissions(command.userPermissions))) return client.emit("commandError",
-                {
-                    "type": "MissingPermissions",
-                    "message": message,
-                    "clientGuild": message.guild.me,
-                    "author": message.member,
-                    "perms": command.userPermissions
-                });
-            if (!message.guild.me.permissions.has(
-                new discord.Permissions(command.botPermissions)
-                )
-            ) return client.emit("commandError", 
-                {
-                    "type": "BotMissingPermissions",
-                    "message": message,
-                    "clientGuild": message.guild.me,
-                    "author": message.member,
-                    "perms": command.botPermissions
-                });
-            if (command.ownerOnly && config.owners.indexOf(message.author.id) == -1)
-                return client.emit("commandError", 
-                {
-                    "type": "NotOwner",
-                    "message": message,
-                    "author": message.author
-                });
+            if (!message.member.permissions.has(new discord.Permissions(command.userPermissions))) return client.emit("commandError", {
+                "type": "MissingPermissions",
+                "message": message,
+                "clientGuild": message.guild.me,
+                "author": message.member,
+                "perms": command.userPermissions
+            });
+
+            if (!message.guild.me.permissions.has(new discord.Permissions(command.botPermissions))) return client.emit("commandError", {
+                "type": "BotMissingPermissions",
+                "message": message,
+                "clientGuild": message.guild.me,
+                "author": message.member,
+                "perms": command.botPermissions
+            });
+
+            if (command.ownerOnly && config.owners.indexOf(message.author.id) == -1) return client.emit("commandError", {
+                "type": "NotOwner",
+                "message": message,
+                "author": message.author
+            });
 
             client.helps.footer = message.author.username +' | © Night Devs';
-                command.run(message, client, args).catch((e)=>{
-                    client.emit("commandError",
-                        {
-                            "type": "unknown",
-                            "message": message,
-                            "author": message.author,
-                            "error": e
-                        })
-                });
+            command.run(message, client, args).catch((e)=>{
+                client.emit("commandError", {
+                    "type": "unknown",
+                    "message": message,
+                    "author": message.author,
+                    "error": e
+                })
+            });
         }
     }
 });

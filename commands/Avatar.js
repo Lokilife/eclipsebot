@@ -19,9 +19,9 @@ module.exports = {
     "aliases": ["avatar", "ava"],
     "help": {
         "category": "Общее",
-        "desciption": "Аватар пользователя",
+        "description": "Аватар пользователя",
         "arguments": `**<user || автор>** - Покажет аватар упомянутого пользователя *(Можно ввести ID или имя)*`,
         "usage": `**${config.prefix}avatar** - Покажет твой аватар\n**${config.prefix}avatar @user** - Покажет аватар упомянутого пользователя\n**${config.prefix}avatar 111111123456789101** - Покажет аватар пользователя с таким ID\n**${config.prefix}avatar UserName** - Покажет аватар пользователя с таким именем *(НЕ НИКОМ НА СЕРВЕРЕ)*\n**${config.prefix}avatar server** - Покажет аватар сервера`,
-        "usegeLevel": 0
+        "usageLevel": 0
     }
 }

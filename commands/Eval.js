@@ -18,9 +18,9 @@ module.exports = {
     "ownerOnly": true,
     "help": {
         "category": "Owners",
-        "desciption": "Просто eval, чё те ещё надо!?",
+        "description": "Просто eval, чё те ещё надо!?",
         "arguments": `Запрещено!`,
         "usage": `Запрещено!`,
-        "usegeLevel": ["BOT_OWNER"]
+        "usageLevel": ["BOT_OWNER"]
     }
 }

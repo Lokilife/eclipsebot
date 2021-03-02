@@ -16,7 +16,7 @@ module.exports = {
             .setDescription(vers.join(', ')))
             return
         }
-        if(!versions[ver]) return errors.castom(message, "Такой версии не существует!");
+        if(!versions[ver]) return errors.custom(message, "Такой версии не существует!");
 
         let embed = new MessageEmbed().setColor(config.colors.default).setTitle(`Версия: ${ver}`).setFooter(bot.helps.footer);
 
@@ -32,9 +32,9 @@ module.exports = {
     "aliases": ["version", "ver"],
     "help": {
         "category": "Общее",
-        "desciption": "Задержки Discord API",
+        "description": "Задержки Discord API",
         "arguments": `**Нет**`,
         "usage": `**${config.prefix}ping** - Показать скорость соединения от хоста до серверов Discord`,
-        "usegeLevel": 0
+        "usageLevel": 0
     }
 }

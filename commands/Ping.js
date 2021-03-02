@@ -11,9 +11,9 @@ module.exports = {
     "aliases": ["ping", "пинг"],
     "help": {
         "category": "Общее",
-        "desciption": "Задержки Discord API",
+        "description": "Задержки Discord API",
         "arguments": `**Нет**`,
         "usage": `**${config.prefix}ping** - Показать скорость соединения от хоста до серверов Discord`,
-        "usegeLevel": 0
+        "usageLevel": 0
     }
 }

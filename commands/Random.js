@@ -30,7 +30,7 @@ module.exports = {
                     if(args[1]>999999 || args[1]<-999999 || args[2]<-999999 || args[2]>999999) return errors.falseArgs(message, "Число не должно быть больше 999999");
                     if(args[1]==args[2]) return message.channel.send(new MessageEmbed().setColor(config.colors.default).setTitle(`${args[1]}`))
                     message.channel.send(new MessageEmbed().setColor(config.colors.default).setTitle(`${tools.getRandomInRange(Number(args[1]), Number(args[2]))}`))
-                } else return errors.unknow(message);
+                } else return errors.unknown(message);
 
             break;
 
@@ -68,9 +68,9 @@ module.exports = {
     "aliases": ["random", "rand"],
     "help": {
         "category": "Прочее",
-        "desciption": "Различные рандомайзеры",
+        "description": "Различные рандомайзеры",
         "arguments": `**word <Слова из которых нужно выбрать>** - Выберет рандомное слово из заданных\n**8ball** - Магический шар, отвечающий на вопросы\n**number <x>** - Выберет рандомное число от 0 до x\n**number <x> <y>** - Выберет рандомное число от x до y\n**user** - Рандомный человек с сервера\n**color** - Рандомный цвет\n\n`,
         "usage": `**${config.prefix}random word Кошка Кошечка Киска** - Выберет рандомное слово из предложенных\n**${config.prefix}random number 10** -  Рандомное число от 0 до 10\n**${config.prefix}random number 5 10** -  Рандомное число от 5 до 10\n**${config.prefix}random user** - Выберет рандомного человека\n**${config.prefix}random color** - Даст рандомный цвет`,
-        "usegeLevel": 0
+        "usageLevel": 0
     }
 }

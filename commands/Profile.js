@@ -75,10 +75,10 @@ module.exports = {
     "aliases": ["profile", "me"],
     "help": {
         "category": "Общее",
-        "desciption": "Информация о пользователей",
+        "description": "Информация о пользователей",
         "arguments": `**<user || автор>** - Покажет информацию о пользователе *(Можно ввести ID или имя)*`,
         "usage": `**${config.prefix}profile** - Покажет информацию о тебе\n**${config.prefix}profile @user** -  Покажет информацию об упомянутом пользователе\n**${config.prefix}profile 111111123456789101** - Покажет информацию о пользователе с таким ID\n**${config.prefix}profile UserName** - Покажет информацию о пользователе с таким именем *(НЕ НИКОМ НА СЕРВЕРЕ)*`,
-        "usegeLevel": 0
+        "usageLevel": 0
     }
     
 }
