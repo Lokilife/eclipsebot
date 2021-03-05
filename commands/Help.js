@@ -10,6 +10,7 @@ module.exports = {
      * @param {Array<String>} args
      */
     "run": async function(message, bot, args) {
+        const footer = require("../templates.json").footer.replace(/{TAG}/, message.author.tag);
         if(args[0]) {
             let ok = false;
             for(let i=0;i<=bot.commands.length-1;i++) {
@@ -21,7 +22,7 @@ module.exports = {
                         .addField('Аргументы:', bot.commands[i].help.arguments)
                         .addField('Примеры:', bot.commands[i].help.usage)
                         .addField('Могут использовать:', tools.securitylevel(bot.commands[i].userPermissions), true)
-                        .setFooter(bot.helps.footer)
+                        .setFooter(footer)
 
                         if(bot.commands[i].aliases.length>1) embed.addField('Сокращения:', bot.commands[i].aliases.slice(1).join(', ') ,true)
 
@@ -39,7 +40,7 @@ module.exports = {
         let categories = [];
         bot.commands.forEach(value => {if(categories.indexOf(value.help.category) == -1 && value.help.category != "Owners") categories.push(value.help.category)});
 
-        let emb         = new discord.MessageEmbed().setColor(config.colors.default).setTitle('Помощь').setDescription(`\`${config.prefix}help <команда>\` для углублённой помощи по команде'`).setFooter(bot.helps.footer)
+        let emb         = new discord.MessageEmbed().setColor(config.colors.default).setTitle('Помощь').setDescription(`\`${config.prefix}help <команда>\` для углублённой помощи по команде'`).setFooter(footer)
         let numbers     = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"] //  Ты целый мап сделал для этого. Я разобрался одним массивом!
         
         let fields = {
@@ -95,7 +96,7 @@ module.exports = {
             collector.on('end', async () => {
                 try {
                     await msg.reactions.removeAll();
-                    await msg.edit(emb.setFooter(`[Время истекло] ${bot.helps.footer}`));
+                    await msg.edit(emb.setFooter(`[Время истекло] ${footer}`));
                 } catch (err) {console.log(err)}
             })
         })

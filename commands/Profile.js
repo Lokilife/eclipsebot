@@ -5,6 +5,7 @@ const config          = require('../config.json');
 
 module.exports = {
     "run": async (message, bot, args) => {
+        const footer = require("../templates.json").footer.replace(/{TAG}/, message.author.tag);
 
         // Получаем пользователя, о котором мы ищем информацию
         let argsUser
@@ -37,7 +38,7 @@ module.exports = {
         .addField(`ID:`,`${argsUser.id}`)
         .addField(`Роли (${roleCount}):`, `${roles}`)
         .setThumbnail(argsUser.avatarURL({ dynamic: true, size: 512 })|| argsUser.defaultAvatarURL)
-        .setFooter(bot.helps.footer); //  Создаём embed. Создал его сразу для своего удобства, потом не придётся писать это снова
+        .setFooter(footer); //  Создаём embed. Создал его сразу для своего удобства, потом не придётся писать это снова
 
         let statuses = {online: `В сети`, idle: `Не активен`, dnd: `Не беспокоить`, offline: `Не в сети`} //  Облегчаем себе жизнь
         let game
@@ -54,8 +55,6 @@ module.exports = {
         let activit  = message.guild.presences.cache.get(argsUser.id).activities; //  Да, я умею называть переменные)
         let activ    = '';
     
-        console.log(activit);
-
         for(let i=0;i<=activit.length-1;i++) {  //  Там без цикла никак...
             if (activit[i].type == 'CUSTOM_STATUS') { //  К кастомному статусу отдельная надпись
                 let stat = ""

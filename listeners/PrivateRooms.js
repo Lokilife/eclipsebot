@@ -1,6 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-const { VoiceState, Client } = require("discord.js"), //  Нужно для IntelliSense
-        privateVoices = require("../models/private-voices"),
+const   privateVoices = require("../models/private-voices"),
         guilds = require("../models/guilds"),
         typeorm = require("typeorm");
 
@@ -13,18 +11,18 @@ module.exports = {
      * @param {VoiceState} newState 
      */
     run: async function(client, oldState, newState) {
-        let manager = typeorm.getMongoManager(),
-            guild = await manager.getRepository(guilds).findOne({_id: newState.guild.id}),
-            privateVoice = manager.getRepository(privateVoices).findOne({_id: newState.member.id});
+        const manager = typeorm.getMongoManager(),
+              guild = await manager.getRepository(guilds).findOne({_id: newState.guild.id.toString()});
+        let   privateVoice = manager.getRepository(privateVoices).findOne({_id: newState.member.id});
 
         // Создание румы
         if (
             newState.channel &&
             guild.privateVoices.enabled &&
-            guild.privateVoices.category == newState.channel.parentID &&
-            guild.privateVoices.channel == newState.channel.id
+            guild.privateVoices.category === newState.channel.parentID &&
+            guild.privateVoices.channel === newState.channel.id
         ) {
-            const name = guild.privateVoices.template.replace(/\{NAME\}/, newState.member.displayName);
+            const name = guild.privateVoices.template.replace(/{NAME}/, newState.member.displayName);
             const channel = await newState.guild.channels.create(name,
                 {
                     permissionOverwrites: [
@@ -37,19 +35,19 @@ module.exports = {
                     parent: newState.channel.parentID
                 })
             .catch(async(e) => {
-                if (e.code == 50013) { // Недостаточно прав
+                if (e.code === 50013) { // Недостаточно прав
                     guild.privateVoices.enabled = false;
                     await manager.getMongoRepository(guilds).updateOne({_id: newState.guild.id}, {$set: {privateVoices: guild.privateVoices}});
                     newState.guild.owner.send(
                         "У бота недостаточно прав чтобы управлять приватными голосовыми каналами. "+
-                        "Выдайте боту права управления каналами и снова включите приватные голосовые каналы.\n\n"+
+                        "Выдайте боту права управления каналами и снова включите приватные госовые каналы.\n\n"+
                         "Данное сообщение отправлено автоматически, на него не нужно отвечать.")
                         .catch(()=>{});
                 }
             });
             if (!channel) return;
 
-            await newState.setChannel(channel).catch(async(/*e*/)=>{await channel.delete()});
+            await newState.setChannel(channel).catch(async()=>{await channel.delete()});
             
             if (channel.deleted) return;
 
@@ -86,19 +84,19 @@ module.exports = {
         if (
             oldState.channel &&
             guild.privateVoices.enabled &&
-            guild.privateVoices.category == oldState.channel.parentID &&
-            guild.privateVoices.channel != oldState.channel.id
+            guild.privateVoices.category === oldState.channel.parentID &&
+            guild.privateVoices.channel !== oldState.channel.id
         ) {
             if (oldState.channel.deleted) return;
             if (oldState.channel.members.size) return;
             await oldState.channel.delete()
             .catch(async(e) => {
-                if (e.code == 50013) { // Недостаточно прав
+                if (e.code === 50013) { // Недостаточно прав
                     guild.privateVoices.enabled = false;
                     await manager.getMongoRepository(guilds).updateOne({_id: newState.guild.id}, {$set: {privateVoices: guild.privateVoices}});
                     newState.guild.owner.send(
                         "У бота недостаточно прав чтобы управлять приватными голосовыми каналами. "+
-                        "Выдайте боту права управления каналами и снова включите приватные голосовые каналы.\n\n"+
+                        "Выдайте боту права управления каналами и снова включите приватные госовые каналы.\n\n"+
                         "Данное сообщение отправлено автоматически, на него не нужно отвечать.")
                         .catch(()=>{});
                 }

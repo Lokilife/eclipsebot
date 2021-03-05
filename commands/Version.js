@@ -6,19 +6,21 @@ const errors          = require('../lib/errors.js');
 
 module.exports = {
     "run": async (message, bot, args) => {
+        const footer = require("../templates.json").footer.replace(/{TAG}/, message.author.tag);
+
         let ver = args[0] || package.version;
 
         if(ver == "list") {
             let vers = [];
             for (let key in versions) vers.push(key);
 
-            message.channel.send(new MessageEmbed().setColor(config.colors.default).setTitle(`Список всех выпущенных версий:`).setFooter(bot.helps.footer)
+            message.channel.send(new MessageEmbed().setColor(config.colors.default).setTitle(`Список всех выпущенных версий:`).setFooter(footer)
             .setDescription(vers.join(', ')))
             return
         }
         if(!versions[ver]) return errors.custom(message, "Такой версии не существует!");
 
-        let embed = new MessageEmbed().setColor(config.colors.default).setTitle(`Версия: ${ver}`).setFooter(bot.helps.footer);
+        let embed = new MessageEmbed().setColor(config.colors.default).setTitle(`Версия: ${ver}`).setFooter(footer);
 
         if(versions[ver].new)  embed.addField('Новое:',versions[ver].new);
         if(versions[ver].edit) embed.addField('Изменено:', versions[ver].edit);
