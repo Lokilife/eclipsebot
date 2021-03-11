@@ -3,10 +3,13 @@ const EntitySchema = require("typeorm").EntitySchema;
 module.exports = new EntitySchema({
     name: "custom",
     columns: {
-        _id: {
+        _id: { // Guild ID
             objectId: true,
             primary: true,
             type: "string"
+        },
+        user: { // ID пользователя
+            type: "number"
         },
         header: {
             type: "json"

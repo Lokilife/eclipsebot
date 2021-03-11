@@ -3,18 +3,18 @@ const EntitySchema = require("typeorm").EntitySchema;
 module.exports = new EntitySchema({
     name: "custom_commands",
     columns: {
-        _id: {
+        _id: { // ID сервера
             objectId: true,
             primary: true,
             type: "string"
         },
-        name: {
+        name: { // Название команды
             type: "string"
         },
-        embed: {
+        embed: { // Эмбед, и так понятно
             type: "json"
         },
-        message: {
+        message: { // Текст сообщения
             type: "string"
         }
     }

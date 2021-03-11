@@ -14,7 +14,7 @@ interface ClientOptions implements discord.ClientOptions {
  * Настройки команды и всё в таком духе
  */
 export interface CommandOptions {
-    exec: AsyncFunction;
+    run: AsyncFunction;
     aliases: string[];
     ownerOnly?: boolean;
     cooldown?: number;

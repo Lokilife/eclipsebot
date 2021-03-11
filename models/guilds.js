@@ -22,6 +22,9 @@ module.exports = new EntitySchema({
         },
         premium: {
             type: "string"
+        },
+        reactionRolesEnabled: {
+            type: "boolean"
         }
     }
 });

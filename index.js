@@ -41,7 +41,9 @@ const connection = typeorm.createConnection({
     entities: [
         require("./models/custom"),
         require("./models/guilds"),
-        require("./models/private-voices")
+        require("./models/private-voices"),
+        require("./models/custom-commands"),
+        require("./models/role-reactions-settings")
     ]
 });
 module.exports.connection = connection;
